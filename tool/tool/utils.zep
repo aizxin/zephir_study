@@ -1,0 +1,5 @@
+namespace Tool;
+
+class Utils{
+
+}
