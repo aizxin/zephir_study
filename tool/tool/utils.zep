@@ -1,6 +1,6 @@
 namespace Tool;
 
-class Utils{
+class Utils {
     //验证邮箱
     public static function is_valid_email(string email){
         return preg_match("/^[a-zA-Z0-9._%-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z]{2,4}$/u", email);
@@ -74,5 +74,50 @@ class Utils{
             return true;
         }
         return false;
+    }
+    /**
+     * HTTP GET 方法
+     * @param  string url
+     * @author widuu <admin@widuu.com>
+     */
+
+    public static function httpGet(string! url="") {
+        var curlHandle, content,timeout ;
+        let timeout    = globals_get("curl_timeout");
+        let curlHandle = curl_init();
+        curl_setopt( curlHandle , CURLOPT_URL, url );
+        curl_setopt( curlHandle , CURLOPT_RETURNTRANSFER, 1 );
+        curl_setopt( curlHandle , CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt( curlHandle , CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt( curlHandle , CURLOPT_TIMEOUT, timeout );
+        let content = curl_exec( curlHandle );
+        curl_close( curlHandle );
+        return content;
+    }
+
+    /**
+     * HTTP POST 方法
+     * @param  string url
+     * @param  array  info
+     * @author widuu <admin@widuu.com>
+     */
+
+    public static function httpPost(string! url=null ,array info){
+        var curlHandle, content,timeout ;
+        if typeof info != "array" {
+            throw new Exception("infomation must be type array",4004);
+        }
+        let timeout    = globals_get("curl_timeout");
+        let curlHandle = curl_init( url );
+        curl_setopt(curlHandle, CURLOPT_HEADER, 0);
+        curl_setopt(curlHandle, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt(curlHandle, CURLOPT_POST, 1);
+        curl_setopt(curlHandle, CURLOPT_POSTFIELDS, json_encode(info,JSON_UNESCAPED_UNICODE));
+        curl_setopt(curlHandle, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt(curlHandle, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt(curlHandle ,CURLOPT_TIMEOUT, timeout );
+        let content = curl_exec( curlHandle );
+        curl_close( curlHandle );
+        return content;
     }
 }
