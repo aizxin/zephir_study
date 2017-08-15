@@ -33,4 +33,7 @@ $database = new Medoo([
         'SET SQL_MODE=ANSI_QUOTES'
     ]
 ]);
+
+
+
 var_dump($database);
