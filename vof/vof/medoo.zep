@@ -86,7 +86,7 @@ class Medoo
 
 	public function __construct(array! options)
 	{
-		var commands,attr,port,is_port,driver,stack,key,value,dsn;
+		var commands,attr,port,is_port,driver,stack,key,value,dsn,e;
 		try {
 			let commands = [];
 			if is_array(options)
