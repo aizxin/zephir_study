@@ -1,7 +1,7 @@
 <?php
 
-// use Vof\Medoo;
-use Medoo\Medoo;
+use Vof\Medoo;
+// use Medoo\Medoo;
 $data = [
     'database_type' => 'mysql',
     'database_name' => 'kamun',
