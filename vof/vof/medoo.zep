@@ -144,7 +144,7 @@ class Medoo
 					let port = options["port"];
 				}
 
-				let is_port = isset(port);
+				let is_port = isset port;
 			}
 		}
 		catch \PDOException, e {
