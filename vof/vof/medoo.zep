@@ -265,16 +265,7 @@ class Medoo
 				let commands[] = "SET NAMES '" . options["charset"] . "'";
 			}
 
-			let this->pdo = new \PDO(
-				dsn,
-				options["username"],
-				options["password"],
-				this->option
-			);
-
-			for key, value in commands {
-				this->pdo->exec(value);
-            }
+			var_dump(dsn);
 		}
 		catch \PDOException, e {
             throw new \Exception(e->getMessage());
