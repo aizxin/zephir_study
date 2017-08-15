@@ -181,9 +181,9 @@ class Medoo
 
 					case "sybase":
 						let attr = [
-							"driver" => "dblib",
-							"host" => options["server"],
-							"dbname" => options["database_name"]
+							"driver":"dblib",
+							"host":options["server"],
+							"dbname":options["database_name"]
 						];
 
 						if (is_port)
