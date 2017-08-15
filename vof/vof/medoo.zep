@@ -280,75 +280,77 @@ class Medoo
             throw new \Exception(e->getMessage());
         }
 	}
-	public function query($query, $map = [])
+	public function query(query, map = [])
 	{
-		if (!empty($map))
+		var key,value;
+		if (!empty(map))
 		{
-			foreach ($map as $key => $value)
+			for key, value in map
 			{
-				switch (gettype($value))
+				switch (gettype(value))
 				{
-					case 'NULL':
-						$map[ $key ] = [null, PDO::PARAM_NULL];
+					case "NULL":
+						map[ key ] = [null, PDO::PARAM_NULL];
 						break;
 
-					case 'resource':
-						$map[ $key ] = [$value, PDO::PARAM_LOB];
+					case "resource":
+						map[ key ] = [value, PDO::PARAM_LOB];
 						break;
 
-					case 'boolean':
-						$map[ $key ] = [($value ? '1' : '0'), PDO::PARAM_BOOL];
+					case "boolean":
+						map[ key ] = [(value ? "1" : "2"), PDO::PARAM_BOOL];
 						break;
 
-					case 'integer':
-					case 'double':
-						$map[ $key ] = [$value, PDO::PARAM_INT];
+					case "integer":
+					case "double":
+						map[ key ] = [value, PDO::PARAM_INT];
 						break;
 
-					case 'string':
-						$map[ $key ] = [$value, PDO::PARAM_STR];
+					case "string":
+						map[ key ] = [value, PDO::PARAM_STR];
 						break;
 				}
 			}
 		}
 
-		return $this->exec($query, $map);
+		return this->exec(query, map);
 	}
 
-	public function exec($query, $map = [])
+	public function exec(query, map = [])
 	{
-		if ($this->debug_mode)
+		var statement,key,value;
+		if (this->debug_mode)
 		{
-			echo $this->generate($query, $map);
+			echo this->generate(query, map);
 
-			$this->debug_mode = false;
+			let this->debug_mode = false;
 
 			return false;
 		}
 
-		if ($this->logging)
+		if (this->logging)
 		{
-			$this->logs[] = [$query, $map];
+			let this->logs[] = [query, map];
 		}
 		else
 		{
-			$this->logs = [[$query, $map]];
+			let this->logs = [[query, map]];
 		}
 
-		$statement = $this->pdo->prepare($query);
+		let statement = this->pdo->prepare(query);
 
-		if ($statement)
+		if (statement)
 		{
-			foreach ($map as $key => $value)
+			for key, value in map
 			{
-				$statement->bindValue($key, $value[ 0 ], $value[ 1 ]);
+				statement->bindValue(key, value[ 0 ], value[ 1 ]);
 			}
 
-			$statement->execute();
+			statement->execute();
 
-			$this->statement = $statement;
+			let this->statement = statement;
 
-			return $statement;
+			return statement;
 		}
 		else
 		{
