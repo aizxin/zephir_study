@@ -151,10 +151,7 @@ class Medoo
 					case "mariadb":
 						let this->database_type = "mysql";
 					case "mysql":
-						let attr = [
-							"driver" => "mysql",
-							"dbname" => options["database_name"]
-						];
+						let attr = ["driver":"mysql","dbname":options["database_name"]];
 				}
 			}
 		}
