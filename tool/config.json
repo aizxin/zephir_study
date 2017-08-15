@@ -52,6 +52,12 @@
         "check-invalid-reads": false,
         "internal-call-transformation": false
     },
+    "globals": {
+        "curl_timeout": {
+            "type": "int",
+            "default": 1
+        }
+    },
     "namespace": "tool",
     "name": "tool",
     "description": "",
