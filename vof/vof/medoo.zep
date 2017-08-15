@@ -179,6 +179,63 @@ class Medoo
 						}
 						break;
 
+					case "sybase":
+						let attr = [
+							"driver" => "dblib",
+							"host" => options["server"],
+							"dbname" => options["database_name"]
+						];
+
+						if (is_port)
+						{
+							let attr["port"] = port;
+						}
+
+						break;
+
+					case "oracle":
+						let attr = [
+							"driver":"oci",
+							"dbname":options["server"] ?
+								'//' . options["server"] . (is_port ? ":" . port : ":1521") . "/" . options["database_name"] :
+								options["database_name"]
+						];
+
+						if (isset(options["charset"]))
+						{
+							let attr["charset"] = options["charset"];
+						}
+
+						break;
+
+					case "mssql":
+						if (strstr(PHP_OS, "WIN"))
+						{
+							let attr = [
+								"driver":"sqlsrv",
+								"Server":options[ 'server' ] . (is_port ? "," . port : ""),
+								"Database":options["database_name"]
+							];
+						}
+						else
+						{
+							let attr = [
+								"driver":"dblib",
+								"host":options["server"] . (is_port ? ":" . port : ""),
+								"dbname":options["database_name"]
+							];
+						}
+
+						// Keep MSSQL QUOTED_IDENTIFIER is ON for standard quoting
+						let commands[] = "SET QUOTED_IDENTIFIER ON";
+
+						// Make ANSI_NULLS is ON for NULL value
+						let commands[] = "SET ANSI_NULLS ON";
+						break;
+
+					case "sqlite":
+						let this->pdo = new \PDO("sqlite:" . options["database_file"], null, null, this->option);
+						break;
 
 				}
 			}
