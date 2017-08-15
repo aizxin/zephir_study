@@ -266,6 +266,16 @@ class Medoo
 			}
 
 			var_dump(dsn);
+			let this->pdo = new \PDO(
+				dsn,
+				options["username"],
+				options["password"],
+				this->option
+			);
+
+			for key, value in commands {
+				this->pdo->exec(value);
+            }
 		}
 		catch \PDOException, e {
             throw new \Exception(e->getMessage());
