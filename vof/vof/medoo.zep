@@ -91,40 +91,17 @@ class Medoo
 			let commands = [];
 			if is_array(options)
 			{
-				if isset(options["database_type"])
+				if isset options["database_type"]
 				{
 					let this->database_type = strtolower(options["database_type"]);
 				}
-			}else{
+			}
+			else{
 				throw new \Exception("option is not array");
 			}
 
-			if isset(options["prefix"])
-			{
-				let this->prefix = options["prefix"];
-			}
-
-			if isset(options["option"])
-			{
-				let this->option = options["option"];
-			}
-
-			if isset(options["logging"]) && is_bool(options["logging"])
-			{
-				let this->logging = options["logging"];
-			}
-
-			if isset(options["command"]) && is_array(options["command"])
-			{
-				let commands = options["command"];
-			}
-			else
-			{
-				let commands = [];
-			}
-
 		}
-		catch (\PDOException, e) {
+		catch \PDOException, e {
 			throw new \Exception(e->getMessage());
 		}
 	}
