@@ -155,22 +155,6 @@ class Medoo
 							"driver" => "mysql",
 							"dbname" => options["database_name"]
 						];
-
-						if (isset(options["socket"]))
-						{
-							let attr["unix_socket"] = options["socket"];
-						}
-						else
-						{
-							let attr["host"] = options["server"];
-
-							if (is_port)
-							{
-								let attr["port"] = port;
-							}
-						}
-						let commands[] = "SET SQL_MODE=ANSI_QUOTES";
-						break;
 				}
 			}
 		}
