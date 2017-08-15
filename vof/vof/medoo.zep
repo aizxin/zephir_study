@@ -237,6 +237,43 @@ class Medoo
 
 				}
 			}
+			let driver = attr["driver"];
+
+			unset(attr["driver"]);
+
+			let stack = [];
+
+			for key, value in attr {
+                if (is_int(key))
+				{
+					let stack[] = value;
+				}
+				else
+				{
+					let stack[] = key . "=" . value;
+				}
+            }
+
+			let dsn = driver . ":" . implode(stack, ";");
+
+			if (
+				in_array(this->database_type, ["mariadb", "mysql", "pgsql", "sybase", "mssql"]) &&
+				isset(options["charset"])
+			)
+			{
+				let commands[] = "SET NAMES '" . options["charset"] . "'";
+			}
+
+			let this->pdo = new \PDO(
+				dsn,
+				options["username"],
+				options["password"],
+				this->option
+			);
+
+			for key, value in commands {
+				this->pdo->exec(value);
+            }
 		}
 		catch \PDOException, e {
             throw new \Exception(e->getMessage());
