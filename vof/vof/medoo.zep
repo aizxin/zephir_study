@@ -269,6 +269,4 @@ class Medoo
 			throw new \Exception(e->getMessage());
 		}
 	}
-
 }
-?>
