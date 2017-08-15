@@ -2,8 +2,7 @@
 
 use Vof\Medoo;
 
-$database = new Medoo([
-    // required
+$data = [
     'database_type' => 'mysql',
     'database_name' => 'kamun',
     'server' => 'rm-wz9435289632q5m4a.mysql.rds.aliyuncs.com',
@@ -32,8 +31,9 @@ $database = new Medoo([
     'command' => [
         'SET SQL_MODE=ANSI_QUOTES'
     ]
-]);
+];
+$database = new Medoo($data);
 
 
-
+var_dump($data);
 var_dump($database);
