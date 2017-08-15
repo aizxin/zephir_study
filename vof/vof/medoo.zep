@@ -211,7 +211,7 @@ class Medoo
 						{
 							let attr = [
 								"driver":"sqlsrv",
-								"Server":options[ 'server' ] . (is_port ? "," . port : ""),
+								"Server":options["server"] . (is_port ? "," . port : ""),
 								"Database":options["database_name"]
 							];
 						}
