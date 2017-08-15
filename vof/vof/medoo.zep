@@ -84,7 +84,7 @@ class Medoo
 
 	protected guid = 0;
 
-	public function __construct(array! options)
+	public function __construct(options = null)
 	{
 		var commands,attr,port,is_port,driver,stack,key,value,dsn,e;
 		try {
