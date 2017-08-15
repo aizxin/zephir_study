@@ -196,9 +196,7 @@ class Medoo
 					case "oracle":
 						let attr = [
 							"driver":"oci",
-							"dbname":options["server"] ?
-								'//' . options["server"] . (is_port ? ":" . port : ":1521") . "/" . options["database_name"] :
-								options["database_name"]
+							"dbname":options["server"] ? '//' . options["server"] . (is_port ? ":" . port : ":1521") . "/" . options["database_name"] : options["database_name"]
 						];
 
 						if (isset(options["charset"]))
