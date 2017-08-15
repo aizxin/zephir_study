@@ -52,8 +52,8 @@
         "check-invalid-reads": false,
         "internal-call-transformation": false
     },
-    "namespace": "cwo",
-    "name": "cwo",
+    "namespace": "vof",
+    "name": "vof",
     "description": "",
     "author": "",
     "version": "0.0.1",
