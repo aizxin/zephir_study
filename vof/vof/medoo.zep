@@ -66,36 +66,22 @@ namespace Vof;
 class Medoo
 {
 
-	public static function testVarDump()
-    {
-        var a, ar;
+	protected pdo;
 
-        let a = "hello";
-        let ar = [1, "world", false];
+	protected database_type;
 
-        var_dump(ar);
-        var_dump(a);
-    }
+	protected prefix;
 
-    public function testVarDump2(ret)
-    {
-        var_dump(ret == 1);
-    }
+	protected statement;
 
-    public function testVarExport()
-    {
-        var a, ar, ret;
+	protected option = [];
 
-        let a = "hello";
-        let ar = [1, "world", false];
+	protected logs = [];
 
-        var_export(ar);
-        let ret = var_export(ar);
+	protected logging = false;
 
-        var_export(a);
-        let ret = var_export(a);
+	protected debug_mode = false;
 
-        return ret;
-    }
+	protected guid = 0;
 
 }
