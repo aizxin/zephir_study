@@ -145,7 +145,7 @@ class Medoo
 				}
 
 				let is_port = isset(options["port"]);
-
+				let attr = [];
 				switch (this->database_type)
 				{
 					case "mariadb":
