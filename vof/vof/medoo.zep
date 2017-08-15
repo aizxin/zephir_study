@@ -86,6 +86,7 @@ class Medoo
 
 	public function __construct(options = null)
 	{
+		var_dump(options);
 		var commands,attr,port,is_port,driver,stack,key,value,dsn,e;
 		try {
 			let commands = [];
