@@ -105,7 +105,7 @@ class Utils {
     public static function httpPost(string! url=null ,array info){
         var curlHandle, content,timeout ;
         if typeof info != "array" {
-            throw new Exception("infomation must be type array",4004);
+            throw new \Exception("infomation must be type array",4004);
         }
         let timeout    = globals_get("curl_timeout");
         let curlHandle = curl_init( url );
