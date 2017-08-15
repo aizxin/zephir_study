@@ -154,7 +154,7 @@ class Medoo
 
 					case "mysql":
 						let attr = ["driver":"mysql","dbname":options["database_name"]];
-						f (isset(options["socket"]))
+						if (isset(options["socket"]))
 						{
 							let attr["unix_socket"] = options["socket"];
 						}
