@@ -435,7 +435,7 @@ class Medoo
         let data = query->fetch(\PDO::FETCH_ASSOC);
         while (data)
         {
-            $this->dataMap(data, columns, column_map, current_stack);
+            this->dataMap(data, columns, column_map, current_stack);
 
             let stack[ index ] = current_stack;
 
@@ -447,7 +447,7 @@ class Medoo
 
 	protected function tableQuote(table)
 	{
-		return "'" . $this->prefix . table . "'";
+		return "'" . this->prefix . table . "'";
 	}
 
 	public function debug()
