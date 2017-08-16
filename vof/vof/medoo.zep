@@ -411,7 +411,7 @@ class Medoo
 		];
 		for key,value in output
 		{
-			let output[ key ] = this->pdo->getAttribute(constant("PDO::ATTR_" . value));
+			let output[ key ] = this->pdo->getAttribute(constant("\PDO::ATTR_" . value));
 		}
 		return output;
 	}
