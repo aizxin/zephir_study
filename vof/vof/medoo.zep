@@ -86,7 +86,6 @@ class Medoo
 
 	public function __construct(array! options)
 	{
-		// var_dump(options);
 		var commands,attr,port,is_port,driver,stack,key,value,dsn,e;
 		try {
 			let commands = [];
@@ -282,7 +281,6 @@ class Medoo
 
 	public function query(query, map = [])
 	{
-		var_dump(map);
 		var key,value;
 		if (!empty(map))
 		{
