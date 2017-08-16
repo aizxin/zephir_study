@@ -284,7 +284,7 @@ class Medoo
 	{
 		var_dump(map);
 		var key,value;
-		if (!empty(map))
+		if (in_array(map))
 		{
 			for key,value in map
 			{
@@ -333,13 +333,13 @@ class Medoo
 		let statement = this->pdo->prepare(query);
 		if (statement)
 		{
-			if(!empty(map)){
+			if(in_array(map)){
 				for key,value in map
 				{
 					statement->bindValue(key, value[ 0 ], value[ 1 ]);
 				}
-				statement->execute();
 			}
+			statement->execute();
 			let this->statement = statement;
 			return statement;
 		}
