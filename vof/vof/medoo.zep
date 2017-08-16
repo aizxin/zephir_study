@@ -404,6 +404,7 @@ class Medoo
                 let stack[ key ] = data[ key ];
             }
         }
+        return stack;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////  1
 
@@ -438,6 +439,7 @@ class Medoo
         let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
         while (data)
         {
+
             this->dataMap(data, columns, column_map, current_stack);
 
             let stack[ index ] = current_stack;
