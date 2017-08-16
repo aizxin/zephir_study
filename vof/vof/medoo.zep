@@ -380,16 +380,29 @@ class Medoo
 		let this->debug_mode = true;
 		return this;
 	}
+
 	public function error()
 	{
 		return this->statement ? this->statement->errorInfo() : null;
 	}
+
 	public function last()
 	{
 		var log;
 		let log = end(this->logs);
 		return this->generate(log[ 0 ], log[ 1 ]);
 	}
+
+	public function log()
+	{
+		var log;
+		return array_map($this->logs,function (log)
+			{
+				return this->generate(log[ 0 ], log[ 1 ]);
+			}
+		);
+	}
+
 	public function info()
 	{
 		var output,key,value;

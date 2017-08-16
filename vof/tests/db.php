@@ -44,8 +44,8 @@ echo "We love " . $data; // We love Medoo
 echo "We love " . $database->quote($data); // We love 'Medoo'
 
 // 测试 query
-$data = $database->query("SELECT email FROM member_bill")->fetchAll();
-var_dump($data);
+// $data = $database->query("SELECT email FROM member_bill")->fetchAll();
+// var_dump($data);
 
 $data1 = $database->query(
     "SELECT * FROM member WHERE id = :id", [
@@ -54,4 +54,7 @@ $data1 = $database->query(
 )->fetchAll();
 var_dump($data1);
 
+// log
+var_dump($database->log());
+// last
 var_dump($database->last());
