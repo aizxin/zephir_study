@@ -365,10 +365,50 @@ class Medoo
 		return this->pdo->quote(query);
 	}
 
+	protected function dataMap(index, key, value, data, stack)
+	{
+		var sub_stack = [],sub_key,sub_value,current_stack,key_match;
+		if (is_array(value))
+		{
+			for sub_key,sub_value in value
+			{
+				if (is_array(sub_value))
+				{
+					let current_stack = stack[ index ][ key ];
+
+					this->dataMap(false, sub_key, sub_value, data, current_stack);
+
+					let stack[ index ][ key ][ sub_key ] = current_stack[ 0 ][ sub_key ];
+				}
+				else
+				{
+					this->dataMap(false, preg_replace("/^[\w]*\./i", "", sub_value), sub_key, data, sub_stack);
+
+					let stack[ index ][ key ] = sub_stack;
+				}
+			}
+		}
+		else
+		{
+			if (index !== false)
+			{
+				let stack[ index ][ value ] = data[ value ];
+			}
+			else
+			{
+				if (preg_match("/[a-zA-Z0-9_\-\.]*\s*\(([a-zA-Z0-9_\-]*)\)/i", key, key_match))
+				{
+					let key = key_match[ 1 ];
+				}
+
+				let stack[ key ] = data[ key ];
+			}
+		}
+	}
 
 	public function select(table, join, columns = null, where = null)
 	{
-		var map=[],stack=[],column_map=[],index=0,is_single_column,query;
+		var map=[],stack=[],column_map=[],index=0,is_single_column,query,data,current_stack = [];
 
 		let column = where === null ? join : columns;
 
@@ -378,68 +418,68 @@ class Medoo
 
 		$this->columnMap(columns, column_map);
 
-		if (!$query)
+		if ($query)
 		{
 			return false;
 		}
 
-		if ($columns === '*')
+		if (columns === "*")
 		{
-			return $query->fetchAll(PDO::FETCH_ASSOC);
+			return query->fetchAll(\PDO::FETCH_ASSOC);
 		}
 
-		if ($is_single_column)
+		if (is_single_column)
 		{
-			return $query->fetchAll(PDO::FETCH_COLUMN);
+			return query->fetchAll(\PDO::FETCH_COLUMN);
+		}
+		let data = query->fetch(\PDO::FETCH_ASSOC)
+		while (data)
+		{
+			$this->dataMap(data, columns, column_map, current_stack);
+
+			let stack[ index ] = current_stack;
+
+			let index++;
 		}
 
-		while ($data = $query->fetch(PDO::FETCH_ASSOC))
-		{
-			$current_stack = [];
-
-			$this->dataMap($data, $columns, $column_map, $current_stack);
-
-			$stack[ $index ] = $current_stack;
-
-			$index++;
-		}
-
-		return $stack;
+		return stack;
 	}
+
 	protected function columnMap(columns, stack)
 	{
 		if (columns === "*")
 		{
 			return stack;
 		}
-		var key,value;
-		foreach (columns as $key => $value)
+		var key,value,key_match,column_key;
+		for key,value in columns
 		{
-			if (is_int($key))
+			if (is_int(key))
 			{
-				preg_match('/(?<column>[a-zA-Z0-9_\.]*)(?:\s*\((?<alias>[a-zA-Z0-9_]+)\)|\s*\[(?<type>(String|Bool|Int|Number|Object|JSON))\])?/i', $value, $key_match);
+				preg_match("/(?<column>[a-zA-Z0-9_\.]*)(?:\s*\((?<alias>[a-zA-Z0-9_]+)\)|\s*\[(?<type>(String|Bool|Int|Number|Object|JSON))\])?/i", value, key_match);
 
-				$column_key = !empty($key_match[ 'alias' ]) ?
-					$key_match[ 'alias' ] :
-					preg_replace('/^[\w]*\./i', '', $key_match[ 'column' ]);
+				let column_key = !empty(key_match[ "alias" ]) ?
+					key_match[ "alias" ] :
+					preg_replace("/^[\w]*\./i", "", key_match[ "column" ]);
 
-				if (isset($key_match[ 'type' ]))
+				if (isset(key_match[ "type" ]))
 				{
-					$stack[ $value ] = [$column_key, $key_match[ 'type' ]];
+					let stack[ value ] = [column_key, key_match[ "type" ]];
 				}
 				else
 				{
-					$stack[ $value ] = [$column_key, 'String'];
+					let stack[ value ] = [column_key, "String"];
 				}
 			}
 			else
 			{
-				$this->columnMap($value, $stack);
+				this->columnMap(value, stack);
 			}
 		}
 
-		return $stack;
+		return stack;
 	}
+
 	protected function selectContext(table, map, join, columns = null, where = null, column_fn = null)
 	{
 		var table_match,table_query,join_key,table_join=[],join_array=[],sub_table,relation,match1,key,value,table_name;
