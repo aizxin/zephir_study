@@ -716,10 +716,10 @@ class Medoo
 	// 	// return where_clause;
 	// }
 
-	protected function mapKey()
-	{
-		return ":MeDoO_" . this->guid++ . "_mEdOo";
-	}
+	// protected function mapKey()
+	// {
+	// 	return ":MeDoO_" . this->guid++ . "_mEdOo";
+	// }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
     protected function columnQuote(str)
