@@ -592,7 +592,7 @@ class Medoo
 
 				if (is_array(match1) && (isset(match1[ "columns" ]) && isset(match1[ "keyword" ])))
 				{
-					let mode = '';
+					let mode = "";
 
 					let mode_array = [
 						"natural" : "IN NATURAL LANGUAGE MODE",
@@ -614,31 +614,31 @@ class Medoo
 				}
 			}
 
-			// if (isset(where[ "GROUP" ]))
-			// {
-			// 	let group = where[ "GROUP" ];
+			if (isset(where[ "GROUP" ]))
+			{
+				let group = where[ "GROUP" ];
 
-			// 	if (is_array(group))
-			// 	{
-			// 		var stack = [],value1,column;
+				if (is_array(group))
+				{
+					var stack = [],value1,column;
 
-			// 		for column,value1 in group
-			// 		{
-			// 			let stack[] = this->columnQuote(value1);
-			// 		}
+					for column,value1 in group
+					{
+						let stack[] = this->columnQuote(value1);
+					}
 
-			// 		let where_clause .= " GROUP BY " . implode(",",stack);
-			// 	}
-			// 	else
-			// 	{
-			// 		let where_clause .= " GROUP BY " . this->columnQuote(where[ "GROUP" ]);
-			// 	}
+					let where_clause .= " GROUP BY " . implode(",",stack);
+				}
+				else
+				{
+					let where_clause .= " GROUP BY " . this->columnQuote(where[ "GROUP" ]);
+				}
 
-			// 	if (isset(where[ "HAVING" ]))
-			// 	{
-			// 		let where_clause .= " HAVING " . this->dataImplode(where[ "HAVING" ], map, " AND");
-			// 	}
-			// }
+				if (isset(where[ "HAVING" ]))
+				{
+					let where_clause .= " HAVING " . this->dataImplode(where[ "HAVING" ], map, " AND");
+				}
+			}
 
 			// if (isset(where[ "ORDER" ]))
 			// {
