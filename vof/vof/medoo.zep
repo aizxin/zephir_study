@@ -340,6 +340,7 @@ class Medoo
 				statement->execute();
 			}
 			let this->statement = statement;
+			var_dump(statement);
 			return statement;
 		}
 		else
