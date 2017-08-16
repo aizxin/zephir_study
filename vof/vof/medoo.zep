@@ -417,14 +417,14 @@ class Medoo
 
             let table_query = table . " AS " . this->tableQuote(table_match[ "alias" ]);
         }
-        else
-        {
-            let table = this->tableQuote(table);
+        // else
+        // {
+        //     let table = this->tableQuote(table);
 
-            let table_query = table;
-        }
+        //     let table_query = table;
+        // }
 
-        let join_key = is_array(join) ? array_keys(join) : null;
+        // let join_key = is_array(join) ? array_keys(join) : null;
 
         // if (
         //     isset(join_key[ 0 ]) &&
