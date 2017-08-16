@@ -433,15 +433,17 @@ class Medoo
         {
             return query->fetchAll(\PDO::FETCH_COLUMN);
         }
-        // let data = query->fetch(\PDO::FETCH_ASSOC);
-        // while (data)
-        // {
-        //     this->dataMap(data, columns, column_map, current_stack);
+        var fetchMethod;
+        let fetchMethod="fetch";
+        let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
+        while (data)
+        {
+            this->dataMap(data, columns, column_map, current_stack);
 
-        //     let stack[ index ] = current_stack;
+            let stack[ index ] = current_stack;
 
-        //     let index = index + 1;
-        // }
+            let index++;
+        }
 
         return stack;
     }
