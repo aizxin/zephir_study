@@ -389,16 +389,6 @@ class Medoo
 		let log = end(this->logs);
 		return this->generate(log[ 0 ], log[ 1 ]);
 	}
-	public function log()
-	{
-		var log;
-		return array_map(function (log)
-			{
-				return this->generate(log[ 0 ], log[ 1 ]);
-			},
-			this->logs
-		);
-	}
 	public function info()
 	{
 		var output,key,value;
