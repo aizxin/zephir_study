@@ -556,15 +556,15 @@ class Medoo
                     let where = join;
                 }
 
-                $column = column_fn . "(" . this->columnPush(columns) . ")";
+                let column = column_fn . "(" . this->columnPush(columns) . ")";
             }
         }
         else
         {
-            $column = $this->columnPush($columns);
+            let column = this->columnPush(columns);
         }
 
-        return "SELECT " . $column . " FROM " . $table_query . $this->whereClause($where, $map);
+        return "SELECT " . $column . " FROM " . table_query . this->whereClause(where, map);
     }
 
 	protected function tableQuote(table)
