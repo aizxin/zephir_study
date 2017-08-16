@@ -19,7 +19,6 @@
 
 namespace Vof;
 
-
 /**
  * Vof\Medoo
  * Medoo database framework
@@ -283,6 +282,7 @@ class Medoo
 
 	public function query(query, map = [])
 	{
+		var_dump(map);
 		var key,value;
 		if (!empty(map))
 		{
