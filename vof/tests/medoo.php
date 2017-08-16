@@ -37,5 +37,11 @@
 	]);
 
 	$data = $database->query("SELECT email FROM member_bill")->fetchAll();
-	var_dump($data);
+	$data1 = $database->query(
+	    "SELECT * FROM member WHERE id = :id", [
+	        ":id" => 19
+	    ]
+	)->fetchAll();
+	// var_dump($data);
+	var_dump($database->log());
 ?>

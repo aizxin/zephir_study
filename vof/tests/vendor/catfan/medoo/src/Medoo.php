@@ -1482,6 +1482,8 @@ class Medoo
 	{
 		return array_map(function ($log)
 			{
+				var_dump($log);
+				// var_dump($log);
 				return $this->generate($log[ 0 ], $log[ 1 ]);
 			},
 			$this->logs

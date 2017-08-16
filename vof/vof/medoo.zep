@@ -324,10 +324,12 @@ class Medoo
 		}
 		if (this->logging)
 		{
+			var_dump("1");
 			let this->logs[] = [query, map];
 		}
 		else
 		{
+			var_dump("2");
 			let this->logs = [[query, map]];
 		}
 		let statement = this->pdo->prepare(query);
@@ -396,9 +398,9 @@ class Medoo
 	public function log()
 	{
 		var log;
-		return array_map($this->logs,function (log)
+		return array_map(this->logs,function (log)
 			{
-				return log;
+				return this->generate(log[0], log[1]);
 			}
 		);
 	}
