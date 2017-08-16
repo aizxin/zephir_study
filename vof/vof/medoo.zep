@@ -671,21 +671,21 @@ class Medoo
 					let where_clause .= " ORDER BY " . this->columnQuote(order1);
 				}
 
-				if (isset(where[ "LIMIT" ]) && in_array(this->database_type, ["oracle", "mssql"]))
-				{
-					var limit;
-					let  limit = where[ "LIMIT" ];
+				// if (isset(where[ "LIMIT" ]) && in_array(this->database_type, ["oracle", "mssql"]))
+				// {
+				// 	var limit;
+				// 	let  limit = where[ "LIMIT" ];
 
-					if (is_numeric(limit))
-					{
-						let where_clause .= " FETCH FIRST " . limit . " ROWS ONLY";
-					}
+				// 	if (is_numeric(limit))
+				// 	{
+				// 		let where_clause .= " FETCH FIRST " . limit . " ROWS ONLY";
+				// 	}
 
-					if (is_array(limit) && is_numeric(limit[ 0 ]) && is_numeric(limit[ 1 ]))
-					{
-						let where_clause .= " OFFSET " . limit[0] . " ROWS FETCH NEXT " . limit[ 1 ] . " ROWS ONLY";
-					}
-				}
+				// 	if (is_array(limit) && is_numeric(limit[ 0 ]) && is_numeric(limit[ 1 ]))
+				// 	{
+				// 		let where_clause .= " OFFSET " . limit[0] . " ROWS FETCH NEXT " . limit[ 1 ] . " ROWS ONLY";
+				// 	}
+				// }
 			}
 
 			// if (isset(where[ "LIMIT" ]) && !in_array(this->database_type, ["oracle", "mssql"]))
@@ -717,7 +717,7 @@ class Medoo
 	}
 
 
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////// 1
 
 	protected function mapKey()
 	{
@@ -726,8 +726,6 @@ class Medoo
 		let this->guid = this->guid + 1;
 		return ":MeDoO_" . i . "_mEdOo";
 	}
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////// 1
 
 	protected function dataImplode(data, conjunctor, outer_conjunctor = null)
     {
