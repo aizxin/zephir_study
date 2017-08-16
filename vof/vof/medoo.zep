@@ -400,6 +400,7 @@ class Medoo
 		var log;
 		return array_map(this->logs,function (log)
 			{
+				let log = log;
 				return this->generate(log[0], log[1]);
 			}
 		);
