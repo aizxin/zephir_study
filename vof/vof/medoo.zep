@@ -365,7 +365,7 @@ class Medoo
 		return this->pdo->quote(query);
 	}
 
-	protected function dataMap(index, key, value, data, &stack)
+	protected function dataMap(index, key, value, data, stack) -> void
     {
         var sub_stack = [],sub_key,sub_value,current_stack,key_match;
         if (is_array(value))
@@ -453,7 +453,7 @@ class Medoo
 
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
 
-	protected function columnMap(columns, stack)
+	protected function columnMap(columns, stack) -> string
 	{
 		if (columns === '*')
 		{
@@ -629,7 +629,7 @@ class Medoo
         return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
     }
 
-    protected function whereClause(where, map)
+    protected function whereClause(where, map) -> string
 	{
 		var group,map_key,columns,where_clause,where_keys,where_OR,where_AND,single_condition,condition,value,match1,mode,mode_array=[];
 
@@ -805,7 +805,7 @@ class Medoo
 		return ":MeDoO_" . i . "_mEdOo";
 	}
 
-	protected function dataImplode(data, conjunctor, outer_conjunctor = null)
+	protected function dataImplode(data, conjunctor, outer_conjunctor = null)  -> string
     {
         var wheres = [],key,value,type,relation_match,match1,operator,connector,stack,condition;
 
@@ -1001,7 +1001,7 @@ class Medoo
         return implode(haystack,outer_conjunctor . " ");
     }
 
-    protected function columnPush(columns)
+    protected function columnPush(columns) -> string
     {
         if (columns === "*")
         {
