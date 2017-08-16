@@ -255,7 +255,7 @@ class Medoo
 				}
             }
 
-			let dsn = driver . ":" . implode(stack, ";");
+			let dsn = driver . ":" . implode(";",stack);
 
 			if (
 				in_array(this->database_type, ["mariadb", "mysql", "pgsql", "sybase", "mssql"]) &&
@@ -264,8 +264,6 @@ class Medoo
 			{
 				let commands[] = "SET NAMES '" . options["charset"] . "'";
 			}
-
-			var_dump(dsn);
 			let this->pdo = new \PDO(
 				dsn,
 				options["username"],
