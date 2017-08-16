@@ -307,6 +307,8 @@ class Medoo
 						break;
 				}
 			}
+		}else{
+			let map[] = [\PDO::ATTR_CURSOR:\PDO::CURSOR_FWDONLY];
 		}
 		return this->exec(query, map);
 	}
@@ -344,7 +346,7 @@ class Medoo
 		}
 		else
 		{
-			return statement;
+			return false;
 		}
 	}
 
