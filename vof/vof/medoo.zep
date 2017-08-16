@@ -550,6 +550,179 @@ class Medoo
         return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
     }
 
+    protected function whereClause(where, map)
+	{
+		var group,map_key,columns,where_clause,where_keys,where_OR,where_AND,single_condition,condition,value,match1,mode,mode_array=[];
+
+		if (is_array(where))
+		{
+			let where_keys = array_keys(where);
+			let where_AND = preg_grep("/^AND\s*#?$/i", where_keys);
+			let where_OR = preg_grep("/^OR\s*#?$/i", where_keys);
+
+			let single_condition = array_diff_key(where, array_flip(
+				["AND", "OR", "GROUP", "ORDER", "HAVING", "LIMIT", "LIKE", "MATCH"]
+			));
+
+			if (!empty(single_condition))
+			{
+				let condition = $this->dataImplode($single_condition, $map, ' AND');
+
+				if (condition !== "")
+				{
+					let where_clause = " WHERE " . condition;
+				}
+			}
+
+			if (!empty(where_AND))
+			{
+				let value = array_values(where_AND);
+				let where_clause = " WHERE " . this->dataImplode(where[ value[ 0 ] ], map, " AND");
+			}
+
+			if (!empty(where_OR))
+			{
+				let value = array_values(where_OR);
+				let where_clause = " WHERE " . this->dataImplode(where[ value[ 0 ] ], map, " OR");
+			}
+
+			if (isset(where[ "MATCH" ]))
+			{
+				let match1 = where[ "MATCH" ];
+
+				if (is_array(match1) && (isset(match1[ "columns" ]) && isset(match1[ "keyword" ])))
+				{
+					let mode = '';
+
+					let mode_array = [
+						"natural" : "IN NATURAL LANGUAGE MODE",
+						"natural+query" : "IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION",
+						"boolean" : "IN BOOLEAN MODE",
+						"query" : "WITH QUERY EXPANSION"
+					];
+
+					if (isset(match1[ "mode" ]) && isset(mode_array[ match1[ "mode" ] ]))
+					{
+						let mode = " " . mode_array[ match1[ "mode" ] ];
+					}
+
+					let columns = implode(", ",array_map([this, "columnQuote"], match1[ "columns" ]));
+					let map_key = this->mapKey();
+					let map[ map_key ] = [match1[ "keyword" ], \PDO::PARAM_STR];
+
+					let where_clause .= (where_clause !== "" ? " AND " : " WHERE") . " MATCH (" . columns . ") AGAINST (" . map_key . mode . ")";
+				}
+			}
+
+			if (isset(where[ "GROUP" ]))
+			{
+				let group = where[ "GROUP" ];
+
+				if (is_array(group))
+				{
+					var stack = [],value1,column;
+
+					for column,value1 in group
+					{
+						let stack[] = $his->columnQuote(value1);
+					}
+
+					let where_clause .= " GROUP BY " . implode(",",stack);
+				}
+				else
+				{
+					let where_clause .= " GROUP BY " . this->columnQuote(where[ "GROUP" ]);
+				}
+
+				if (isset(where[ "HAVING" ]))
+				{
+					let where_clause .= " HAVING " . this->dataImplode(where[ "HAVING" ], map, " AND");
+				}
+			}
+
+			if (isset(where[ "ORDER" ]))
+			{
+				var order1;
+				let order1 = where[ "ORDER" ];
+
+				if (is_array(order1))
+				{
+					var stack = [],column,value2;
+					for column,value2 in order1
+					{
+						if (is_array(value2))
+						{
+							let stack[] = "FIELD(" . this->columnQuote(column) . ", " . this->arrayQuote(value2) . ")";
+						}
+						else if (value2 === "ASC" || value2 === "DESC")
+						{
+							let stack[] = this->columnQuote(column) . " " . value2;
+						}
+						else if (is_int(column))
+						{
+							let stack[] = this->columnQuote(value2);
+						}
+					}
+
+					let where_clause .= " ORDER BY " . implode(",",stack);
+				}
+				else
+				{
+					let where_clause .= " ORDER BY " . this->columnQuote(order1);
+				}
+
+				if (isset(where[ "LIMIT" ]) && in_array(this->database_type, ["oracle", "mssql"]))
+				{
+					var limit;
+					let  limit = where[ "LIMIT" ];
+
+					if (is_numeric(limit))
+					{
+						let where_clause .= " FETCH FIRST " . limit . " ROWS ONLY";
+					}
+
+					if (is_array(limit) && is_numeric(limit[ 0 ]) && is_numeric(limit[ 1 ]))
+					{
+						let where_clause .= " OFFSET " . limit[0] . " ROWS FETCH NEXT " . limit[ 1 ] . " ROWS ONLY";
+					}
+				}
+			}
+
+			if (isset(where[ "LIMIT" ]) && !in_array(this->database_type, ["oracle", "mssql"]))
+			{
+				var limit;
+				let  limit = where[ "LIMIT" ];
+
+				if (is_numeric(limit))
+				{
+					let where_clause .= " LIMIT " . limit;
+				}
+
+				if (is_array(limit) && is_numeric(limit[ 0 ]) && is_numeric(limit[ 1 ])
+				)
+				{
+					let where_clause .= " LIMIT " . limit[ 1 ] . " OFFSET " . limit[ 0 ];
+				}
+			}
+		}
+		else
+		{
+			if (where !== null)
+			{
+				let where_clause .= " " . where;
+			}
+		}
+
+		return where_clause;
+	}
+
+	// protected function mapKey()
+	// {
+	// 	return ":MeDoO_" . this->guid++ . "_mEdOo";
+	// }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////// 1
+
     protected function columnPush(columns)
     {
         if (columns === "*")
@@ -590,178 +763,6 @@ class Medoo
         return implode(",",stack);
     }
 
- //    protected function whereClause(where, map)
-	// {
-	// 	var group,map_key,columns,where_clause,where_keys,where_OR,where_AND,single_condition,condition,value,match1,mode,mode_array=[];
-
-	// 	// if (is_array(where))
-	// 	// {
-	// 	// 	let where_keys = array_keys(where);
-	// 	// 	let where_AND = preg_grep("/^AND\s*#?$/i", where_keys);
-	// 	// 	let where_OR = preg_grep("/^OR\s*#?$/i", where_keys);
-
-	// 	// 	let single_condition = array_diff_key(where, array_flip(
-	// 	// 		["AND", "OR", "GROUP", "ORDER", "HAVING", "LIMIT", "LIKE", "MATCH"]
-	// 	// 	));
-
-	// 	// 	if (!empty(single_condition))
-	// 	// 	{
-	// 	// 		let condition = $this->dataImplode($single_condition, $map, ' AND');
-
-	// 	// 		if (condition !== "")
-	// 	// 		{
-	// 	// 			let where_clause = " WHERE " . condition;
-	// 	// 		}
-	// 	// 	}
-
-	// 	// 	if (!empty(where_AND))
-	// 	// 	{
-	// 	// 		let value = array_values(where_AND);
-	// 	// 		let where_clause = " WHERE " . this->dataImplode(where[ value[ 0 ] ], map, " AND");
-	// 	// 	}
-
-	// 	// 	if (!empty(where_OR))
-	// 	// 	{
-	// 	// 		let value = array_values(where_OR);
-	// 	// 		let where_clause = " WHERE " . this->dataImplode(where[ value[ 0 ] ], map, " OR");
-	// 	// 	}
-
-	// 	// 	if (isset(where[ "MATCH" ]))
-	// 	// 	{
-	// 	// 		let match1 = where[ "MATCH" ];
-
-	// 	// 		if (is_array(match1) && (isset(match1[ "columns" ]) && isset(match1[ "keyword" ])))
-	// 	// 		{
-	// 	// 			let mode = '';
-
-	// 	// 			let mode_array = [
-	// 	// 				"natural" : "IN NATURAL LANGUAGE MODE",
-	// 	// 				"natural+query" : "IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION",
-	// 	// 				"boolean" : "IN BOOLEAN MODE",
-	// 	// 				"query" : "WITH QUERY EXPANSION"
-	// 	// 			];
-
-	// 	// 			if (isset(match1[ "mode" ]) && isset(mode_array[ match1[ "mode" ] ]))
-	// 	// 			{
-	// 	// 				let mode = " " . mode_array[ match1[ "mode" ] ];
-	// 	// 			}
-
-	// 	// 			let columns = implode(", ",array_map([this, "columnQuote"], match1[ "columns" ]));
-	// 	// 			let map_key = this->mapKey();
-	// 	// 			let map[ map_key ] = [match1[ "keyword" ], \PDO::PARAM_STR];
-
-	// 	// 			let where_clause .= (where_clause !== "" ? " AND " : " WHERE") . " MATCH (" . columns . ") AGAINST (" . map_key . mode . ")";
-	// 	// 		}
-	// 	// 	}
-
-	// 	// 	if (isset(where[ "GROUP" ]))
-	// 	// 	{
-	// 	// 		let group = where[ "GROUP" ];
-
-	// 	// 		if (is_array(group))
-	// 	// 		{
-	// 	// 			var stack = [],value1,column;
-
-	// 	// 			for column,value1 in group
-	// 	// 			{
-	// 	// 				let stack[] = $his->columnQuote(value1);
-	// 	// 			}
-
-	// 	// 			let where_clause .= " GROUP BY " . implode(",",stack);
-	// 	// 		}
-	// 	// 		else
-	// 	// 		{
-	// 	// 			let where_clause .= " GROUP BY " . this->columnQuote(where[ "GROUP" ]);
-	// 	// 		}
-
-	// 	// 		if (isset(where[ "HAVING" ]))
-	// 	// 		{
-	// 	// 			let where_clause .= " HAVING " . this->dataImplode(where[ "HAVING" ], map, " AND");
-	// 	// 		}
-	// 	// 	}
-
-	// 	// 	if (isset(where[ "ORDER" ]))
-	// 	// 	{
-	// 	// 		var order1;
-	// 	// 		let order1 = where[ "ORDER" ];
-
-	// 	// 		if (is_array(order1))
-	// 	// 		{
-	// 	// 			var stack = [],column,value2;
-	// 	// 			for column,value2 in order1
-	// 	// 			{
-	// 	// 				if (is_array(value2))
-	// 	// 				{
-	// 	// 					let stack[] = "FIELD(" . this->columnQuote(column) . ", " . this->arrayQuote(value2) . ")";
-	// 	// 				}
-	// 	// 				else if (value2 === "ASC" || value2 === "DESC")
-	// 	// 				{
-	// 	// 					let stack[] = this->columnQuote(column) . " " . value2;
-	// 	// 				}
-	// 	// 				else if (is_int(column))
-	// 	// 				{
-	// 	// 					let stack[] = this->columnQuote(value2);
-	// 	// 				}
-	// 	// 			}
-
-	// 	// 			let where_clause .= " ORDER BY " . implode(",",stack);
-	// 	// 		}
-	// 	// 		else
-	// 	// 		{
-	// 	// 			let where_clause .= " ORDER BY " . this->columnQuote(order1);
-	// 	// 		}
-
-	// 	// 		if (isset(where[ "LIMIT" ]) && in_array(this->database_type, ["oracle", "mssql"]))
-	// 	// 		{
-	// 	// 			var limit;
-	// 	// 			let  limit = where[ "LIMIT" ];
-
-	// 	// 			if (is_numeric(limit))
-	// 	// 			{
-	// 	// 				let where_clause .= " FETCH FIRST " . limit . " ROWS ONLY";
-	// 	// 			}
-
-	// 	// 			if (is_array(limit) && is_numeric(limit[ 0 ]) && is_numeric(limit[ 1 ]))
-	// 	// 			{
-	// 	// 				let where_clause .= " OFFSET " . limit[0] . " ROWS FETCH NEXT " . limit[ 1 ] . " ROWS ONLY";
-	// 	// 			}
-	// 	// 		}
-	// 	// 	}
-
-	// 	// 	if (isset(where[ "LIMIT" ]) && !in_array(this->database_type, ["oracle", "mssql"]))
-	// 	// 	{
-	// 	// 		var limit;
-	// 	// 		let  limit = where[ "LIMIT" ];
-
-	// 	// 		if (is_numeric(limit))
-	// 	// 		{
-	// 	// 			let where_clause .= " LIMIT " . limit;
-	// 	// 		}
-
-	// 	// 		if (is_array(limit) && is_numeric(limit[ 0 ]) && is_numeric(limit[ 1 ])
-	// 	// 		)
-	// 	// 		{
-	// 	// 			let where_clause .= " LIMIT " . limit[ 1 ] . " OFFSET " . limit[ 0 ];
-	// 	// 		}
-	// 	// 	}
-	// 	// }
-	// 	// else
-	// 	// {
-	// 	// 	if (where !== null)
-	// 	// 	{
-	// 	// 		let where_clause .= " " . where;
-	// 	// 	}
-	// 	// }
-
-	// 	// return where_clause;
-	// }
-
-	// protected function mapKey()
-	// {
-	// 	return ":MeDoO_" . this->guid++ . "_mEdOo";
-	// }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////// 1
     protected function columnQuote(str)
     {
         var column_match;
