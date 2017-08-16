@@ -379,26 +379,26 @@ class Medoo
 				{
 					switch (map[ 1 ])
 					{
-						// case "Number":
-						// case "Int":
-						// 	let stack[ column_key ] = int data[ column_key ];
-						// 	break;
+						case "Number":
+						case "Int":
+							let stack[ column_key ] = int data[ column_key ];
+							break;
 
-						// case "Bool":
-						// 	let stack[ column_key ] = boolean data[ column_key ];
-						// 	break;
+						case "Bool":
+							let stack[ column_key ] = boolean data[ column_key ];
+							break;
 
-						// case "Object":
-						// 	let stack[ column_key ] = unserialize(data[ column_key ]);
-						// 	break;
+						case "Object":
+							let stack[ column_key ] = unserialize(data[ column_key ]);
+							break;
 
-						// case "JSON":
-						// 	let stack[ column_key ] = json_decode(data[ column_key ], true);
-						// 	break;
+						case "JSON":
+							let stack[ column_key ] = json_decode(data[ column_key ], true);
+							break;
 
-						// case "String":
-						// 	let stack[ column_key ] = data[ column_key ];
-						// 	break;
+						case "String":
+							let stack[ column_key ] = data[ column_key ];
+							break;
 					}
 				}
 				else
