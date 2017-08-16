@@ -45,4 +45,4 @@ echo "We love " . $database->quote($data); // We love 'Medoo'
 
 // 测试 query
 $data = $database->query("SELECT email FROM member_bill")->fetchAll();
-print_r($data);
+var_dump($data);
