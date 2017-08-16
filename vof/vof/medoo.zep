@@ -368,52 +368,52 @@ class Medoo
 	protected function dataMap(data, columns, column_map, stack) -> void
     {
     	var key,value,map,column_key,current_stack = [];
-  //   	for key,value in columns;
-		// {
-		// 	if (is_int(key))
-		// 	{
-		// 		let map = column_map[ value ];
-		// 		let column_key = map[ 0 ];
+    	for key,value in columns;
+		{
+			if (is_int(key))
+			{
+			// 	let map = column_map[ value ];
+			// 	let column_key = map[ 0 ];
 
-		// 		if (isset(map[ 1 ]))
-		// 		{
-		// 			switch (map[ 1 ])
-		// 			{
-		// 				// case "Number":
-		// 				// case "Int":
-		// 				// 	let stack[ column_key ] = int data[ column_key ];
-		// 				// 	break;
+			// 	if (isset(map[ 1 ]))
+			// 	{
+			// 		switch (map[ 1 ])
+			// 		{
+			// 			// case "Number":
+			// 			// case "Int":
+			// 			// 	let stack[ column_key ] = int data[ column_key ];
+			// 			// 	break;
 
-		// 				// case "Bool":
-		// 				// 	let stack[ column_key ] = boolean data[ column_key ];
-		// 				// 	break;
+			// 			// case "Bool":
+			// 			// 	let stack[ column_key ] = boolean data[ column_key ];
+			// 			// 	break;
 
-		// 				// case "Object":
-		// 				// 	let stack[ column_key ] = unserialize(data[ column_key ]);
-		// 				// 	break;
+			// 			// case "Object":
+			// 			// 	let stack[ column_key ] = unserialize(data[ column_key ]);
+			// 			// 	break;
 
-		// 				// case "JSON":
-		// 				// 	let stack[ column_key ] = json_decode(data[ column_key ], true);
-		// 				// 	break;
+			// 			// case "JSON":
+			// 			// 	let stack[ column_key ] = json_decode(data[ column_key ], true);
+			// 			// 	break;
 
-		// 				// case "String":
-		// 				// 	let stack[ column_key ] = data[ column_key ];
-		// 				// 	break;
-		// 			}
-		// 		}
-		// 		else
-		// 		{
-		// 			let stack[ column_key ] = data[ column_key ];
-		// 		}
-		// 	}
-		// 	else
-		// 	{
+			// 			// case "String":
+			// 			// 	let stack[ column_key ] = data[ column_key ];
+			// 			// 	break;
+			// 		}
+			// 	}
+			// 	else
+			// 	{
+			// 		let stack[ column_key ] = data[ column_key ];
+			// 	}
+			// }
+			else
+			{
 
-		// 		this->dataMap(data, value, column_map, current_stack);
+				this->dataMap(data, value, column_map, current_stack);
 
-		// 		let stack[ key ] = current_stack;
-		// 	}
-		// }
+				let stack[ key ] = current_stack;
+			}
+		}
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////  1
 
