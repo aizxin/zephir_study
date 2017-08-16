@@ -280,6 +280,27 @@ class Medoo
         }
 	}
 
+	protected function generate(query, map)
+	{
+		var key,value;
+		for key,value in map
+		{
+			if (value[1] === \PDO::PARAM_STR)
+			{
+				let query = str_replace(key, this->quote(value[0]), query);
+			}
+			elseif (value[ 1 ] === \PDO::PARAM_NULL)
+			{
+				let query = str_replace(key, "NULL", query);
+			}
+			else
+			{
+				let query = str_replace(key, value[0], query);
+			}
+		}
+		return query;
+	}
+
 	public function quote(query)
 	{
 		return this->pdo->quote(query);
