@@ -446,6 +446,38 @@ class Medoo
         return stack;
     }
 
+    protected function columnMap(columns, stack)
+	{
+		if (columns === '*')
+		{
+			return stack;
+		}
+		var key,value,key_match,column_key;
+		for key,value in columns
+		{
+			if (is_int(key))
+			{
+				preg_match("/(?<column>[a-zA-Z0-9_\.]*)(?:\s*\((?<alias>[a-zA-Z0-9_]+)\)|\s*\[(?<type>(String|Bool|Int|Number|Object|JSON))\])?/i", value, key_match);
+
+				let column_key = !empty(key_match[ "alias" ]) ? key_match[ "alias" ] : preg_replace("/^[\w]*\./i", "", key_match[ "column" ]);
+
+				if (isset(key_match[ "type" ]))
+				{
+					let stack[ value ] = [column_key, key_match[ "type" ]];
+				}
+				else
+				{
+					let stack[ value ] = [column_key, "String"];
+				}
+			}
+			else
+			{
+				this->columnMap(value, stack);
+			}
+		}
+
+		return stack;
+	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
 
