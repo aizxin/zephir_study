@@ -17,23 +17,28 @@ $data = [
     // // 'prefix' => 'PREFIX_',
 
     // // [optional] Enable logging (Logging is disabled by default for better performance)
-    // 'logging' => true,
+    'logging' => true,
 
     // // [optional] MySQL socket (shouldn't be used with server and port)
     // // 'socket' => '/home/mysql.sock',
 
     // // [optional] driver_option for connection, read more from http://www.php.net/manual/en/pdo.setattribute.php
-    // 'option' => [
-    //     PDO::ATTR_CASE => PDO::CASE_NATURAL
-    // ],
+    'option' => [
+        PDO::ATTR_CASE => PDO::CASE_NATURAL
+    ],
 
     // // [optional] Medoo will execute those commands after connected to the database for initialization
-    // 'command' => [
-    //     'SET SQL_MODE=ANSI_QUOTES'
-    // ]
+    'command' => [
+        'SET SQL_MODE=ANSI_QUOTES'
+    ]
 ];
 $database = new Medoo($data);
 
 
-var_dump($data);
-var_dump($database);
+// var_dump($data);
+// var_dump($database);
+
+// 测试  quote
+$data = "Medoo";
+echo "We love " . $data; // We love Medoo
+echo "We love " . $database->quote($data); // We love 'Medoo'
