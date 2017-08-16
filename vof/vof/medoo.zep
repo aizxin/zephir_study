@@ -397,13 +397,19 @@ class Medoo
 
 	public function log()
 	{
-		var log;
+		var log,logs;
+		let logs = [[1,2],[2,3]];
 		return array_map(function (log)
 			{
 				let log = log;
-				return this->generate(log[0], log[1]);
-			},this->logs
+				return this->test(log[0], log[1]);
+			},logs
 		);
+	}
+
+	public function test(a,b)
+	{
+		return a + b;
 	}
 
 	public function info()
