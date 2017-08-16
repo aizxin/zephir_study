@@ -280,7 +280,7 @@ class Medoo
         }
 	}
 
-	public function query(query, map)
+	public function query(query, map = [])
 	{
 		var key,value;
 		if (!empty($map))
@@ -312,7 +312,7 @@ class Medoo
 	}
 
 
-	public function exec(query, map)
+	public function exec(query,map)
 	{
 		var statement,key,value;
 		if (this->debug_mode)
@@ -332,11 +332,13 @@ class Medoo
 		let statement = this->pdo->prepare(query);
 		if (statement)
 		{
-			for key,value in map
-			{
-				statement->bindValue(key, value[ 0 ], value[ 1 ]);
+			if(!empty($map)){
+				for key,value in map
+				{
+					statement->bindValue(key, value[ 0 ], value[ 1 ]);
+				}
+				statement->execute();
 			}
-			statement->execute();
 			let this->statement = statement;
 			return statement;
 		}
