@@ -409,9 +409,9 @@ class Medoo
 			else
 			{
 
-				this->dataMap(data, value, column_map, current_stack);
+				// this->dataMap(data, value, column_map, current_stack);
 
-				let stack[ key ] = current_stack;
+				// let stack[ key ] = current_stack;
 			}
 		}
     }
