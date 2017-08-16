@@ -405,7 +405,7 @@ class Medoo
 			// 	{
 			// 		let stack[ column_key ] = data[ column_key ];
 			// 	}
-			// }
+			}
 			else
 			{
 
