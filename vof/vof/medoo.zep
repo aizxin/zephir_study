@@ -653,11 +653,15 @@ class Medoo
 						if (is_array(value2))
 						{
 							let stack[] = "FIELD(" . this->columnQuote(column) . ", " . this->arrayQuote(value2) . ")";
+						}else{
+							if (value2 === "ASC" || value2 === "DESC")
+							{
+								// let stack[] = this->columnQuote(column) . " " . value2;
+							}else{
+
+							}
 						}
-						else if (value2 === "ASC" || value2 === "DESC")
-						{
-							// let stack[] = this->columnQuote(column) . " " . value2;
-						}
+						// else
 						// else if (is_int(column))
 						// {
 						// 	let stack[] = this->columnQuote(value2);
