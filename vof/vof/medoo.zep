@@ -413,9 +413,9 @@ class Medoo
 
         if (isset(table_match[ "table" ], table_match[ "alias" ]))
         {
-            let table = this->tableQuote(table_match[ "table" ]);
+            // let table = this->tableQuote(table_match[ "table" ]);
 
-            let table_query = table . " AS " . this->tableQuote(table_match[ "alias" ]);
+            // let table_query = table . " AS " . this->tableQuote(table_match[ "alias" ]);
         }
         // else
         // {
