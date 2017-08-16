@@ -574,45 +574,45 @@ class Medoo
 				}
 			}
 
-			// if (!empty(where_AND))
-			// {
-			// 	let value = array_values(where_AND);
-			// 	let where_clause = " WHERE " . this->dataImplode(where[ value[ 0 ] ], map, " AND");
-			// }
+			if (!empty(where_AND))
+			{
+				let value = array_values(where_AND);
+				let where_clause = " WHERE " . this->dataImplode(where[ value[ 0 ] ], map, " AND");
+			}
 
-			// if (!empty(where_OR))
-			// {
-			// 	let value = array_values(where_OR);
-			// 	let where_clause = " WHERE " . this->dataImplode(where[ value[ 0 ] ], map, " OR");
-			// }
+			if (!empty(where_OR))
+			{
+				let value = array_values(where_OR);
+				let where_clause = " WHERE " . this->dataImplode(where[ value[ 0 ] ], map, " OR");
+			}
 
-			// if (isset(where[ "MATCH" ]))
-			// {
-			// 	let match1 = where[ "MATCH" ];
+			if (isset(where[ "MATCH" ]))
+			{
+				let match1 = where[ "MATCH" ];
 
-			// 	if (is_array(match1) && (isset(match1[ "columns" ]) && isset(match1[ "keyword" ])))
-			// 	{
-			// 		let mode = '';
+				if (is_array(match1) && (isset(match1[ "columns" ]) && isset(match1[ "keyword" ])))
+				{
+					let mode = '';
 
-			// 		let mode_array = [
-			// 			"natural" : "IN NATURAL LANGUAGE MODE",
-			// 			"natural+query" : "IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION",
-			// 			"boolean" : "IN BOOLEAN MODE",
-			// 			"query" : "WITH QUERY EXPANSION"
-			// 		];
+					let mode_array = [
+						"natural" : "IN NATURAL LANGUAGE MODE",
+						"natural+query" : "IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION",
+						"boolean" : "IN BOOLEAN MODE",
+						"query" : "WITH QUERY EXPANSION"
+					];
 
-			// 		if (isset(match1[ "mode" ]) && isset(mode_array[ match1[ "mode" ] ]))
-			// 		{
-			// 			let mode = " " . mode_array[ match1[ "mode" ] ];
-			// 		}
+					if (isset(match1[ "mode" ]) && isset(mode_array[ match1[ "mode" ] ]))
+					{
+						let mode = " " . mode_array[ match1[ "mode" ] ];
+					}
 
-			// 		let columns = implode(", ",array_map([this, "columnQuote"], match1[ "columns" ]));
-			// 		let map_key = this->mapKey();
-			// 		let map[ map_key ] = [match1[ "keyword" ], \PDO::PARAM_STR];
+					let columns = implode(", ",array_map([this, "columnQuote"], match1[ "columns" ]));
+					let map_key = this->mapKey();
+					let map[ map_key ] = [match1[ "keyword" ], \PDO::PARAM_STR];
 
-			// 		let where_clause .= (where_clause !== "" ? " AND " : " WHERE") . " MATCH (" . columns . ") AGAINST (" . map_key . mode . ")";
-			// 	}
-			// }
+					let where_clause .= (where_clause !== "" ? " AND " : " WHERE") . " MATCH (" . columns . ") AGAINST (" . map_key . mode . ")";
+				}
+			}
 
 			// if (isset(where[ "GROUP" ]))
 			// {
@@ -715,6 +715,16 @@ class Medoo
 
 		return where_clause;
 	}
+
+
+
+
+	// protected function mapKey()
+	// {
+	// 	return ":MeDoO_" . this->guid++ . "_mEdOo";
+	// }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////// 1
 
 	protected function dataImplode(data, conjunctor, outer_conjunctor = null)
     {
@@ -884,14 +894,6 @@ class Medoo
         return implode(wheres,conjunctor . " ");
     }
 
-
-
-	// protected function mapKey()
-	// {
-	// 	return ":MeDoO_" . this->guid++ . "_mEdOo";
-	// }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////// 1
 
     protected function fnQuote(column, str)
     {
