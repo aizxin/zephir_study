@@ -408,7 +408,7 @@ class Medoo
 
     protected function selectContext(table, map, join, columns = null, where = null, column_fn = null)
     {
-        var table_match,table_query,join_key,table_join=[],join_array=[],sub_table,relation,match1,key,value,table_name,joins=[];
+        var column,table_match,table_query,join_key,table_join=[],join_array=[],sub_table,relation,match1,key,value,table_name,joins=[];
         preg_match("/(?<table>[a-zA-Z0-9_]+)\s*\((?<alias>[a-zA-Z0-9_]+)\)/i", table, table_match);
 
         if (isset(table_match[ "table" ]) && isset(table_match[ "alias" ]))
