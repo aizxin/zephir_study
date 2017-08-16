@@ -365,45 +365,55 @@ class Medoo
 		return this->pdo->quote(query);
 	}
 
-	protected function dataMap(index, key, value, data, stack) -> void
+	protected function dataMap(data, columns, column_map, stack) -> void
     {
-        var sub_stack = [],sub_key,sub_value,current_stack,key_match;
-        if (is_array(value))
-        {
-            for sub_key,sub_value in value
-            {
-                if (is_array(sub_value))
-                {
-                    let current_stack = stack[ index ][ key ];
+    	var key,value,map,column_key,current_stack = [];
+    	for key,value in columns;
+		{
+			if (is_int(key))
+			{
+				let map = column_map[ $alue ];
+				let column_key = map[ 0 ];
 
-                    this->dataMap(false, sub_key, sub_value, data, current_stack);
+				if (isset(map[ 1 ]))
+				{
+					switch (map[ 1 ])
+					{
+						case "Number":
+						case "Int":
+							let stack[ column_key ] = int data[ column_key ];
+							break;
 
-                    let stack[ index ][ key ][ sub_key ] = current_stack[ 0 ][ sub_key ];
-                }
-                else
-                {
-                    this->dataMap(false, preg_replace("/^[\w]*\./i", "", sub_value), sub_key, data, sub_stack);
+						case "Bool":
+							let stack[ column_key ] = boolean data[ column_key ];
+							break;
 
-                    let stack[ index ][ key ] = sub_stack;
-                }
-            }
-        }
-        else
-        {
-            if (index !== false)
-            {
-                let stack[ index ][ value ] = data[ value ];
-            }
-            else
-            {
-                if (preg_match("/[a-zA-Z0-9_\-\.]*\s*\(([a-zA-Z0-9_\-]*)\)/i", key, key_match))
-                {
-                    let key = key_match[ 1 ];
-                }
+						case "Object":
+							let stack[ column_key ] = unserialize(data[ column_key ]);
+							break;
 
-                let stack[ key ] = data[ key ];
-            }
-        }
+						case "JSON":
+							let stack[ column_key ] = json_decode(data[ column_key ], true);
+							break;
+
+						case "String":
+							let stack[ column_key ] = data[ column_key ];
+							break;
+					}
+				}
+				else
+				{
+					let stack[ column_key ] = data[ column_key ];
+				}
+			}
+			else
+			{
+
+				this->dataMap(data, value, column_map, current_stack);
+
+				let stack[ key ] = current_stack;
+			}
+		}
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////  1
 
