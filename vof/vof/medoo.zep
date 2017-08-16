@@ -419,34 +419,38 @@ class Medoo
 
         this->columnMap(columns, column_map);
 
-        // if (query)
-        // {
-        //     return false;
-        // }
+        if (query)
+        {
+            return false;
+        }
 
-        // if (columns === "*")
-        // {
-        //     return query->fetchAll(\PDO::FETCH_ASSOC);
-        // }
+        if (columns === "*")
+        {
+            return query->fetchAll(\PDO::FETCH_ASSOC);
+        }
 
-        // if (is_single_column)
-        // {
-        //     return query->fetchAll(\PDO::FETCH_COLUMN);
-        // }
-        // let data = query->fetch(\PDO::FETCH_ASSOC);
-        // while (data)
-        // {
-        //     this->dataMap(data, columns, column_map, current_stack);
+        if (is_single_column)
+        {
+            return query->fetchAll(\PDO::FETCH_COLUMN);
+        }
+        let data = query->fetch(\PDO::FETCH_ASSOC);
+        while (data)
+        {
+            this->dataMap(data, columns, column_map, current_stack);
 
-        //     let stack[ index ] = current_stack;
+            let stack[ index ] = current_stack;
 
-        //     let index = index + 1;
-        // }
+            let index = index + 1;
+        }
 
         return stack;
     }
 
-    protected function columnMap(columns, stack)
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////// 1
+
+	protected function columnMap(columns, stack)
 	{
 		if (columns === '*')
 		{
@@ -478,8 +482,6 @@ class Medoo
 
 		return stack;
 	}
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////// 1
 
 	protected function selectContext(table, map, join, columns = null, where = null, column_fn = null)
     {
