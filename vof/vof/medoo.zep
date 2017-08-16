@@ -552,6 +552,19 @@ class Medoo
         return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
     }
 
+    protected function columnQuote(str)
+    {
+        var column_match;
+        preg_match("/(^#)?([a-zA-Z0-9_]*)\.([a-zA-Z0-9_]*)(\s*\[JSON\]$)?/", str, column_match);
+
+        if (isset(column_match[ 2 ])&& isset(column_match[ 3 ]))
+        {
+            return "'" . this->prefix . column_match[ 2 ] . "'.'" . column_match[ 3 ] . "'";
+        }
+
+        return "'" . str . "'";
+    }
+
 	protected function tableQuote(table)
 	{
 		return "'" . this->prefix . table . "'";
