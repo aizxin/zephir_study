@@ -742,6 +742,7 @@ class Medoo
                 else
                 {
                     preg_match("/(#?)([\w\.\-]+)(\[(\>|\>\=|\<|\<\=|\!|\<\>|\>\<|\!?~)\])?/i", key, match1);
+                    var column;
                     let column = this->columnQuote(match1[ 2 ]);
 
                     if (isset(match1[ 4 ]))
