@@ -883,6 +883,17 @@ class Medoo
         return implode(wheres,conjunctor . " ");
     }
 
+    protected function innerConjunct(data, conjunctor, outer_conjunctor)
+    {
+        var haystack = [],value;
+        for value in data
+        {
+            let haystack[] = "(" . this->dataImplode(value, conjunctor) . ")";
+        }
+
+        return implode(haystack,outer_conjunctor . " ");
+    }
+
 	// protected function mapKey()
 	// {
 	// 	return ":MeDoO_" . this->guid++ . "_mEdOo";
