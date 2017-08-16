@@ -280,6 +280,37 @@ class Medoo
         }
 	}
 
+	public function query(query, map)
+	{
+		var key,value;
+		if (!empty($map))
+		{
+			for key,value in map
+			{
+				switch (gettype(value))
+				{
+					case "NULL":
+						let map[ key ] = [null, \PDO::PARAM_NULL];
+						break;
+					case "resource":
+						let map[key] = [value, \PDO::PARAM_LOB];
+						break;
+					case "boolean":
+						let map[key] = [(value ? "1" : "0"), \PDO::PARAM_BOOL];
+						break;
+					case "integer":
+					case "double":
+						let map[ key ] = [value, \PDO::PARAM_INT];
+						break;
+					case "string":
+						let map[ key ] = [value, \PDO::PARAM_STR];
+						break;
+				}
+			}
+		}
+		return this->exec(query, map);
+	}
+
 
 	public function exec(query, map)
 	{
