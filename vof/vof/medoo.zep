@@ -405,8 +405,323 @@ class Medoo
             }
         }
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////////  1
 
+    protected function selectContext(table, map, join, columns = null, where = null, column_fn = null)
+    {
+        var column,table_match,table_query,join_key,table_join=[],join_array=[],sub_table,relation,match1,key,value,table_name,joins=[];
+        preg_match("/(?<table>[a-zA-Z0-9_]+)\s*\((?<alias>[a-zA-Z0-9_]+)\)/i", table, table_match);
 
+        if (isset(table_match[ "table" ]) && isset(table_match[ "alias" ]))
+        {
+            let table = this->tableQuote(table_match[ "table" ]);
+
+            let table_query = table . " AS " . this->tableQuote(table_match[ "alias" ]);
+        }
+        else
+        {
+            let table = this->tableQuote(table);
+
+            let table_query = table;
+        }
+
+        let join_key = is_array(join) ? array_keys(join) : null;
+
+        if (
+            isset(join_key[ 0 ]) &&
+            strpos(join_key[ 0 ], '[') === 0
+        )
+        {
+            let join_array = [
+                ">" : "LEFT",
+                "<" : "RIGHT",
+                "<>" : "FULL",
+                "><" : "INNER"
+            ];
+
+            for sub_table,relation in join
+            {
+                preg_match("/(\[(?<join>\<|\>|\>\<|\<\>)\])?(?<table>[a-zA-Z0-9_]+)\s?(\((?<alias>[a-zA-Z0-9_]+)\))?/", sub_table, match1);
+
+                if (match1[ "join" ] !== "" && match1[ "table" ] !== "")
+                {
+                    if (is_string(relation))
+                    {
+                        let relation = "USING ('" . relation . "')";
+                    }
+
+                    if (is_array(relation))
+                    {
+                        // For ['column1', 'column2']
+                        if (isset(relation[ 0 ]))
+                        {
+                            let relation = "USING ('" . implode("', '",relation) . "')";
+                        }
+                        else
+                        {
+                            for key,value in relation
+                            {
+                                let joins[] = (
+                                    strpos(key, ".") > 0 ?
+                                        // For ['tableB.column' => 'column']
+                                        this->columnQuote(key) :
+
+                                        // For ['column1' => 'column2']
+                                        table . ".'" . key . "'"
+                                ) .
+                                " = " .
+                                this->tableQuote(isset(match1[ "alias" ]) ? match1[ "alias" ] : match1[ "table" ]) . ".'" . value . "'";
+                            }
+
+                            let relation = "ON " . implode(" AND ",joins);
+                        }
+                    }
+
+                    let table_name = this->tableQuote(match1[ "table" ]) . " ";
+
+                    if (isset(match1[ "alias" ]))
+                    {
+                        let table_name .= "AS " . this->tableQuote(match1[ "alias" ]) . " ";
+                    }
+
+                    let table_join[] = join_array[ match1[ "join" ] ] . " JOIN " . table_name . relation;
+                }
+            }
+
+            let table_query .= " " . implode(" ",table_join);
+        }
+        else
+        {
+            if (is_null(columns))
+            {
+                if (is_null(where))
+                {
+                    if (is_array(join) && column_fn)
+                    {
+                        let where = join;
+                        let columns = null;
+                    }
+                    else
+                    {
+                        let where = null;
+                        let columns = join;
+                    }
+                }
+                else
+                {
+                    let where = join;
+                    let columns = null;
+                }
+            }
+            else
+            {
+                let where = columns;
+                let columns = join;
+            }
+        }
+
+        if (column_fn)
+        {
+            if (column_fn === 1)
+            {
+                let column = "1";
+
+                if (is_null(where))
+                {
+                    let where = columns;
+                }
+            }
+            else
+            {
+                if (empty(columns))
+                {
+                    let columns = "*";
+                    let where = join;
+                }
+
+                let column = column_fn . "(" . this->columnPush(columns) . ")";
+            }
+        }
+        else
+        {
+            let column = this->columnPush(columns);
+        }
+
+        return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
+    }
+
+    protected function whereClause(where, map)
+	{
+		var group,map_key,columns,where_clause,where_keys,where_OR,where_AND,single_condition,condition,value,match1,mode,mode_array=[];
+
+		// if (is_array(where))
+		// {
+		// 	let where_keys = array_keys(where);
+		// 	let where_AND = preg_grep("/^AND\s*#?$/i", where_keys);
+		// 	let where_OR = preg_grep("/^OR\s*#?$/i", where_keys);
+
+		// 	let single_condition = array_diff_key(where, array_flip(
+		// 		["AND", "OR", "GROUP", "ORDER", "HAVING", "LIMIT", "LIKE", "MATCH"]
+		// 	));
+
+		// 	if (!empty(single_condition))
+		// 	{
+		// 		let condition = $this->dataImplode($single_condition, $map, ' AND');
+
+		// 		if (condition !== "")
+		// 		{
+		// 			let where_clause = " WHERE " . condition;
+		// 		}
+		// 	}
+
+		// 	if (!empty(where_AND))
+		// 	{
+		// 		let value = array_values(where_AND);
+		// 		let where_clause = " WHERE " . this->dataImplode(where[ value[ 0 ] ], map, " AND");
+		// 	}
+
+		// 	if (!empty(where_OR))
+		// 	{
+		// 		let value = array_values(where_OR);
+		// 		let where_clause = " WHERE " . this->dataImplode(where[ value[ 0 ] ], map, " OR");
+		// 	}
+
+		// 	if (isset(where[ "MATCH" ]))
+		// 	{
+		// 		let match1 = where[ "MATCH" ];
+
+		// 		if (is_array(match1) && (isset(match1[ "columns" ]) && isset(match1[ "keyword" ])))
+		// 		{
+		// 			let mode = '';
+
+		// 			let mode_array = [
+		// 				"natural" : "IN NATURAL LANGUAGE MODE",
+		// 				"natural+query" : "IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION",
+		// 				"boolean" : "IN BOOLEAN MODE",
+		// 				"query" : "WITH QUERY EXPANSION"
+		// 			];
+
+		// 			if (isset(match1[ "mode" ]) && isset(mode_array[ match1[ "mode" ] ]))
+		// 			{
+		// 				let mode = " " . mode_array[ match1[ "mode" ] ];
+		// 			}
+
+		// 			let columns = implode(", ",array_map([this, "columnQuote"], match1[ "columns" ]));
+		// 			let map_key = this->mapKey();
+		// 			let map[ map_key ] = [match1[ "keyword" ], \PDO::PARAM_STR];
+
+		// 			let where_clause .= (where_clause !== "" ? " AND " : " WHERE") . " MATCH (" . columns . ") AGAINST (" . map_key . mode . ")";
+		// 		}
+		// 	}
+
+		// 	if (isset(where[ "GROUP" ]))
+		// 	{
+		// 		let group = where[ "GROUP" ];
+
+		// 		if (is_array(group))
+		// 		{
+		// 			var stack = [],value1,column;
+
+		// 			for column,value1 in group
+		// 			{
+		// 				let stack[] = $his->columnQuote(value1);
+		// 			}
+
+		// 			let where_clause .= " GROUP BY " . implode(",",stack);
+		// 		}
+		// 		else
+		// 		{
+		// 			let where_clause .= " GROUP BY " . this->columnQuote(where[ "GROUP" ]);
+		// 		}
+
+		// 		if (isset(where[ "HAVING" ]))
+		// 		{
+		// 			let where_clause .= " HAVING " . this->dataImplode(where[ "HAVING" ], map, " AND");
+		// 		}
+		// 	}
+
+		// 	if (isset(where[ "ORDER" ]))
+		// 	{
+		// 		var order1;
+		// 		let order1 = where[ "ORDER" ];
+
+		// 		if (is_array(order1))
+		// 		{
+		// 			var stack = [],column,value2;
+		// 			for column,value2 in order1
+		// 			{
+		// 				if (is_array(value2))
+		// 				{
+		// 					let stack[] = "FIELD(" . this->columnQuote(column) . ", " . this->arrayQuote(value2) . ")";
+		// 				}
+		// 				else if (value2 === "ASC" || value2 === "DESC")
+		// 				{
+		// 					let stack[] = this->columnQuote(column) . " " . value2;
+		// 				}
+		// 				else if (is_int(column))
+		// 				{
+		// 					let stack[] = this->columnQuote(value2);
+		// 				}
+		// 			}
+
+		// 			let where_clause .= " ORDER BY " . implode(",",stack);
+		// 		}
+		// 		else
+		// 		{
+		// 			let where_clause .= " ORDER BY " . this->columnQuote(order1);
+		// 		}
+
+		// 		if (isset(where[ "LIMIT" ]) && in_array(this->database_type, ["oracle", "mssql"]))
+		// 		{
+		// 			var limit;
+		// 			let  limit = where[ "LIMIT" ];
+
+		// 			if (is_numeric(limit))
+		// 			{
+		// 				let where_clause .= " FETCH FIRST " . limit . " ROWS ONLY";
+		// 			}
+
+		// 			if (is_array(limit) && is_numeric(limit[ 0 ]) && is_numeric(limit[ 1 ]))
+		// 			{
+		// 				let where_clause .= " OFFSET " . limit[0] . " ROWS FETCH NEXT " . limit[ 1 ] . " ROWS ONLY";
+		// 			}
+		// 		}
+		// 	}
+
+		// 	if (isset(where[ "LIMIT" ]) && !in_array(this->database_type, ["oracle", "mssql"]))
+		// 	{
+		// 		var limit;
+		// 		let  limit = where[ "LIMIT" ];
+
+		// 		if (is_numeric(limit))
+		// 		{
+		// 			let where_clause .= " LIMIT " . limit;
+		// 		}
+
+		// 		if (is_array(limit) && is_numeric(limit[ 0 ]) && is_numeric(limit[ 1 ])
+		// 		)
+		// 		{
+		// 			let where_clause .= " LIMIT " . limit[ 1 ] . " OFFSET " . limit[ 0 ];
+		// 		}
+		// 	}
+		// }
+		// else
+		// {
+		// 	if (where !== null)
+		// 	{
+		// 		let where_clause .= " " . where;
+		// 	}
+		// }
+
+		// return where_clause;
+	}
+
+	protected function mapKey()
+	{
+		return ":MeDoO_" . this->guid++ . "_mEdOo";
+	}
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////// 1
     protected function columnQuote(str)
     {
         var column_match;
