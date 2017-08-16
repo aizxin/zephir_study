@@ -365,7 +365,50 @@ class Medoo
 		return this->pdo->quote(query);
 	}
 
-	protected function dataMap(data, columns, column_map, stack) -> void
+    /////////////////////////////////////////////////////////////////////////////////////////////////  1
+
+    public function select(table, join, columns = null, where = null)
+    {
+        var column,map=[],stack=[],column_map=[],index=0,is_single_column,query,data,current_stack = [];
+
+        let column = where === null ? join : columns;
+
+        let is_single_column = (is_string(column) && column !== "*");
+
+        let query = this->exec(this->selectContext(table, map, join, columns, where), map);
+
+        this->columnMap(columns, column_map);
+
+        if (query)
+        {
+            return false;
+        }
+
+        if (columns === "*")
+        {
+            return query->fetchAll(\PDO::FETCH_ASSOC);
+        }
+
+        if (is_single_column)
+        {
+            return query->fetchAll(\PDO::FETCH_COLUMN);
+        }
+        var fetchMethod;
+        let fetchMethod="fetch";
+        let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
+        while (data)
+        {
+
+            this->dataMap(data, columns, column_map, current_stack);
+
+            let stack[ index ] = current_stack;
+
+            let index++;
+        }
+
+        return stack;
+    }
+    protected function dataMap(data, columns, column_map, stack) -> void
     {
     	var key,value,map,column_key,current_stack = [];
     	for key,value in columns
@@ -415,50 +458,6 @@ class Medoo
 			}
 		}
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////  1
-
-    public function select(table, join, columns = null, where = null)
-    {
-        var column,map=[],stack=[],column_map=[],index=0,is_single_column,query,data,current_stack = [];
-
-        let column = where === null ? join : columns;
-
-        let is_single_column = (is_string(column) && column !== "*");
-
-        let query = this->exec(this->selectContext(table, map, join, columns, where), map);
-
-        this->columnMap(columns, column_map);
-
-        if (query)
-        {
-            return false;
-        }
-
-        if (columns === "*")
-        {
-            return query->fetchAll(\PDO::FETCH_ASSOC);
-        }
-
-        if (is_single_column)
-        {
-            return query->fetchAll(\PDO::FETCH_COLUMN);
-        }
-        var fetchMethod;
-        let fetchMethod="fetch";
-        let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
-        while (data)
-        {
-
-            this->dataMap(data, columns, column_map, current_stack);
-
-            let stack[ index ] = current_stack;
-
-            let index++;
-        }
-
-        return stack;
-    }
-
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
