@@ -422,7 +422,7 @@ class Medoo
 
     protected function selectContext(table, map, join, columns = null, where = null, column_fn = null)
     {
-        var table_match,table_query,join_key,table_join=[],join_array=[],sub_table,relation,match1,key,value,table_name;
+        var table_match,table_query,join_key,table_join=[],join_array=[],sub_table,relation,match1,key,value,table_name,joins=[];
         preg_match("/(?<table>[a-zA-Z0-9_]+)\s*\((?<alias>[a-zA-Z0-9_]+)\)/i", table, table_match);
 
         if (isset(table_match[ "table" ], table_match[ "alias" ]))
@@ -472,7 +472,6 @@ class Medoo
                         }
                         else
                         {
-                            let joins = [];
                             for key,value in relation
                             {
                                 let joins[] = (
@@ -564,7 +563,7 @@ class Medoo
             let column = this->columnPush(columns);
         }
 
-        return "SELECT " . $column . " FROM " . table_query . this->whereClause(where, map);
+        return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
     }
 
 	protected function tableQuote(table)
