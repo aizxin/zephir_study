@@ -550,6 +550,46 @@ class Medoo
         return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
     }
 
+    protected function columnPush(columns)
+    {
+        if (columns === "*")
+        {
+            return columns;
+        }
+
+        var stack = [],key,value,match2;
+
+        if (is_string(columns))
+        {
+            let columns = [columns];
+        }
+
+        for key,value in columns
+        {
+            if (is_array(value))
+            {
+                let stack[] = this->columnPush(value);
+            }
+            else
+            {
+                preg_match("/(?<column>[a-zA-Z0-9_\.]+)(?:\s*\((?<alias>[a-zA-Z0-9_]+)\)|\s*\[(?<type>(String|Bool|Int|Number|Object|JSON))\])?/i", value, match2);
+
+                if (!empty(match2[ "alias" ]))
+                {
+                    let stack[] = this->columnQuote( match2[ "column" ] ) . " AS " . this->columnQuote( match2[ "alias" ] );
+
+                    let columns[ key ] = match2[ "alias" ];
+                }
+                else
+                {
+                    let stack[] = this->columnQuote( match2[ "column" ] );
+                }
+            }
+        }
+
+        return implode(",",stack);
+    }
+
  //    protected function whereClause(where, map)
 	// {
 	// 	var group,map_key,columns,where_clause,where_keys,where_OR,where_AND,single_condition,condition,value,match1,mode,mode_array=[];
