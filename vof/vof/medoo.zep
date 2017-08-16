@@ -884,10 +884,7 @@ class Medoo
         return implode(wheres,conjunctor . " ");
     }
 
-    protected function fnQuote(column, str)
-    {
-        return (strpos(column, "#") === 0 && preg_match("/^[A-Z0-9\_]*\([^)]*\)$/", str)) ? str : this->quote(str);
-    }
+
 
 	// protected function mapKey()
 	// {
@@ -896,9 +893,14 @@ class Medoo
 
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
 
+    protected function fnQuote(column, str)
+    {
+        return (strpos(column, "#") === 0 && preg_match("/^[A-Z0-9\_]*\([^)]*\)$/", str)) ? str : this->quote(str);
+    }
+
     protected function arrayQuote(array1)
     {
-        var stack = [].value;
+        var stack = [],value;
         for value in array1
         {
             let stack[] = is_int(value) ? value : this->pdo->quote(value);
