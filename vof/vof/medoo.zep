@@ -298,21 +298,6 @@ class Medoo
 		{
 			let this->logs = [[query, map]];
 		}
-		let statement = this->pdo->prepare(query);
-		if (statement)
-		{
-			for key,value in map
-			{
-				let statement->bindValue(key, value[ 0 ], value[ 1 ]);
-			}
-			let statement->execute();
-			let this->statement = statement;
-			return statement;
-		}
-		else
-		{
-			return false;
-		}
 	}
 
 	protected function generate(query, map)
