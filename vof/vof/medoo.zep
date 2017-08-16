@@ -411,12 +411,12 @@ class Medoo
         var table_match,table_query,join_key,table_join=[],join_array=[],sub_table,relation,match1,key,value,table_name,joins=[];
         preg_match("/(?<table>[a-zA-Z0-9_]+)\s*\((?<alias>[a-zA-Z0-9_]+)\)/i", table, table_match);
 
-        // if (isset(table_match[ "table" ], table_match[ "alias" ]))
-        // {
-        //     let table = this->tableQuote(table_match[ "table" ]);
+        if (isset(table_match[ "table" ], table_match[ "alias" ]))
+        {
+            let table = this->tableQuote(table_match[ "table" ]);
 
-        //     let table_query = table . " AS " . this->tableQuote(table_match[ "alias" ]);
-        // }
+            let table_query = table . " AS " . this->tableQuote(table_match[ "alias" ]);
+        }
         // else
         // {
         //     let table = this->tableQuote(table);
