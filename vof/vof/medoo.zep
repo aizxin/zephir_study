@@ -372,7 +372,7 @@ class Medoo
 		{
 			if (is_int(key))
 			{
-				let map = column_map[ $alue ];
+				let map = column_map[ value ];
 				let column_key = map[ 0 ];
 
 				if (isset(map[ 1 ]))
