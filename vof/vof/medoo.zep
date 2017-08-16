@@ -432,7 +432,7 @@ class Medoo
         {
             return query->fetchAll(\PDO::FETCH_COLUMN);
         }
-        let data = query->fetch(\PDO::FETCH_ASSOC)
+        let data = query->fetch(\PDO::FETCH_ASSOC);
         while (data)
         {
             $this->dataMap(data, columns, column_map, current_stack);
