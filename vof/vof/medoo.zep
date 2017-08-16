@@ -365,7 +365,7 @@ class Medoo
 		return this->pdo->quote(query);
 	}
 
-	protected function dataMap(index, key, value, data, stack)
+	protected function dataMap(index, key, value, data, &stack)
     {
         var sub_stack = [],sub_key,sub_value,current_stack,key_match;
         if (is_array(value))
@@ -404,7 +404,6 @@ class Medoo
                 let stack[ key ] = data[ key ];
             }
         }
-        return stack;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////  1
 
