@@ -690,22 +690,22 @@ class Medoo
 				}
 			}
 
-			// if (isset(where[ "LIMIT" ]) && !in_array(this->database_type, ["oracle", "mssql"]))
-			// {
-			// 	var limit;
-			// 	let  limit = where[ "LIMIT" ];
+			if (isset(where[ "LIMIT" ]) && !in_array(this->database_type, ["oracle", "mssql"]))
+			{
+				var limit;
+				let  limit = where[ "LIMIT" ];
 
-			// 	if (is_numeric(limit))
-			// 	{
-			// 		let where_clause .= " LIMIT " . limit;
-			// 	}
+				if (is_numeric(limit))
+				{
+					let where_clause .= " LIMIT " . limit;
+				}
 
-			// 	if (is_array(limit) && is_numeric(limit[ 0 ]) && is_numeric(limit[ 1 ])
-			// 	)
-			// 	{
-			// 		let where_clause .= " LIMIT " . limit[ 1 ] . " OFFSET " . limit[ 0 ];
-			// 	}
-			// }
+				if (is_array(limit) && is_numeric(limit[ 0 ]) && is_numeric(limit[ 1 ])
+				)
+				{
+					let where_clause .= " LIMIT " . limit[ 1 ] . " OFFSET " . limit[ 0 ];
+				}
+			}
 		}
 		else
 		{
