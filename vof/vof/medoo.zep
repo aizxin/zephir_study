@@ -719,10 +719,10 @@ class Medoo
 
 
 
-	// protected function mapKey()
-	// {
-	// 	return ":MeDoO_" . this->guid++ . "_mEdOo";
-	// }
+	protected function mapKey()
+	{
+		return ":MeDoO_" . this->guid++ . "_mEdOo";
+	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
 
