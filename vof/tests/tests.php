@@ -1,5 +1,5 @@
 <?php
-	$logs = [1,2];
+	$logs = [[1,2],[2,3]];
 	$da = array_map(function ($log)
 		{
 			var_dump($log);

@@ -399,11 +399,13 @@ class Medoo
 	{
 		var log,da,logs;
 		let logs = [[1,2],[2,3]];
-		return array_map(logs,function (log)
+		return array_map(function (log)
 			{
 				var_dump(log);
+				let log = log;
 				return log[0] + log[1];
-			}
+			},
+			logs
 		);
 	}
 
