@@ -392,7 +392,7 @@ class Medoo
 	{
 		var log;
 		let log = end(this->logs);
-		return this->generate(log[ 0 ], log[ 1 ]);
+		return this->generate(log[0], log[1]);
 	}
 
 	public function log()
@@ -400,7 +400,7 @@ class Medoo
 		var log,logs;
 		for log in this->logs
 		{
-			let logs[] = this->generate(log[ 0 ], log[ 1 ]);
+			let logs[] = this->generate(log[0], log[1]);
 		}
 		return logs;
 		// return array_map(function (log)

@@ -57,4 +57,4 @@ $data1 = $database->query(
 // log
 var_dump($database->log());
 // last
-// var_dump($database->last());
+var_dump($database->last());
