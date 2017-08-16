@@ -345,7 +345,7 @@ class Medoo
 		}
 	}
 
-	protected function generate(query, map = [])
+	protected function generate(query, map)
 	{
 		var key,value;
 		for key,value in map
@@ -366,8 +366,8 @@ class Medoo
 		return query;
 	}
 
-	public function quote(string)
+	public function quote(query)
 	{
-		return this->pdo->quote(string);
+		return this->pdo->quote(query);
 	}
 }
