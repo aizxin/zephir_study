@@ -398,7 +398,7 @@ class Medoo
 		var log;
 		return array_map($this->logs,function (log)
 			{
-				return this->generate(log[ 0 ], log[ 1 ]);
+				return log;
 			}
 		);
 	}
