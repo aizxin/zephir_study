@@ -403,11 +403,11 @@ class Medoo
 	{
 		var output,key,value;
 		let output = [
-			'server' : 'SERVER_INFO',
-			'driver' : 'DRIVER_NAME',
-			'client' : 'CLIENT_VERSION',
-			'version' : 'SERVER_VERSION',
-			'connection' : 'CONNECTION_STATUS'
+			"server" : "SERVER_INFO",
+			"driver" : "DRIVER_NAME",
+			"client" : "CLIENT_VERSION",
+			"version" : "SERVER_VERSION",
+			"connection" : "CONNECTION_STATUS"
 		];
 		for key,value in output
 		{
