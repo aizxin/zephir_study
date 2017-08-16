@@ -406,7 +406,19 @@ class Medoo
         }
     }
 
+    public function select(table, join, columns = null, where = null)
+    {
+        var map=[],stack=[],column_map=[],index=0,is_single_column,query,data,current_stack = [];
 
+        let column = where === null ? join : columns;
+
+        let is_single_column = (is_string(column) && column !== "*");
+
+        let query = this->exec(this->selectContext(table, map, join, columns, where), map);
+
+        this->columnMap(columns, column_map);
+
+    }
 
 	protected function tableQuote(table)
 	{
