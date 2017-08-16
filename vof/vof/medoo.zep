@@ -648,21 +648,21 @@ class Medoo
 				if (is_array(order1))
 				{
 					var stack = [],column,value2;
-					// for column,value2 in order1
-					// {
-					// 	if (is_array(value2))
-					// 	{
-					// 		let stack[] = "FIELD(" . this->columnQuote(column) . ", " . this->arrayQuote(value2) . ")";
-					// 	}
-					// 	else if (value2 === "ASC" || value2 === "DESC")
-					// 	{
-					// 		let stack[] = this->columnQuote(column) . " " . value2;
-					// 	}
-					// 	else if (is_int(column))
-					// 	{
-					// 		let stack[] = this->columnQuote(value2);
-					// 	}
-					// }
+					for column,value2 in order1
+					{
+						if (is_array(value2))
+						{
+							let stack[] = "FIELD(" . this->columnQuote(column) . ", " . this->arrayQuote(value2) . ")";
+						}
+						// else if (value2 === "ASC" || value2 === "DESC")
+						// {
+						// 	let stack[] = this->columnQuote(column) . " " . value2;
+						// }
+						// else if (is_int(column))
+						// {
+						// 	let stack[] = this->columnQuote(value2);
+						// }
+					}
 
 					let where_clause .= " ORDER BY " . implode(",",stack);
 				}
