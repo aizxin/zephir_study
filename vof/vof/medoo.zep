@@ -388,9 +388,9 @@ class Medoo
 						// 	let stack[ column_key ] = boolean data[ column_key ];
 						// 	break;
 
-						// case "Object":
-						// 	let stack[ column_key ] = unserialize(data[ column_key ]);
-						// 	break;
+						case "Object":
+							let stack[ column_key ] = unserialize(data[ column_key ]);
+							break;
 
 						case "JSON":
 							let stack[ column_key ] = json_decode(data[ column_key ], true);
