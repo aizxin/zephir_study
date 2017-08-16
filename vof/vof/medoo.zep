@@ -365,6 +365,46 @@ class Medoo
 		return this->pdo->quote(query);
 	}
 
+	protected function dataMap(index, key, value, data, stack)
+    {
+        var sub_stack = [],sub_key,sub_value,current_stack,key_match;
+        if (is_array(value))
+        {
+            for sub_key,sub_value in value
+            {
+                if (is_array(sub_value))
+                {
+                    let current_stack = stack[ index ][ key ];
+
+                    this->dataMap(false, sub_key, sub_value, data, current_stack);
+
+                    let stack[ index ][ key ][ sub_key ] = current_stack[ 0 ][ sub_key ];
+                }
+                else
+                {
+                    this->dataMap(false, preg_replace("/^[\w]*\./i", "", sub_value), sub_key, data, sub_stack);
+
+                    let stack[ index ][ key ] = sub_stack;
+                }
+            }
+        }
+        else
+        {
+            if (index !== false)
+            {
+                let stack[ index ][ value ] = data[ value ];
+            }
+            else
+            {
+                if (preg_match("/[a-zA-Z0-9_\-\.]*\s*\(([a-zA-Z0-9_\-]*)\)/i", key, key_match))
+                {
+                    let key = key_match[ 1 ];
+                }
+
+                let stack[ key ] = data[ key ];
+            }
+        }
+    }
 
 	protected function tableQuote(table)
 	{
