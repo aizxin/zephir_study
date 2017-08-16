@@ -397,15 +397,12 @@ class Medoo
 
 	public function log()
 	{
-		var log,da,logs;
-		let logs = [[1,2],[2,3]];
+		var log;
 		return array_map(function (log)
 			{
-				var_dump(log);
 				let log = log;
-				return log[0] + log[1];
-			},
-			logs
+				return this->generate(log[0], log[1]);
+			},this->logs
 		);
 	}
 
