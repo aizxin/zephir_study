@@ -408,7 +408,7 @@ class Medoo
 
     public function select(table, join, columns = null, where = null)
     {
-        var map=[],stack=[],column_map=[],index=0,is_single_column,query,data,current_stack = [];
+        var column,map=[],stack=[],column_map=[],index=0,is_single_column,query,data,current_stack = [];
 
         let column = where === null ? join : columns;
 
