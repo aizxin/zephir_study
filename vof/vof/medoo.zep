@@ -373,4 +373,46 @@ class Medoo
 	{
 		return this->pdo->quote(query);
 	}
+
+	public function debug()
+	{
+		let this->debug_mode = true;
+		return this;
+	}
+	public function error()
+	{
+		return this->statement ? this->statement->errorInfo() : null;
+	}
+	public function last()
+	{
+		var log;
+		let log = end(this->logs);
+		return this->generate(log[ 0 ], log[ 1 ]);
+	}
+	public function log()
+	{
+		var log;
+		return array_map(function (log)
+			{
+				return this->generate(log[ 0 ], log[ 1 ]);
+			},
+			this->logs
+		);
+	}
+	public function info()
+	{
+		var output,key,value;
+		let output = [
+			'server' : 'SERVER_INFO',
+			'driver' : 'DRIVER_NAME',
+			'client' : 'CLIENT_VERSION',
+			'version' : 'SERVER_VERSION',
+			'connection' : 'CONNECTION_STATUS'
+		];
+		for key,value in output
+		{
+			let output[ key ] = this->pdo->getAttribute(constant("PDO::ATTR_" . value));
+		}
+		return output;
+	}
 }
