@@ -564,15 +564,15 @@ class Medoo
 				["AND", "OR", "GROUP", "ORDER", "HAVING", "LIMIT", "LIKE", "MATCH"]
 			));
 
-			// if (!empty(single_condition))
-			// {
-			// 	let condition = $this->dataImplode($single_condition, $map, ' AND');
+			if (!empty(single_condition))
+			{
+				let condition = this->dataImplode(single_condition, map, " AND");
 
-			// 	if (condition !== "")
-			// 	{
-			// 		let where_clause = " WHERE " . condition;
-			// 	}
-			// }
+				if (condition !== "")
+				{
+					let where_clause = " WHERE " . condition;
+				}
+			}
 
 			// if (!empty(where_AND))
 			// {
@@ -624,7 +624,7 @@ class Medoo
 
 			// 		for column,value1 in group
 			// 		{
-			// 			let stack[] = $his->columnQuote(value1);
+			// 			let stack[] = this->columnQuote(value1);
 			// 		}
 
 			// 		let where_clause .= " GROUP BY " . implode(",",stack);
@@ -715,6 +715,173 @@ class Medoo
 
 		return where_clause;
 	}
+
+	protected function dataImplode(data, conjunctor, outer_conjunctor = null)
+    {
+        var wheres = [],key,value,type,relation_match,match1,operator,connector,stack,condition;
+
+        for key,value in data
+        {
+            let type = gettype(value);
+
+            if (preg_match("/^(AND|OR)(\s+#.*)?$/i", key, relation_match) && type == "array")
+            {
+                let wheres[] = 0 !== count(array_diff_key(value, array_keys(array_keys(value)))) ?
+                    "(" . this->dataImplode(value, " " . relation_match[ 1 ]) . ")" :
+                    "(" . this->innerConjunct(value, " " . relation_match[ 1 ], conjunctor) . ")";
+            }
+            else
+            {
+                if (is_int(key) && preg_match("/([\w\.\-]+)\[(\>|\>\=|\<|\<\=|\!|\=)\]([\w\.\-]+)/i", value, match1)
+                )
+                {
+                    let operator = match1[ 2 ];
+
+                    let wheres[] = this->columnQuote(match1[ 1 ]) . ' ' . operator . ' ' . this->columnQuote(match1[ 3 ]);
+                }
+                else
+                {
+                    preg_match("/(#?)([\w\.\-]+)(\[(\>|\>\=|\<|\<\=|\!|\<\>|\>\<|\!?~)\])?/i", key, match1);
+                    let column = this->columnQuote(match1[ 2 ]);
+
+                    if (isset(match1[ 4 ]))
+                    {
+                        let operator = match1[ 4 ];
+
+                        if (operator == '!')
+                        {
+                            switch (type)
+                            {
+                                case "NULL":
+                                    let wheres[] = column . " IS NOT NULL";
+                                    break;
+
+                                case "array":
+                                    let wheres[] = column . " NOT IN (" . this->arrayQuote(value) . ")";
+                                    break;
+
+                                case "integer":
+                                case "double":
+                                    let wheres[] = column . " != " . value;
+                                    break;
+
+                                case "boolean":
+                                    let wheres[] = column . " != " . (value ? "1" : "0");
+                                    break;
+
+                                case "string":
+                                    let wheres[] = column . " != " . this->fnQuote(key, value);
+                                    break;
+                            }
+                        }
+
+                        if (operator == "<>" || operator == "><")
+                        {
+                            if (type == "array")
+                            {
+                                if (operator == "><")
+                                {
+                                    let column .= " NOT";
+                                }
+
+                                if (is_numeric(value[ 0 ]) && is_numeric(value[ 1 ]))
+                                {
+                                    let wheres[] = "(" . column . " BETWEEN " . value[ 0 ] . " AND " . value[ 1 ] . ")";
+                                }
+                                else
+                                {
+                                    let wheres[] = "(" . column . " BETWEEN " . this->quote(value[ 0 ]) . " AND " . this->quote(value[ 1 ]) . ")";
+                                }
+                            }
+                        }
+
+                        if (operator == "~" || operator == "!~")
+                        {
+                            if (type != "array")
+                            {
+                                let value = [value];
+                            }
+
+                            let connector = " OR ";
+                            let stack = array_values(value);
+
+                            if (is_array(stack[0]))
+                            {
+                                if (isset(value["AND"]) || isset(value["OR"]))
+                                {
+                                    let connector = " " . array_keys(value)[0] . " ";
+                                    let value = stack[0];
+                                }
+                            }
+
+                            var like_clauses = [],item;
+                            for item in value
+                            {
+                                let item = strval(item);
+
+                                if (!preg_match("/(\[.+\]|_|%.+|.+%)/", item))
+                                {
+                                    let item = "%" . item . "%";
+                                }
+
+                                let like_clauses[] = column . (operator === "!~" ? " NOT" : "") . " LIKE " . this->fnQuote(key, item);
+                            }
+
+                            let wheres[] = "(" . implode(like_clauses,connector) . ")";
+                        }
+
+                        if (in_array(operator, [">", ">=", "<", "<="]))
+                        {
+                            let condition = column . " " . operator . " ";
+
+                            if (is_numeric(value))
+                            {
+                                let condition .= value;
+                            }
+                            elseif (strpos(key, "#") === 0)
+                            {
+                                let condition .= this->fnQuote(key, value);
+                            }
+                            else
+                            {
+                                let condition .= this->quote(value);
+                            }
+
+                            let wheres[] = condition;
+                        }
+                    }
+                    else
+                    {
+                        switch (type)
+                        {
+                            case "NULL":
+                                let wheres[] = column . " IS NULL";
+                                break;
+
+                            case "array":
+                                let wheres[] = column . " IN (" . this->arrayQuote(value) . ")";
+                                break;
+
+                            case "integer":
+                            case "double":
+                                let wheres[] = column . " = " . value;
+                                break;
+
+                            case "boolean":
+                                let wheres[] = column . " = " . (value ? "1" : "0");
+                                break;
+
+                            case "string":
+                                let wheres[] = column . " = " . this->fnQuote(key, value);
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return implode(wheres,conjunctor . " ");
+    }
 
 	// protected function mapKey()
 	// {
