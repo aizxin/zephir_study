@@ -737,7 +737,7 @@ class Medoo
                 {
                     let operator = match1[ 2 ];
 
-                    let wheres[] = this->columnQuote(match1[ 1 ]) . ' ' . operator . ' ' . this->columnQuote(match1[ 3 ]);
+                    let wheres[] = this->columnQuote(match1[ 1 ]) . " " . operator . " " . this->columnQuote(match1[ 3 ]);
                 }
                 else
                 {
@@ -883,6 +883,15 @@ class Medoo
         return implode(wheres,conjunctor . " ");
     }
 
+
+
+	// protected function mapKey()
+	// {
+	// 	return ":MeDoO_" . this->guid++ . "_mEdOo";
+	// }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////// 1
+
     protected function innerConjunct(data, conjunctor, outer_conjunctor)
     {
         var haystack = [],value;
@@ -893,13 +902,6 @@ class Medoo
 
         return implode(haystack,outer_conjunctor . " ");
     }
-
-	// protected function mapKey()
-	// {
-	// 	return ":MeDoO_" . this->guid++ . "_mEdOo";
-	// }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////// 1
 
     protected function columnPush(columns)
     {
