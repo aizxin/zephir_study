@@ -385,7 +385,7 @@ class Medoo
 						// 	break;
 
 						case "Bool":
-							let stack[ column_key ] = boolean data[ column_key ];
+							let stack[ column_key ] = boolean! data[ column_key ];
 							break;
 
 						case "Object":
