@@ -381,12 +381,12 @@ class Medoo
 					{
 						case "Number":
 						// case "Int":
-						// 	let stack[ column_key ] = int data[ column_key ];
-						// 	break;
-
-						case "Bool":
-							let stack[ column_key ] = boolean! data[ column_key ];
+							let stack[ column_key ] = int data[ column_key ];
 							break;
+
+						// case "Bool":
+						// 	let stack[ column_key ] = boolean! data[ column_key ];
+						// 	break;
 
 						case "Object":
 							let stack[ column_key ] = unserialize(data[ column_key ]);
