@@ -39,9 +39,9 @@ $database = new Medoo($data);
 // var_dump($database);
 
 // 测试  quote
-$data = "Medoo";
-echo "We love " . $data; // We love Medoo
-echo "We love " . $database->quote($data); // We love 'Medoo'
+// $data = "Medoo";
+// echo "We love " . $data; // We love Medoo
+// echo "We love " . $database->quote($data); // We love 'Medoo'
 
 // 测试 query
 // $data = $database->query("SELECT email FROM member_bill")->fetchAll();
