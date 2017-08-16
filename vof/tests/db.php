@@ -52,7 +52,7 @@ $data1 = $database->query(
         ":id" => 19
     ]
 )->fetchAll();
-// var_dump($data1);
+var_dump($data1);
 
 // log
 var_dump($database->log());

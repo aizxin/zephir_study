@@ -86,9 +86,8 @@ class Medoo
 
 	public function __construct(array! options)
 	{
-		var commands,attr,port,is_port,driver,stack,key,value,dsn,e;
+		var commands=[],attr=[],port,is_port,driver,stack=[],key,value,dsn,e;
 		try {
-			let commands = [];
 			if is_array(options)
 			{
 				if isset options["database_type"]
@@ -119,10 +118,6 @@ class Medoo
 			{
 				let commands = options["command"];
 			}
-			else
-			{
-				let commands = [];
-			}
 
 			if isset(options["dsn"])
 			{
@@ -145,7 +140,6 @@ class Medoo
 				}
 
 				let is_port = isset(options["port"]);
-				let attr = [];
 				switch (this->database_type)
 				{
 					case "mariadb":
@@ -241,8 +235,6 @@ class Medoo
 
 			unset(attr["driver"]);
 
-			let stack = [];
-
 			for key, value in attr {
                 if (is_int(key))
 				{
@@ -270,7 +262,7 @@ class Medoo
 				this->option
 			);
 
-			for key, value in commands {
+			for value in commands {
 				this->pdo->exec(value);
             }
 		}
@@ -393,8 +385,7 @@ class Medoo
 
 	public function log()
 	{
-		var log,logs;
-		let logs = [];
+		var log,logs = [];
 		for log in this->logs
 		{
 			let logs[] = this->generate(log[0], log[1]);
