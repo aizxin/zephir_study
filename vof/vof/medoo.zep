@@ -495,7 +495,7 @@ class Medoo
             {
                 if (is_null(where))
                 {
-                    if (is_array(join) && isset(column_fn))
+                    if (is_array(join) && column_fn)
                     {
                         let where = join;
                         let columns = null;
@@ -519,7 +519,7 @@ class Medoo
             }
         }
 
-        if (isset(column_fn))
+        if (column_fn)
         {
             if (column_fn === 1)
             {
