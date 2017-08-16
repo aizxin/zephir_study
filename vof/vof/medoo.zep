@@ -884,6 +884,17 @@ class Medoo
         return implode(wheres,conjunctor . " ");
     }
 
+    protected function fnQuote(column, str)
+    {
+        return (strpos(column, "#") === 0 && preg_match("/^[A-Z0-9\_]*\([^)]*\)$/", str)) ? str : this->quote(str);
+    }
+
+	// protected function mapKey()
+	// {
+	// 	return ":MeDoO_" . this->guid++ . "_mEdOo";
+	// }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////// 1
 
     protected function arrayQuote(array1)
     {
@@ -895,12 +906,6 @@ class Medoo
 
         return implode(',',stack);
     }
-	// protected function mapKey()
-	// {
-	// 	return ":MeDoO_" . this->guid++ . "_mEdOo";
-	// }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////// 1
 
     protected function innerConjunct(data, conjunctor, outer_conjunctor)
     {
