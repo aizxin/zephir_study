@@ -656,16 +656,14 @@ class Medoo
 						}else{
 							if (value2 === "ASC" || value2 === "DESC")
 							{
-								// let stack[] = this->columnQuote(column) . " " . value2;
+								let stack[] = this->columnQuote(column) . " " . value2;
 							}else{
-
+								if (is_int(column))
+								{
+									let stack[] = this->columnQuote(value2);
+								}
 							}
 						}
-						// else
-						// else if (is_int(column))
-						// {
-						// 	let stack[] = this->columnQuote(value2);
-						// }
 					}
 
 					let where_clause .= " ORDER BY " . implode(",",stack);
