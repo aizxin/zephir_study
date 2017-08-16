@@ -84,7 +84,7 @@ class Medoo
 
 	protected guid = 0;
 
-	public function __construct(options = null)
+	public function __construct(array! options)
 	{
 		// var_dump(options);
 		var commands,attr,port,is_port,driver,stack,key,value,dsn,e;
@@ -280,4 +280,94 @@ class Medoo
         }
 	}
 
+	public function query(query, map)
+	{
+		var key,value;
+		if (!empty($map))
+		{
+			for key,value in map
+			{
+				switch (gettype(value))
+				{
+					case "NULL":
+						map[ key ] = [null, \PDO::PARAM_NULL];
+						break;
+					case "resource":
+						map[key] = [value, \PDO::PARAM_LOB];
+						break;
+					case "boolean":
+						map[key] = [(value ? "1" : "0"), \PDO::PARAM_BOOL];
+						break;
+					case "integer":
+					case "double":
+						map[ key ] = [value, \PDO::PARAM_INT];
+						break;
+					case "string":
+						map[ key ] = [value, \PDO::PARAM_STR];
+						break;
+				}
+			}
+		}
+		return this->exec(query, map);
+	}
+
+	public function exec(query, map)
+	{
+		var statement,key,value;
+		if (this->debug_mode)
+		{
+			echo this->generate(query, map);
+			let this->debug_mode = false;
+			return false;
+		}
+		if (this->logging)
+		{
+			let this->logs[] = [query, map];
+		}
+		else
+		{
+			let this->logs = [[query, map]];
+		}
+		let statement = this->pdo->prepare(query);
+		if (statement)
+		{
+			for key,value in map
+			{
+				statement->bindValue(key, value[ 0 ], value[ 1 ]);
+			}
+			statement->execute();
+			let this->statement = statement;
+			return statement;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	protected function generate(query, map = [])
+	{
+		var key,value;
+		for key,value in map
+		{
+			if (value[1] === \PDO::PARAM_STR)
+			{
+				query = str_replace(key, this->quote(value[0]), query);
+			}
+			elseif (value[ 1 ] === \PDO::PARAM_NULL)
+			{
+				query = str_replace(key, "NULL", query);
+			}
+			else
+			{
+				query = str_replace(key, value[0], query);
+			}
+		}
+		return query;
+	}
+
+	public function quote(string)
+	{
+		return this->pdo->quote(string);
+	}
 }
