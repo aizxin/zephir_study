@@ -885,7 +885,16 @@ class Medoo
     }
 
 
+    protected function arrayQuote(array1)
+    {
+        var stack = [].value;
+        for value in array1
+        {
+            let stack[] = is_int(value) ? value : this->pdo->quote(value);
+        }
 
+        return implode(',',stack);
+    }
 	// protected function mapKey()
 	// {
 	// 	return ":MeDoO_" . this->guid++ . "_mEdOo";
