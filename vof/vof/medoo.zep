@@ -19,6 +19,10 @@
 
 namespace Vof;
 
+
+use PDO;
+use Exception;
+use PDOException;
 /**
  * Vof\Medoo
  * Medoo database framework
@@ -233,7 +237,7 @@ class Medoo
 						break;
 
 					case "sqlite":
-						let this->pdo = new \PDO("sqlite:" . options["database_file"], null, null, this->option);
+						let this->pdo = new PDO("sqlite:" . options["database_file"], null, null, this->option);
 						break;
 
 				}
@@ -264,7 +268,7 @@ class Medoo
 			{
 				let commands[] = "SET NAMES '" . options["charset"] . "'";
 			}
-			let this->pdo = new \PDO(
+			let this->pdo = new PDO(
 				dsn,
 				options["username"],
 				options["password"],
@@ -275,40 +279,38 @@ class Medoo
 				this->pdo->exec(value);
             }
 		}
-		catch \PDOException, e {
-            throw new \Exception(e->getMessage());
+		catch PDOException, e {
+            throw new Exception(e->getMessage());
         }
 	}
 
 	public function query(query, map = [])
 	{
 		var key,value;
-		if (!empty($map))
+		if (!empty(map))
 		{
 			for key,value in map
 			{
 				switch (gettype(value))
 				{
 					case "NULL":
-						let map[ key ] = [null, \PDO::PARAM_NULL];
+						let map[ key ] = [null, PDO::PARAM_NULL];
 						break;
 					case "resource":
-						let map[key] = [value, \PDO::PARAM_LOB];
+						let map[key] = [value, PDO::PARAM_LOB];
 						break;
 					case "boolean":
-						let map[key] = [(value ? "1" : "0"), \PDO::PARAM_BOOL];
+						let map[key] = [(value ? "1" : "0"), PDO::PARAM_BOOL];
 						break;
 					case "integer":
 					case "double":
-						let map[ key ] = [value, \PDO::PARAM_INT];
+						let map[ key ] = [value, PDO::PARAM_INT];
 						break;
 					case "string":
-						let map[ key ] = [value, \PDO::PARAM_STR];
+						let map[ key ] = [value, PDO::PARAM_STR];
 						break;
 				}
 			}
-		}else{
-			let map[] = [\PDO::ATTR_CURSOR:\PDO::CURSOR_FWDONLY];
 		}
 		return this->exec(query, map);
 	}
@@ -334,7 +336,7 @@ class Medoo
 		let statement = this->pdo->prepare(query);
 		if (statement)
 		{
-			if(!empty($map)){
+			if(!empty(map)){
 				for key,value in map
 				{
 					statement->bindValue(key, value[ 0 ], value[ 1 ]);
@@ -355,11 +357,11 @@ class Medoo
 		var key,value;
 		for key,value in map
 		{
-			if (value[1] === \PDO::PARAM_STR)
+			if (value[1] === PDO::PARAM_STR)
 			{
 				let query = str_replace(key, this->quote(value[0]), query);
 			}
-			elseif (value[ 1 ] === \PDO::PARAM_NULL)
+			elseif (value[ 1 ] === PDO::PARAM_NULL)
 			{
 				let query = str_replace(key, "NULL", query);
 			}
@@ -403,7 +405,7 @@ class Medoo
 		];
 		for key,value in output
 		{
-			let output[ key ] = this->pdo->getAttribute(constant("\PDO::ATTR_" . value));
+			let output[ key ] = this->pdo->getAttribute(constant("PDO::ATTR_" . value));
 		}
 		return output;
 	}
