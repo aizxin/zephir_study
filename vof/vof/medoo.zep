@@ -373,7 +373,7 @@ class Medoo
 
         let column = where === null ? join : columns;
 
-        let is_single_column = (is_string(column) && column !== "*");
+        let is_single_column = is_string(column) && column !== "*";
 
         let query = this->exec(this->selectContext(table, map, join, columns, where), map);
 
@@ -582,9 +582,9 @@ class Medoo
         }
         else
         {
-            if (is_null(columns))
+            if is_null(columns)
             {
-                if (is_null(where))
+                if is_null(where)
                 {
                     if (is_array(join) && column_fn)
                     {
@@ -610,20 +610,20 @@ class Medoo
             }
         }
 
-        if (column_fn)
+        if column_fn
         {
             if (column_fn === 1)
             {
                 let column = "1";
 
-                if (is_null(where))
+                if is_null(where)
                 {
                     let where = columns;
                 }
             }
             else
             {
-                if (empty(columns))
+                if empty(columns)
                 {
                     let columns = "*";
                     let where = join;
@@ -636,7 +636,7 @@ class Medoo
         {
             let column = this->columnPush(columns);
         }
-        var_dump(column);
+        var_dump("SELECT " . column . " FROM " . table_query . this->whereClause(where, map));
         return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
     }
 
