@@ -7,10 +7,10 @@
 	$database = new Medoo([
 		// required
 		'database_type' => 'mysql',
-		'database_name' => 'kamun',
-		'server' => '127.0.0.1',
-		'username' => 'root',
-		'password' => 'root',
+	    'database_name' => 'kamun',
+	    'server' => 'rm-wz9435289632q5m4a.mysql.rds.aliyuncs.com',
+	    'username' => 'root',
+	    'password' => '0FKeMf10gle2ml670Rz8',
 
 		// [optional]
 		'charset' => 'utf8',
