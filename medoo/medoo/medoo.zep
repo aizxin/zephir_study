@@ -498,6 +498,7 @@ class Medoo
         if !(query) {
             return false;
         }
+        var_dump("fgd".columns);
         if columns === "*" {
             return query->fetchAll(\PDO::FETCH_ASSOC);
         }
