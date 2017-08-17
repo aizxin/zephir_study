@@ -377,7 +377,6 @@ class Medoo
 
         let query = this->exec(this->selectContext(table, map, join, columns, where), map);
 
-        this->columnMap(columns, column_map);
 
         if (query)
         {
@@ -395,7 +394,10 @@ class Medoo
         }
         var fetchMethod;
         let fetchMethod="fetch";
+        this->columnMap(columns, column_map);
+
         let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
+
         while (data)
         {
 
@@ -462,7 +464,7 @@ class Medoo
 
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
 
-	protected function columnMap(columns, stack) -> string
+	protected function columnMap(columns, stack) -> array
 	{
 		if (columns === '*')
 		{
