@@ -5,34 +5,23 @@
 	use Medoo\Medoo;
 
 	$database = new Medoo([
-		// required
-		'database_type' => 'mysql',
-	    'database_name' => 'kamun',
-	    'server' => 'rm-wz9435289632q5m4a.mysql.rds.aliyuncs.com',
-	    'username' => 'root',
-	    'password' => '0FKeMf10gle2ml670Rz8',
+		//必需
+		'database_type'=>'mysql',
+		'database_name'=>'kamun',      //数据库名称
+		'server'=>'rm-wz9435289632q5m4a.mysql.rds.aliyuncs.com',        //数据库连接地址
+		'username'=>'root',  //用户名
+		'password'=>'0FKeMf10gle2ml670Rz8',  //密码
+		'charset'=>'utf8',            //数据库编码
 
-		// [optional]
-		'charset' => 'utf8',
-		'port' => 3306,
+		// [可选的] 数据库连接端口
+		'port'=> 3306,
 
-		// [optional] Table prefix
-		// 'prefix' => 'PREFIX_',
+		// [可选]表前缀
+		// 'prefix'=>'PREFIX_',
 
-		// [optional] Enable logging (Logging is disabled by default for better performance)
-		'logging' => true,
-
-		// [optional] MySQL socket (shouldn't be used with server and port)
-		// 'socket' => '/tmp/mysql.sock',
-
-		// [optional] driver_option for connection, read more from http://www.php.net/manual/en/pdo.setattribute.php
-		'option' => [
-			PDO::ATTR_CASE => PDO::CASE_NATURAL
-		],
-
-		// [optional] Medoo will execute those commands after connected to the database for initialization
-		'command' => [
-			'SET SQL_MODE=ANSI_QUOTES'
+		// [可选]用于连接的driver_option，阅读更多从http://www.php.net/manual/zh/pdo.setattribute.php
+		'option'=> [
+		 	PDO :: ATTR_CASE => PDO :: CASE_NATURAL
 		]
 	]);
 
