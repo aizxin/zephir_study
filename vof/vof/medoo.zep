@@ -377,7 +377,7 @@ class Medoo
 
         let query = this->exec(this->selectContext(table, map, join, columns, where), map);
 
-
+        var_dump(columns);
         if (query)
         {
             return false;
@@ -497,7 +497,7 @@ class Medoo
 		return stack;
 	}
 
-	protected function selectContext(table, map, join, columns = null, where = null, column_fn = null)
+	protected function selectContext(table, map, join, columns = null, where = null, column_fn = null) -> string
     {
         var column,table_match,table_query,join_key,table_join=[],join_array=[],sub_table,relation,match1,key,value,table_name,joins=[];
         preg_match("/(?<table>[a-zA-Z0-9_]+)\s*\((?<alias>[a-zA-Z0-9_]+)\)/i", table, table_match);
