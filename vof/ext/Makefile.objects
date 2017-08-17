@@ -1,0 +1,134 @@
+vof.lo: /home/php-zephir/zephir_study/vof/ext/vof.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof.c -o vof.lo 
+kernel/main.lo: /home/php-zephir/zephir_study/vof/ext/kernel/main.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/main.c -o kernel/main.lo 
+kernel/memory.lo: /home/php-zephir/zephir_study/vof/ext/kernel/memory.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/memory.c -o kernel/memory.lo 
+kernel/exception.lo: /home/php-zephir/zephir_study/vof/ext/kernel/exception.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/exception.c -o kernel/exception.lo 
+kernel/debug.lo: /home/php-zephir/zephir_study/vof/ext/kernel/debug.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/debug.c -o kernel/debug.lo 
+kernel/backtrace.lo: /home/php-zephir/zephir_study/vof/ext/kernel/backtrace.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/backtrace.c -o kernel/backtrace.lo 
+kernel/object.lo: /home/php-zephir/zephir_study/vof/ext/kernel/object.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/object.c -o kernel/object.lo 
+kernel/array.lo: /home/php-zephir/zephir_study/vof/ext/kernel/array.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/array.c -o kernel/array.lo 
+kernel/string.lo: /home/php-zephir/zephir_study/vof/ext/kernel/string.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/string.c -o kernel/string.lo 
+kernel/fcall.lo: /home/php-zephir/zephir_study/vof/ext/kernel/fcall.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/fcall.c -o kernel/fcall.lo 
+kernel/require.lo: /home/php-zephir/zephir_study/vof/ext/kernel/require.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/require.c -o kernel/require.lo 
+kernel/file.lo: /home/php-zephir/zephir_study/vof/ext/kernel/file.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/file.c -o kernel/file.lo 
+kernel/operators.lo: /home/php-zephir/zephir_study/vof/ext/kernel/operators.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/operators.c -o kernel/operators.lo 
+kernel/math.lo: /home/php-zephir/zephir_study/vof/ext/kernel/math.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/math.c -o kernel/math.lo 
+kernel/concat.lo: /home/php-zephir/zephir_study/vof/ext/kernel/concat.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/concat.c -o kernel/concat.lo 
+kernel/variables.lo: /home/php-zephir/zephir_study/vof/ext/kernel/variables.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/variables.c -o kernel/variables.lo 
+kernel/filter.lo: /home/php-zephir/zephir_study/vof/ext/kernel/filter.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/filter.c -o kernel/filter.lo 
+kernel/iterator.lo: /home/php-zephir/zephir_study/vof/ext/kernel/iterator.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/iterator.c -o kernel/iterator.lo 
+kernel/time.lo: /home/php-zephir/zephir_study/vof/ext/kernel/time.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/time.c -o kernel/time.lo 
+kernel/exit.lo: /home/php-zephir/zephir_study/vof/ext/kernel/exit.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/kernel/exit.c -o kernel/exit.lo 
+vof/cache/backendinterface.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/backendinterface.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/backendinterface.zep.c -o vof/cache/backendinterface.lo 
+vof/cache/backend.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/backend.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/backend.zep.c -o vof/cache/backend.lo 
+vof/cache/frontendinterface.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/frontendinterface.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/frontendinterface.zep.c -o vof/cache/frontendinterface.lo 
+vof/logger/adapterinterface.lo: /home/php-zephir/zephir_study/vof/ext/vof/logger/adapterinterface.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/logger/adapterinterface.zep.c -o vof/logger/adapterinterface.lo 
+vof/logger/formatterinterface.lo: /home/php-zephir/zephir_study/vof/ext/vof/logger/formatterinterface.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/logger/formatterinterface.zep.c -o vof/logger/formatterinterface.lo 
+vof/session/adapterinterface.lo: /home/php-zephir/zephir_study/vof/ext/vof/session/adapterinterface.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/session/adapterinterface.zep.c -o vof/session/adapterinterface.lo 
+vof/logger/adapter.lo: /home/php-zephir/zephir_study/vof/ext/vof/logger/adapter.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/logger/adapter.zep.c -o vof/logger/adapter.lo 
+vof/logger/formatter.lo: /home/php-zephir/zephir_study/vof/ext/vof/logger/formatter.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/logger/formatter.zep.c -o vof/logger/formatter.lo 
+vof/session/adapter.lo: /home/php-zephir/zephir_study/vof/ext/vof/session/adapter.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/session/adapter.zep.c -o vof/session/adapter.lo 
+vof/cache/frontend/data.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/frontend/data.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/frontend/data.zep.c -o vof/cache/frontend/data.lo 
+vof/cache/backend/apc.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/apc.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/apc.zep.c -o vof/cache/backend/apc.lo 
+vof/cache/backend/apcu.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/apcu.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/apcu.zep.c -o vof/cache/backend/apcu.lo 
+vof/cache/backend/file.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/file.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/file.zep.c -o vof/cache/backend/file.lo 
+vof/cache/backend/libmemcached.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/libmemcached.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/libmemcached.zep.c -o vof/cache/backend/libmemcached.lo 
+vof/cache/backend/memcache.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/memcache.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/memcache.zep.c -o vof/cache/backend/memcache.lo 
+vof/cache/backend/memory.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/memory.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/memory.zep.c -o vof/cache/backend/memory.lo 
+vof/cache/backend/mongo.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/mongo.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/mongo.zep.c -o vof/cache/backend/mongo.lo 
+vof/cache/backend/redis.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/redis.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/redis.zep.c -o vof/cache/backend/redis.lo 
+vof/cache/backend/xcache.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/xcache.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/backend/xcache.zep.c -o vof/cache/backend/xcache.lo 
+vof/cache/exception.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/exception.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/exception.zep.c -o vof/cache/exception.lo 
+vof/cache/frontend/base64.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/frontend/base64.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/frontend/base64.zep.c -o vof/cache/frontend/base64.lo 
+vof/cache/frontend/igbinary.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/frontend/igbinary.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/frontend/igbinary.zep.c -o vof/cache/frontend/igbinary.lo 
+vof/cache/frontend/json.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/frontend/json.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/frontend/json.zep.c -o vof/cache/frontend/json.lo 
+vof/cache/frontend/msgpack.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/frontend/msgpack.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/frontend/msgpack.zep.c -o vof/cache/frontend/msgpack.lo 
+vof/cache/frontend/none.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/frontend/none.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/frontend/none.zep.c -o vof/cache/frontend/none.lo 
+vof/cache/frontend/output.lo: /home/php-zephir/zephir_study/vof/ext/vof/cache/frontend/output.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/cache/frontend/output.zep.c -o vof/cache/frontend/output.lo 
+vof/logger.lo: /home/php-zephir/zephir_study/vof/ext/vof/logger.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/logger.zep.c -o vof/logger.lo 
+vof/logger/adapter/file.lo: /home/php-zephir/zephir_study/vof/ext/vof/logger/adapter/file.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/logger/adapter/file.zep.c -o vof/logger/adapter/file.lo 
+vof/logger/adapter/firephp.lo: /home/php-zephir/zephir_study/vof/ext/vof/logger/adapter/firephp.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/logger/adapter/firephp.zep.c -o vof/logger/adapter/firephp.lo 
+vof/logger/adapter/stream.lo: /home/php-zephir/zephir_study/vof/ext/vof/logger/adapter/stream.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/logger/adapter/stream.zep.c -o vof/logger/adapter/stream.lo 
+vof/logger/adapter/syslog.lo: /home/php-zephir/zephir_study/vof/ext/vof/logger/adapter/syslog.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/logger/adapter/syslog.zep.c -o vof/logger/adapter/syslog.lo 
+vof/logger/exception.lo: /home/php-zephir/zephir_study/vof/ext/vof/logger/exception.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/logger/exception.zep.c -o vof/logger/exception.lo 
+vof/logger/formatter/firephp.lo: /home/php-zephir/zephir_study/vof/ext/vof/logger/formatter/firephp.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/logger/formatter/firephp.zep.c -o vof/logger/formatter/firephp.lo 
+vof/logger/formatter/json.lo: /home/php-zephir/zephir_study/vof/ext/vof/logger/formatter/json.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/logger/formatter/json.zep.c -o vof/logger/formatter/json.lo 
+vof/logger/formatter/line.lo: /home/php-zephir/zephir_study/vof/ext/vof/logger/formatter/line.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/logger/formatter/line.zep.c -o vof/logger/formatter/line.lo 
+vof/logger/formatter/syslog.lo: /home/php-zephir/zephir_study/vof/ext/vof/logger/formatter/syslog.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/logger/formatter/syslog.zep.c -o vof/logger/formatter/syslog.lo 
+vof/medoo.lo: /home/php-zephir/zephir_study/vof/ext/vof/medoo.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/medoo.zep.c -o vof/medoo.lo 
+vof/security/exception.lo: /home/php-zephir/zephir_study/vof/ext/vof/security/exception.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/security/exception.zep.c -o vof/security/exception.lo 
+vof/security/random.lo: /home/php-zephir/zephir_study/vof/ext/vof/security/random.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/security/random.zep.c -o vof/security/random.lo 
+vof/session/adapter/files.lo: /home/php-zephir/zephir_study/vof/ext/vof/session/adapter/files.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/session/adapter/files.zep.c -o vof/session/adapter/files.lo 
+vof/session/adapter/libmemcached.lo: /home/php-zephir/zephir_study/vof/ext/vof/session/adapter/libmemcached.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/session/adapter/libmemcached.zep.c -o vof/session/adapter/libmemcached.lo 
+vof/session/adapter/memcache.lo: /home/php-zephir/zephir_study/vof/ext/vof/session/adapter/memcache.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/session/adapter/memcache.zep.c -o vof/session/adapter/memcache.lo 
+vof/session/adapter/redis.lo: /home/php-zephir/zephir_study/vof/ext/vof/session/adapter/redis.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/session/adapter/redis.zep.c -o vof/session/adapter/redis.lo 
+vof/session/exception.lo: /home/php-zephir/zephir_study/vof/ext/vof/session/exception.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/vof/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/vof/ext/vof/session/exception.zep.c -o vof/session/exception.lo 
+$(phplibdir)/vof.la: ./vof.la
+	$(LIBTOOL) --mode=install cp ./vof.la $(phplibdir)
+
+./vof.la: $(shared_objects_vof) $(VOF_SHARED_DEPENDENCIES)
+	$(LIBTOOL) --mode=link $(CC) $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ -export-dynamic -avoid-version -prefer-pic -module -rpath $(phplibdir) $(EXTRA_LDFLAGS) $(shared_objects_vof) $(VOF_SHARED_LIBADD)
+

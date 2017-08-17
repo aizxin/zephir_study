@@ -1,0 +1,50 @@
+tool.lo: /home/php-zephir/zephir_study/tool/ext/tool.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/tool.c -o tool.lo 
+kernel/main.lo: /home/php-zephir/zephir_study/tool/ext/kernel/main.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/main.c -o kernel/main.lo 
+kernel/memory.lo: /home/php-zephir/zephir_study/tool/ext/kernel/memory.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/memory.c -o kernel/memory.lo 
+kernel/exception.lo: /home/php-zephir/zephir_study/tool/ext/kernel/exception.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/exception.c -o kernel/exception.lo 
+kernel/debug.lo: /home/php-zephir/zephir_study/tool/ext/kernel/debug.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/debug.c -o kernel/debug.lo 
+kernel/backtrace.lo: /home/php-zephir/zephir_study/tool/ext/kernel/backtrace.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/backtrace.c -o kernel/backtrace.lo 
+kernel/object.lo: /home/php-zephir/zephir_study/tool/ext/kernel/object.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/object.c -o kernel/object.lo 
+kernel/array.lo: /home/php-zephir/zephir_study/tool/ext/kernel/array.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/array.c -o kernel/array.lo 
+kernel/string.lo: /home/php-zephir/zephir_study/tool/ext/kernel/string.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/string.c -o kernel/string.lo 
+kernel/fcall.lo: /home/php-zephir/zephir_study/tool/ext/kernel/fcall.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/fcall.c -o kernel/fcall.lo 
+kernel/require.lo: /home/php-zephir/zephir_study/tool/ext/kernel/require.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/require.c -o kernel/require.lo 
+kernel/file.lo: /home/php-zephir/zephir_study/tool/ext/kernel/file.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/file.c -o kernel/file.lo 
+kernel/operators.lo: /home/php-zephir/zephir_study/tool/ext/kernel/operators.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/operators.c -o kernel/operators.lo 
+kernel/math.lo: /home/php-zephir/zephir_study/tool/ext/kernel/math.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/math.c -o kernel/math.lo 
+kernel/concat.lo: /home/php-zephir/zephir_study/tool/ext/kernel/concat.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/concat.c -o kernel/concat.lo 
+kernel/variables.lo: /home/php-zephir/zephir_study/tool/ext/kernel/variables.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/variables.c -o kernel/variables.lo 
+kernel/filter.lo: /home/php-zephir/zephir_study/tool/ext/kernel/filter.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/filter.c -o kernel/filter.lo 
+kernel/iterator.lo: /home/php-zephir/zephir_study/tool/ext/kernel/iterator.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/iterator.c -o kernel/iterator.lo 
+kernel/time.lo: /home/php-zephir/zephir_study/tool/ext/kernel/time.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/time.c -o kernel/time.lo 
+kernel/exit.lo: /home/php-zephir/zephir_study/tool/ext/kernel/exit.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/kernel/exit.c -o kernel/exit.lo 
+tool/utils.lo: /home/php-zephir/zephir_study/tool/ext/tool/utils.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/tool/utils.zep.c -o tool/utils.lo 
+tool/vars.lo: /home/php-zephir/zephir_study/tool/ext/tool/vars.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/php-zephir/zephir_study/tool/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/php-zephir/zephir_study/tool/ext/tool/vars.zep.c -o tool/vars.lo 
+$(phplibdir)/tool.la: ./tool.la
+	$(LIBTOOL) --mode=install cp ./tool.la $(phplibdir)
+
+./tool.la: $(shared_objects_tool) $(TOOL_SHARED_DEPENDENCIES)
+	$(LIBTOOL) --mode=link $(CC) $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ -export-dynamic -avoid-version -prefer-pic -module -rpath $(phplibdir) $(EXTRA_LDFLAGS) $(shared_objects_tool) $(TOOL_SHARED_LIBADD)
+

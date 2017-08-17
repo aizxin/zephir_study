@@ -1,0 +1,26 @@
+ARG_ENABLE("vof", "enable vof", "no");
+
+if (PHP_VOF != "no") {
+  EXTENSION("vof", "vof.c", null, "-I"+configure_module_dirname);
+  ADD_SOURCES(configure_module_dirname + "/kernel", "main.c memory.c exception.c debug.c backtrace.c object.c array.c string.c fcall.c require.c file.c operators.c math.c concat.c variables.c filter.c iterator.c exit.c time.c", "vof");
+  /* PCRE is always included on WIN32 */
+  AC_DEFINE("ZEPHIR_USE_PHP_PCRE", 1, "Whether PHP pcre extension is present at compile time");
+  if (PHP_JSON != "no") {
+    ADD_EXTENSION_DEP("vof", "json");
+    AC_DEFINE("ZEPHIR_USE_PHP_JSON", 1, "Whether PHP json extension is present at compile time");
+  }
+  
+  ADD_SOURCES(configure_module_dirname + "/vof/cache", "backendinterface.zep.c backend.zep.c frontendinterface.zep.c exception.zep.c", "vof");
+	ADD_SOURCES(configure_module_dirname + "/vof/logger", "adapterinterface.zep.c formatterinterface.zep.c adapter.zep.c formatter.zep.c exception.zep.c", "vof");
+	ADD_SOURCES(configure_module_dirname + "/vof/session", "adapterinterface.zep.c adapter.zep.c exception.zep.c", "vof");
+	ADD_SOURCES(configure_module_dirname + "/vof/cache/frontend", "data.zep.c base64.zep.c igbinary.zep.c json.zep.c msgpack.zep.c none.zep.c output.zep.c", "vof");
+	ADD_SOURCES(configure_module_dirname + "/vof/cache/backend", "apc.zep.c apcu.zep.c file.zep.c libmemcached.zep.c memcache.zep.c memory.zep.c mongo.zep.c redis.zep.c xcache.zep.c", "vof");
+	ADD_SOURCES(configure_module_dirname + "/vof", "logger.zep.c medoo.zep.c", "vof");
+	ADD_SOURCES(configure_module_dirname + "/vof/logger/adapter", "file.zep.c firephp.zep.c stream.zep.c syslog.zep.c", "vof");
+	ADD_SOURCES(configure_module_dirname + "/vof/logger/formatter", "firephp.zep.c json.zep.c line.zep.c syslog.zep.c", "vof");
+	ADD_SOURCES(configure_module_dirname + "/vof/security", "exception.zep.c random.zep.c", "vof");
+	ADD_SOURCES(configure_module_dirname + "/vof/session/adapter", "files.zep.c libmemcached.zep.c memcache.zep.c redis.zep.c", "vof");
+  ADD_FLAG("CFLAGS_VOF", "/D ZEPHIR_RELEASE /Oi /Ot /Oy /Ob2 /Gs /GF /Gy /GL");
+  ADD_FLAG("CFLAGS", "/D ZEPHIR_RELEASE /Oi /Ot /Oy /Ob2 /Gs /GF /Gy /GL");
+  ADD_FLAG("LDFLAGS", "/LTCG");
+}
