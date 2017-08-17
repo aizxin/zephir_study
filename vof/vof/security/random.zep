@@ -19,7 +19,7 @@
 namespace Vof\Security;
 
 /**
- * Phalcon\Security\Random
+ * Vof\Security\Random
  *
  * Secure random number generator class.
  *
@@ -33,14 +33,14 @@ namespace Vof\Security;
  * - openssl, libressl
  * - /dev/urandom
  *
- * `Phalcon\Security\Random` could be mainly useful for:
+ * `Vof\Security\Random` could be mainly useful for:
  *
  * - Key generation (e.g. generation of complicated keys)
  * - Generating random passwords for new user accounts
  * - Encryption systems
  *
  *<code>
- * $random = new \Phalcon\Security\Random();
+ * $random = new \Vof\Security\Random();
  *
  * // Random binary string
  * $bytes = $random->bytes();
@@ -73,11 +73,6 @@ namespace Vof\Security;
  * echo $random->uuid(); // 75e6b628-c562-4117-bb76-61c4153455a9
  * echo $random->uuid(); // dc446df1-0848-4d05-b501-4af3c220c13d
  *
- * // Random number between 0 and $len
- * echo $random->number(256); // 84
- * echo $random->number(256); // 79
- * echo $random->number(100); // 29
- * echo $random->number(300); // 40
  *
  * // Random base58 string
  * echo $random->base58();   // 4kUgL2pdQMSCQtjE
@@ -93,71 +88,13 @@ namespace Vof\Security;
 class Random
 {
 	/**
-	 * Generates a random binary string
-	 *
-	 * The `Random::bytes` method returns a string and accepts as input an int
-	 * representing the length in bytes to be returned.
-	 *
-	 * If $len is not specified, 16 is assumed. It may be larger in future.
-	 * The result may contain any byte: "x00" - "xFF".
-	 *
-	 *<code>
-	 * $random = new \Phalcon\Security\Random();
-	 *
-	 * $bytes = $random->bytes();
-	 * var_dump(bin2hex($bytes));
-	 * // Possible output: string(32) "00f6c04b144b41fad6a59111c126e1ee"
-	 *</code>
-	 *
-	 * @throws Exception If secure random number generator is not available or unexpected partial read
-	 */
-	public function bytes(int len = 16) -> string
-	{
-		var handle, ret;
-
-		if len <= 0 {
-			let len = 16;
-		}
-
-		if function_exists("random_bytes") {
-			return random_bytes(len);
-		}
-
-		if function_exists("\\Sodium\\randombytes_buf") {
-			return \\Sodium\\randombytes_buf(len);
-		}
-
-		if function_exists("openssl_random_pseudo_bytes") {
-			return openssl_random_pseudo_bytes(len);
-		}
-
-		if file_exists("/dev/urandom") {
-			let handle = fopen("/dev/urandom", "rb");
-
-			if handle !== false {
-				stream_set_read_buffer(handle, 0);
-				let ret = fread(handle, len);
-				fclose(handle);
-
-				if strlen(ret) != len {
-					throw new Exception("Unexpected partial read from random device");
-				}
-
-				return ret;
-			}
-		}
-
-		throw new Exception("No random device available");
-	}
-
-	/**
 	 * Generates a random hex string
 	 *
 	 * If $len is not specified, 16 is assumed. It may be larger in future.
 	 * The length of the result string is usually greater of $len.
 	 *
 	 *<code>
-	 * $random = new \Phalcon\Security\Random();
+	 * $random = new \Vof\Security\Random();
 	 *
 	 * echo $random->hex(10); // a29f470508d5ccb8e289
 	 *</code>
@@ -175,16 +112,16 @@ class Random
 	 * If $len is not specified, 16 is assumed. It may be larger in future.
 	 * The result may contain alphanumeric characters except 0, O, I and l.
 	 *
-	 * It is similar to `Phalcon\Security\Random:base64` but has been modified to avoid both non-alphanumeric
+	 * It is similar to `Vof\Security\Random:base64` but has been modified to avoid both non-alphanumeric
 	 * characters and letters which might look ambiguous when printed.
 	 *
 	 * <code>
-	 * $random = new \Phalcon\Security\Random();
+	 * $random = new \Vof\Security\Random();
 	 *
 	 * echo $random->base58(); // 4kUgL2pdQMSCQtjE
 	 * </code>
 	 *
-	 * @see    \Phalcon\Security\Random:base64
+	 * @see    \Vof\Security\Random:base64
 	 * @link   https://en.wikipedia.org/wiki/Base58
 	 * @throws Exception If secure random number generator is not available or unexpected partial read
 	 */
@@ -198,16 +135,16 @@ class Random
 	 *
 	 * If $len is not specified, 16 is assumed. It may be larger in future.
 	 *
-	 * It is similar to `Phalcon\Security\Random:base58` but has been modified to provide the largest value that can
+	 * It is similar to `Vof\Security\Random:base58` but has been modified to provide the largest value that can
 	 * safely be used in URLs without needing to take extra characters into consideration because it is [A-Za-z0-9].
 	 *
 	 *< code>
-	 * $random = new \Phalcon\Security\Random();
+	 * $random = new \Vof\Security\Random();
 	 *
 	 * echo $random->base62(); // z0RkwHfh8ErDM1xw
 	 * </code>
 	 *
-	 * @see    \Phalcon\Security\Random:base58
+	 * @see    \Vof\Security\Random:base58
 	 * @throws Exception If secure random number generator is not available or unexpected partial read
 	 */
 	public function base62(int len = null) -> string
@@ -223,7 +160,7 @@ class Random
 	 * Size formula: 4 * ($len / 3) and this need to be rounded up to a multiple of 4.
 	 *
 	 *<code>
-	 * $random = new \Phalcon\Security\Random();
+	 * $random = new \Vof\Security\Random();
 	 *
 	 * echo $random->base64(12); // 3rcq39QzGK9fUqh8
 	 *</code>
@@ -246,7 +183,7 @@ class Random
 	 * See RFC 3548 for the definition of URL-safe base64.
 	 *
 	 *<code>
-	 * $random = new \Phalcon\Security\Random();
+	 * $random = new \Vof\Security\Random();
 	 *
 	 * echo $random->base64Safe(); // GD8JojhzSTrqX7Q8J6uug
 	 *</code>
@@ -280,7 +217,7 @@ class Random
 	 * digit and y is one of 8, 9, A, or B (e.g., f47ac10b-58cc-4372-a567-0e02b2c3d479).
 	 *
 	 *<code>
-	 * $random = new \Phalcon\Security\Random();
+	 * $random = new \Vof\Security\Random();
 	 *
 	 * echo $random->uuid(); // 1378c906-64bb-4f81-a8d6-4ae1bfcdec22
 	 *</code>
@@ -299,59 +236,6 @@ class Random
 		array_unshift(ary, "%08x-%04x-%04x-%04x-%04x%08x");
 
 		return call_user_func_array("sprintf", ary);
-	}
-
-	/**
-	 * Generates a random number between 0 and $len
-	 *
-	 * Returns an integer: 0 <= result <= $len.
-	 *
-	 *<code>
-	 * $random = new \Phalcon\Security\Random();
-	 *
-	 * echo $random->number(16); // 8
-	 *</code>
-	 * @throws Exception If secure random number generator is not available, unexpected partial read or $len <= 0
-	 */
-	public function number(int len) -> int
-	{
-		var hex, mask, rnd, ret;
-		string bin = "";
-
-		if len <= 0 {
-			throw new Exception("Require a positive integer > 0");
-		}
-
-		if function_exists("random_int") {
-			return random_int(0, len);
-		}
-
-		if function_exists("\\Sodium\\randombytes_uniform") {
-			// \Sodium\randombytes_uniform will return a random integer between 0 and len - 1
-			return \\Sodium\\randombytes_uniform(len) + 1;
-		}
-
-		let hex = dechex(len);
-
-		if (strlen(hex) & 1) == 1 {
-			let hex = "0" . hex;
-		}
-
-		let bin .= pack("H*", hex);
-
-		let mask = ord(bin[0]);
-		let mask = mask | (mask >> 1);
-		let mask = mask | (mask >> 2);
-		let mask = mask | (mask >> 4);
-
-		do {
-			let rnd = this->bytes(strlen(bin));
-			let rnd = substr_replace(rnd, chr(ord(substr(rnd, 0, 1)) & mask), 0, 1);
-		} while bin < rnd;
-
-		let ret = unpack("H*", rnd);
-
-		return hexdec(array_shift(ret));
 	}
 
 	/**
