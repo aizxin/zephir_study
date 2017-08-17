@@ -423,12 +423,12 @@ class Medoo
 					switch (map[ 1 ])
 					{
 						case "Number":
-						// case "Int":
-							let stack[ column_key ] = integer(data[ column_key ]);
+						case "Int":
+							let stack[ column_key ] = intval(data[ column_key ]);
 							break;
 
 						case "Bool":
-							let stack[ column_key ] = boolean(data[ column_key ]);
+							let stack[ column_key ] = (boolean) data[ column_key ];
 							break;
 
 						case "Object":
