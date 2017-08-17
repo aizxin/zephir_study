@@ -52,6 +52,16 @@
         "check-invalid-reads": false,
         "internal-call-transformation": false
     },
+    "globals": {
+        "db.escape_identifiers": {
+            "type": "bool",
+            "default": true
+        },
+        "db.force_casting": {
+            "type": "bool",
+            "default": false
+        }
+    },
     "namespace": "vof",
     "name": "vof",
     "description": "",
