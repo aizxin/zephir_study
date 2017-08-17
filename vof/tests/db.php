@@ -47,12 +47,12 @@ $database = new Medoo($data);
 // $data = $database->query("SELECT email FROM member_bill")->fetchAll();
 // var_dump($data);
 
-$data1 = $database->query(
-    "SELECT * FROM member WHERE id = :id", [
-        ":id" => 19
-    ]
-)->fetchAll();
-var_dump($data1);
+// $data1 = $database->query(
+//     "SELECT * FROM member WHERE id = :id", [
+//         ":id" => 19
+//     ]
+// )->fetchAll();
+// var_dump($data1);
 //  测试 select
 $datas = $database->select("member", "*");
 var_dump($datas);

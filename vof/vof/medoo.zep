@@ -636,7 +636,7 @@ class Medoo
         {
             let column = this->columnPush(columns);
         }
-
+        var_dump(column);
         return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
     }
 
