@@ -53,7 +53,9 @@ $data1 = $database->query(
     ]
 )->fetchAll();
 var_dump($data1);
-
+//  测试 select
+$datas = $database->select("member", "*");
+var_dump($datas);
 // log
 var_dump($database->log());
 // last
