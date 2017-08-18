@@ -537,7 +537,7 @@ class Medoo
                 {
                     if (is_string(relation))
                     {
-                        let relation = "USING ('" . relation . "')";
+                        let relation = "USING (`" . relation . "`)";
                     }
 
                     if (is_array(relation))
@@ -545,7 +545,7 @@ class Medoo
                         // For ['column1', 'column2']
                         if (isset(relation[ 0 ]))
                         {
-                            let relation = "USING ('" . implode("', '",relation) . "')";
+                            let relation = "USING (`" . implode("`, `",relation) . "`)";
                         }
                         else
                         {
@@ -557,10 +557,10 @@ class Medoo
                                         this->columnQuote(key) :
 
                                         // For ['column1' => 'column2']
-                                        table . ".'" . key . "'"
+                                        table . ".`" . key . "`"
                                 ) .
                                 " = " .
-                                this->tableQuote(isset(match1[ "alias" ]) ? match1[ "alias" ] : match1[ "table" ]) . ".'" . value . "'";
+                                this->tableQuote(isset(match1[ "alias" ]) ? match1[ "alias" ] : match1[ "table" ]) . ".`" . value . "`";
                             }
 
                             let relation = "ON " . implode(" AND ",joins);
