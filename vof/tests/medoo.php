@@ -1,5 +1,5 @@
 <?php
-	// require 'vendor/autoload.php';
+	require 'vendor/autoload.php';
 
 	// Using Medoo namespace
 	use Medoo\Medoo;
@@ -25,16 +25,26 @@
 		]
 	]);
 
-	$data = $database->query("SELECT email FROM member_bill")->fetchAll();
-	var_dump($data);
-	// $data1 = $database->query(
-	//     "SELECT * FROM member WHERE id = :id", [
-	//         ":id" => 19
-	//     ]
-	// )->fetchAll();
-	// var_dump($data);
-	$datas = $database->select("member", "*");
-	var_dump($datas);
+	// $data = $database->query("SELECT email FROM member_bill")->fetchAll();
+	var_dump($database);
+	// // $data1 = $database->query(
+	// //     "SELECT * FROM member WHERE id = :id", [
+	// //         ":id" => 19
+	// //     ]
+	// // )->fetchAll();
+	// // var_dump($data);
+	// $datas = $database->select("member", "*");
+	// var_dump($datas);
 	// log
+	$datas = $database->select("member",[
+    	"[>]member_bill" => ["id" => "memberId"]
+	],[
+	    "member.id",
+	    "member_bill.email"
+	],[
+	    "LIMIT" => 50
+	]);
+	var_dump($datas);
+// log
 	var_dump($database->log());
 ?>
