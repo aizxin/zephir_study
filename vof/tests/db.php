@@ -57,7 +57,7 @@ $database = new Medoo($data);
 // $datas = $database->select("member", "*");
 
 $datas = $database->select("member",[
-    "[>]member_bill" => ["memberId" => "id"]
+    "[>]member_bill" => ["id" => "memberId"]
 ],[
     "member.id",
     "member_bill.email"
