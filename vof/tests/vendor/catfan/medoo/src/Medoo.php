@@ -1045,9 +1045,9 @@ class Medoo
 		$is_single_column = (is_string($column) && $column !== '*');
 
 		$query = $this->exec($this->selectContext($table, $map, $join, $columns, $where), $map);
+		var_dump($columns);
 
 		$this->columnMap($columns, $column_map);
-
 		if (!$query)
 		{
 			return false;
@@ -1482,7 +1482,7 @@ class Medoo
 	{
 		return array_map(function ($log)
 			{
-				var_dump($log);
+				// var_dump($log);
 				// var_dump($log);
 				return $this->generate($log[ 0 ], $log[ 1 ]);
 			},
