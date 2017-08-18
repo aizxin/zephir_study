@@ -710,9 +710,9 @@ class Medoo
 
 				if (is_array(group))
 				{
-					var stack = [],value1,column;
+					var stack = [],value1;
 
-					for column,value1 in group
+					for value1 in group
 					{
 						let stack[] = this->columnQuote(value1);
 					}
@@ -790,8 +790,7 @@ class Medoo
 					let where_clause .= " LIMIT " . limit;
 				}
 
-				if (is_array(limit) && is_numeric(limit[ 0 ]) && is_numeric(limit[ 1 ])
-				)
+				if (is_array(limit) && is_numeric(limit[ 0 ]) && is_numeric(limit[ 1 ]))
 				{
 					let where_clause .= " LIMIT " . limit[ 1 ] . " OFFSET " . limit[ 0 ];
 				}
