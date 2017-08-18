@@ -54,7 +54,16 @@ $database = new Medoo($data);
 // )->fetchAll();
 // var_dump($data1);
 //  测试 select
-$datas = $database->select("member", "*");
+// $datas = $database->select("member", "*");
+
+$datas = $database->select("member",[
+    "[>]member_bill" => ["memberId" => "id"]
+],[
+    "member.id",
+    "member_bill.email"
+],[
+    "LIMIT" => 50
+]);
 var_dump($datas);
 // log
 var_dump($database->log());

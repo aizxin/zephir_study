@@ -377,7 +377,7 @@ class Medoo
 
         let query = this->exec(this->selectContext(table, map, join, columns, where), map);
 
-        var_dump(columns);
+        // var_dump(columns);
         if (query)
         {
             return false;
@@ -636,7 +636,7 @@ class Medoo
         {
             let column = this->columnPush(columns);
         }
-        var_dump("SELECT " . column . " FROM " . table_query . this->whereClause(where, map));
+        // var_dump("SELECT " . column . " FROM " . table_query . this->whereClause(where, map));
         return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
     }
 
