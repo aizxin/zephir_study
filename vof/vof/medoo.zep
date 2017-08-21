@@ -395,7 +395,7 @@ class Medoo
         }
         var fetchMethod;
         let fetchMethod="fetch";
-        var_dump(is_single_column);
+        // var_dump(is_single_column);
         let column_map = this->columnMap(columns, column_map);
 
         let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
