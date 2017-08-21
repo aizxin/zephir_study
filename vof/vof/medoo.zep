@@ -368,6 +368,9 @@ class Medoo
 
     /////////////////////////////////////////////////////////////////////////////////////////////////  1
 
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////// 1
     public function select(table, join, columns = null, where = null)
     {
         var column,map=[],stack=[],column_map=[],index=0,is_single_column,query = null,data,current_stack = [];
@@ -412,7 +415,6 @@ class Medoo
 
         //     let index++;
         // }
-
         // return stack;
     }
     protected function dataMap(data, columns, column_map, stack) -> array
@@ -467,9 +469,6 @@ class Medoo
 		var_dump(stack);
 		return stack;
     }
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////// 1
 
 	protected function columnMap(columns, stack) -> array
 	{
