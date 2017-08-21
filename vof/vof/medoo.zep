@@ -392,23 +392,28 @@ class Medoo
         {
             return query->fetchAll(\PDO::FETCH_COLUMN);
         }
-        var fetchMethod;
-        let fetchMethod = "fetch";
-        let column_map = this->columnMap(columns, column_map);
-        let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
-        while (data)
-        {
-       		var_dump(column_map);
-       		var_dump(current_stack);
-
-            let current_stack = this->dataMap(data, columns, column_map, current_stack);
-
-            let stack[ index ] = current_stack;
-
-            let index++;
+        let data = query->fetchAll(\PDO::FETCH_ASSOC);
+        if(data){
+        	return data;
+        }else{
+            return false;
         }
+        // var fetchMethod;
+        // let fetchMethod = "fetch";
+        // let column_map = this->columnMap(columns, column_map);
+        // while (data)
+        // {
+       	// 	var_dump(column_map);
+       	// 	var_dump(current_stack);
 
-        return stack;
+        //     let current_stack = this->dataMap(data, columns, column_map, current_stack);
+
+        //     let stack[ index ] = current_stack;
+
+        //     let index++;
+        // }
+
+        // return stack;
     }
     protected function dataMap(data, columns, column_map, stack) -> array
     {
