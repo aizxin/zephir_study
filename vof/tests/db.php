@@ -56,9 +56,10 @@ $database = new Medoo($data);
 // )->fetchAll();
 // var_dump($data1);
 //  测试 select
-// $datas = $database->select("member", "*");
+$datas1 = $database->select("member", "*");
+var_dump($datas1);
 
-$datas = $database->select("member",[
+$datas2 = $database->select("member",[
     "[>]member_bill" => ["id" => "memberId"]
 ],[
     "member.id",
@@ -66,7 +67,7 @@ $datas = $database->select("member",[
 ],[
     "LIMIT" => 50
 ]);
-var_dump($datas);
+var_dump($datas2);
 // log
 var_dump($database->log());
 // last
