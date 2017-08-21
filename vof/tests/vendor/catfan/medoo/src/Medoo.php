@@ -833,7 +833,7 @@ class Medoo
 			foreach($join as $sub_table => $relation)
 			{
 				preg_match('/(\[(?<join>\<|\>|\>\<|\<\>)\])?(?<table>[a-zA-Z0-9_]+)\s?(\((?<alias>[a-zA-Z0-9_]+)\))?/', $sub_table, $match);
-				var_dump($match);
+
 				if ($match[ 'join' ] !== '' && $match[ 'table' ] !== '')
 				{
 					if (is_string($relation))
@@ -865,9 +865,8 @@ class Medoo
 								' = ' .
 								$this->tableQuote(isset($match[ 'alias' ]) ? $match[ 'alias' ] : $match[ 'table' ]) . '."' . $value . '"';
 							}
-							var_dump($joins);
+
 							$relation = 'ON ' . implode($joins, ' AND ');
-							var_dump($relation);
 						}
 					}
 
@@ -881,7 +880,7 @@ class Medoo
 					$table_join[] = $join_array[ $match[ 'join' ] ] . ' JOIN ' . $table_name . $relation;
 				}
 			}
-			var_dump(implode($table_join, ' '));
+
 			$table_query .= ' ' . implode($table_join, ' ');
 		}
 		else

@@ -331,7 +331,7 @@ class Medoo
 			}
 			statement->execute();
 			let this->statement = statement;
-			var_dump(statement);
+			// var_dump(statement);
 			return statement;
 		}
 		else
@@ -379,7 +379,6 @@ class Medoo
         let query = this->exec(this->selectContext(table, map, join, columns, where), map);
         let columns = columns == null ? "*" : columns;
 
-        var_dump(is_single_column);
         var_dump(column);
         if (query == false)
         {
@@ -394,12 +393,13 @@ class Medoo
         {
             return query->fetchAll(\PDO::FETCH_COLUMN);
         }
+        var_dump(is_single_column);
         var fetchMethod;
-        let fetchMethod="fetch";
+        let fetchMethod = "fetch";
         let column_map = this->columnMap(columns, column_map);
-
+        var_dump(column_map);
         let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
-
+        var_dump(data);
         while (data)
         {
 
