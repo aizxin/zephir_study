@@ -376,7 +376,7 @@ class Medoo
         let is_single_column = is_string(column) && column !== "*";
 
         let query = this->exec(this->selectContext(table, map, join, columns, where), map);
-
+        let columns = columns == null ? "*" : columns;
         var_dump(query);
         if (query)
         {
