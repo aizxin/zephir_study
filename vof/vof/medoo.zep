@@ -478,7 +478,7 @@ class Medoo
 			{
 				preg_match("/(?<column>[a-zA-Z0-9_\.]*)(?:\s*\((?<alias>[a-zA-Z0-9_]+)\)|\s*\[(?<type>(String|Bool|Int|Number|Object|JSON))\])?/i", value, key_match);
 
-				let column_key = !empty(key_match[ "alias" ]) ? key_match[ "alias" ] : preg_replace("/^[\w]*\./i", "", key_match[ "column" ]);
+				let column_key = isset(key_match[ "alias" ]) ? key_match[ "alias" ] : preg_replace("/^[\w]*\./i", "", key_match[ "column" ]);
 
 				if (isset(key_match[ "type" ]))
 				{
@@ -1036,7 +1036,7 @@ class Medoo
             {
                 preg_match("/(?<column>[a-zA-Z0-9_\.]+)(?:\s*\((?<alias>[a-zA-Z0-9_]+)\)|\s*\[(?<type>(String|Bool|Int|Number|Object|JSON))\])?/i", value, match2);
 
-                if (!empty(match2[ "alias" ]))
+                if (isset(match2[ "alias" ]))
                 {
                     let stack[] = this->columnQuote( match2[ "column" ] ) . " AS " . this->columnQuote( match2[ "alias" ] );
 
