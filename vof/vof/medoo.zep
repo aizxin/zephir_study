@@ -399,6 +399,9 @@ class Medoo
         while (data)
         {
        		var_dump(data);
+       		var_dump(columns);
+       		var_dump(column_map);
+       		var_dump(current_stack);
 
             let current_stack = this->dataMap(data, columns, column_map, current_stack);
 
@@ -414,8 +417,7 @@ class Medoo
     	var key,value,map,column_key,current_stack = [];
     	for key,value in columns
 		{
-			var_dump(is_int(key));
-			if (key > 0)
+			if (is_int(key))
 			{
 				let map = column_map[ value ];
 				let column_key = map[ 0 ];
