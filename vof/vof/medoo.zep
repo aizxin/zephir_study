@@ -320,8 +320,8 @@ class Medoo
 		{
 			let this->logs = [[query, map]];
 		}
-		var_dump(query);
 		let statement = this->pdo->prepare(query);
+		var_dump(statement);
 		if (statement)
 		{
 			if(!empty(map)){
