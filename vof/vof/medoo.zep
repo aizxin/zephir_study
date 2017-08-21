@@ -377,8 +377,6 @@ class Medoo
 
         let query = this->exec(this->selectContext(table, map, join, columns, where), map);
         let columns = columns == null ? "*" : columns;
-        var_dump(columns);
-        var_dump(query);
         if (query)
         {
             return false;
@@ -395,14 +393,15 @@ class Medoo
         }
         var fetchMethod;
         let fetchMethod="fetch";
-        this->columnMap(columns, column_map);
+        var_dump(is_single_column);
+        let column_map = this->columnMap(columns, column_map);
 
         let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
 
         while (data)
         {
 
-            this->dataMap(data, columns, column_map, current_stack);
+            let current_stack = this->dataMap(data, columns, column_map, current_stack);
 
             let stack[ index ] = current_stack;
 
@@ -411,7 +410,7 @@ class Medoo
 
         return stack;
     }
-    protected function dataMap(data, columns, column_map, stack) -> void
+    protected function dataMap(data, columns, column_map, stack) -> array
     {
     	var key,value,map,column_key,current_stack = [];
     	for key,value in columns
@@ -455,11 +454,12 @@ class Medoo
 			else
 			{
 
-				this->dataMap(data, value, column_map, current_stack);
+				let current_stack = this->dataMap(data, value, column_map, current_stack);
 
 				let stack[ key ] = current_stack;
 			}
 		}
+		return stack;
     }
 
 
