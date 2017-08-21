@@ -45,9 +45,9 @@ $database = new Medoo($data);
 
 // 测试 query
 // $sql = "SELECT email FROM member_bill";
-$sql = "SELECT `member`.`id`,`member_bill`.`email` FROM `member` LEFT JOIN `member_bill` ON `member`.`id` = `member_bill`.`memberId` LIMIT 50";
-$data = $database->query($sql)->fetchAll();
-var_dump($data);
+// $sql = "SELECT `member`.`id`,`member_bill`.`email` FROM `member` LEFT JOIN `member_bill` ON `member`.`id` = `member_bill`.`memberId` LIMIT 50";
+// $data = $database->query($sql)->fetchAll();
+// var_dump($data);
 
 // $data1 = $database->query(
 //     "SELECT * FROM member WHERE id = :id", [
