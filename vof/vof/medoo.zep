@@ -398,8 +398,6 @@ class Medoo
         let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
         while (data)
         {
-       		var_dump(data);
-       		var_dump(columns);
        		var_dump(column_map);
        		var_dump(current_stack);
 
