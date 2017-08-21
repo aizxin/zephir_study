@@ -370,7 +370,7 @@ class Medoo
 
     public function select(table, join, columns = null, where = null)
     {
-        var column,map=[],stack=[],column_map=[],index=0,is_single_column,query,data,current_stack = [];
+        var column,map=[],stack=[],column_map=[],index=0,is_single_column,query = null,data,current_stack = [];
 
         let column = where === null ? join : columns;
 
@@ -379,7 +379,7 @@ class Medoo
         let query = this->exec(this->selectContext(table, map, join, columns, where), map);
         let columns = columns == null ? "*" : columns;
         var_dump(query);
-        if (query)
+        if (query == null)
         {
             return false;
         }
