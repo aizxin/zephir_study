@@ -253,7 +253,7 @@ class Medoo
 				isset(options["charset"])
 			)
 			{
-				let commands[] = "SET NAMES '" . options["charset"] . "'";
+				let commands[] = "SET NAMES " . options["charset"];
 			}
 			let this->pdo = new \PDO(
 				dsn,
@@ -466,7 +466,7 @@ class Medoo
 
 	protected function columnMap(columns, stack) -> array
 	{
-		if (columns === '*')
+		if (columns === "*")
 		{
 			return stack;
 		}
@@ -519,7 +519,7 @@ class Medoo
 
         if (
             isset(join_key[ 0 ]) &&
-            strpos(join_key[ 0 ], '[') === 0
+            strpos(join_key[ 0 ], "[") === 0
         )
         {
             let join_array = [
@@ -848,7 +848,7 @@ class Medoo
                     {
                         let operator = match1[ 4 ];
 
-                        if (operator == '!')
+                        if (operator == "!")
                         {
                             switch (type)
                             {
@@ -997,7 +997,7 @@ class Medoo
             let stack[] = is_int(value) ? value : this->pdo->quote(value);
         }
 
-        return implode(',',stack);
+        return implode(",",stack);
     }
 
     protected function innerConjunct(data, conjunctor, outer_conjunctor)
@@ -1058,15 +1058,15 @@ class Medoo
 
         if (isset(column_match[ 2 ])&& isset(column_match[ 3 ]))
         {
-            return "'" . this->prefix . column_match[ 2 ] . "'.'" . column_match[ 3 ] . "'";
+            return "`" . this->prefix . column_match[ 2 ] . "`.`" . column_match[ 3 ] . "`";
         }
 
-        return "'" . str . "'";
+        return "`" . str . "`";
     }
 
 	protected function tableQuote(table)
 	{
-		return "'" . this->prefix . table . "'";
+		return "`" . this->prefix . table . "`";
 	}
 
 	public function debug()
