@@ -395,11 +395,10 @@ class Medoo
         var fetchMethod;
         let fetchMethod = "fetch";
         let column_map = this->columnMap(columns, column_map);
-        var_dump(column_map);
         let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
-        var_dump(data);
         while (data)
         {
+       		var_dump(data);
 
             let current_stack = this->dataMap(data, columns, column_map, current_stack);
 
@@ -415,7 +414,8 @@ class Medoo
     	var key,value,map,column_key,current_stack = [];
     	for key,value in columns
 		{
-			if (is_int(key))
+			var_dump(is_int(key));
+			if (key > 0)
 			{
 				let map = column_map[ value ];
 				let column_key = map[ 0 ];
@@ -459,6 +459,7 @@ class Medoo
 				let stack[ key ] = current_stack;
 			}
 		}
+		var_dump(stack);
 		return stack;
     }
 
