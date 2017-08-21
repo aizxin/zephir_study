@@ -395,15 +395,15 @@ class Medoo
         {
             return query->fetchAll(\PDO::FETCH_COLUMN);
         }
-        let data = query->fetchAll(\PDO::FETCH_ASSOC);
+        var fetchMethod;
+        let fetchMethod = "fetch";
+        let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
+        let column_map = this->columnMap(columns, column_map);
         if(data){
-        	return data;
+            return data;
         }else{
             return false;
         }
-        // var fetchMethod;
-        // let fetchMethod = "fetch";
-        // let column_map = this->columnMap(columns, column_map);
         // while (data)
         // {
        	// 	var_dump(column_map);
