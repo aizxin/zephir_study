@@ -1062,8 +1062,9 @@ class Medoo
 		{
 			return $query->fetchAll(PDO::FETCH_COLUMN);
 		}
-
-		while ($data = $query->fetch(PDO::FETCH_ASSOC))
+		$data = $query->fetch(PDO::FETCH_ASSOC);
+		var_dump($data);
+		while ($data)
 		{
 			$current_stack = [];
 
@@ -1107,7 +1108,7 @@ class Medoo
 			{
 				if (strpos($key, '#') === 0)
 				{
-					$values[] = $this->fnQuote($key, $data[ $key ]);	
+					$values[] = $this->fnQuote($key, $data[ $key ]);
 					continue;
 				}
 
