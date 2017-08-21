@@ -320,6 +320,7 @@ class Medoo
 		{
 			let this->logs = [[query, map]];
 		}
+		var_dump(query);
 		let statement = this->pdo->prepare(query);
 		if (statement)
 		{
@@ -377,11 +378,11 @@ class Medoo
 
         let query = this->exec(this->selectContext(table, map, join, columns, where), map);
         let columns = columns == null ? "*" : columns;
+        var_dump(query);
         if (query)
         {
             return false;
         }
-        var_dump(query);
         var_dump(columns);
         if (columns === "*")
         {
