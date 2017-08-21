@@ -377,12 +377,11 @@ class Medoo
 
         let query = this->exec(this->selectContext(table, map, join, columns, where), map);
         let columns = columns == null ? "*" : columns;
-        var_dump(columns);
         if (query)
         {
             return false;
         }
-
+        var_dump(query);
         var_dump(columns);
         if (columns === "*")
         {
