@@ -321,7 +321,6 @@ class Medoo
 			let this->logs = [[query, map]];
 		}
 		let statement = this->pdo->prepare(query);
-		var_dump(statement);
 		if (statement)
 		{
 			if(!empty(map)){
@@ -332,6 +331,7 @@ class Medoo
 			}
 			statement->execute();
 			let this->statement = statement;
+			var_dump(statement);
 			return statement;
 		}
 		else
@@ -378,12 +378,10 @@ class Medoo
 
         let query = this->exec(this->selectContext(table, map, join, columns, where), map);
         let columns = columns == null ? "*" : columns;
-        var_dump(query);
-        if (query == null)
+        if (query == false)
         {
             return false;
         }
-        var_dump(columns);
         if (columns === "*")
         {
             return query->fetchAll(\PDO::FETCH_ASSOC);
@@ -393,9 +391,9 @@ class Medoo
         {
             return query->fetchAll(\PDO::FETCH_COLUMN);
         }
+        var_dump(is_single_column);
         var fetchMethod;
         let fetchMethod="fetch";
-        // var_dump(is_single_column);
         let column_map = this->columnMap(columns, column_map);
 
         let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
