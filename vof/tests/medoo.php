@@ -26,9 +26,9 @@
 		 	PDO :: ATTR_CASE => PDO :: CASE_NATURAL
 		]
 	]);
-	$sql = "SELECT 'member'.'id','member_bill'.'email' FROM 'member' LEFT JOIN 'member_bill' ON 'member'.'id' = 'member_bill'.'memberId' LIMIT 50";
+	$sql = "SELECT `member`.`id`,`member_bill`.`email` FROM `member` LEFT JOIN `member_bill` ON `member`.`id` = `member_bill`.`memberId` LIMIT 50";
 
-	// $data = $database->query("SELECT email FROM member_bill")->fetchAll();
+	$data = $database->query("SELECT email FROM member_bill")->fetchAll();
 	// $data = $database->query($sql)->fetchAll();
 	// var_dump($database);
 	// // $data1 = $database->query(
@@ -48,8 +48,8 @@
 	],[
 	    "LIMIT" => 50
 	]);
-	// var_dump($data);
+	var_dump($data);
 // log
-	// var_dump($sql);
+	var_dump($sql);
 	var_dump($database->log());
 ?>
