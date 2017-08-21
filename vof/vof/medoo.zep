@@ -383,7 +383,7 @@ class Medoo
         {
             return false;
         }
-        // var_dump(columns);
+        var_dump(columns);
         if (columns === "*")
         {
             return query->fetchAll(\PDO::FETCH_ASSOC);
