@@ -9,7 +9,8 @@
 		'database_type'=>'mysql',
 		'database_name'=>'medoo',      //数据库名称
 		// 'server'=>'127.0.0.1',        //数据库连接地址
-		'server'=>'rm-wz9435289632q5m4ao.mysql.rds.aliyuncs.com',        //数据库连接地址
+		'server'=>'rm-wz9435289632q5m4a.mysql.rds.aliyuncs.com',        //数据库连接地址
+		// 'server'=>'rm-wz9435289632q5m4ao.mysql.rds.aliyuncs.com',        //数据库连接地址
 		'username'=>'root',  //用户名
 		// 'password'=>'root',  //密码
 		'password'=>'0FKeMf10gle2ml670Rz8',  //密码
