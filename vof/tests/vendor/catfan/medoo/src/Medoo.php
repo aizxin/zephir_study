@@ -1063,7 +1063,7 @@ class Medoo
 			return $query->fetchAll(PDO::FETCH_COLUMN);
 		}
 		$data = $query->fetch(PDO::FETCH_ASSOC);
-		var_dump($data);
+		// var_dump($data);
 		while ($data)
 		{
 			$current_stack = [];
