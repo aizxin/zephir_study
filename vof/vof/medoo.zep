@@ -380,12 +380,11 @@ class Medoo
         var column,map=[],stack=[],column_map=[],index=0,is_single_column,query = null,data,current_stack;
 
         let column = where === null ? join : columns;
-        var_dump(column);
         let is_single_column = is_string(column) && column !== "*";
-        var_dump(is_single_column);
 
         let query = this->exec(this->selectContext(table, map, join, columns, where), this->map);
         let columns =  this->columns;
+        var_dump(query);
         if (query == false)
         {
             return false;
