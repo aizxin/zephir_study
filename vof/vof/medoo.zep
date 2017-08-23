@@ -1013,13 +1013,13 @@ class Medoo
     protected function columnPush(columns) -> string
     {
 
+        var stack = [],key,value,match2;
         if (columns === "*" || is_string(columns))
         {
-        	let columns = [columns];
-        	var_dump(columns);
+        	let stack = [columns];
+        	var_dump(stack);
             return columns;
         }
-        var stack = [],key,value,match2;
         for key,value in columns
         {
             if (is_array(value))
