@@ -634,10 +634,8 @@ class Medoo
         {
         	var_dump(columns);
             let column = this->columnPush(columns);
-        	var_dump(column);
         }
         let this->columns = columns;
-        var_dump("SELECT " . column . " FROM " . table_query . this->whereClause(where, map));
         return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
     }
 
@@ -1014,18 +1012,13 @@ class Medoo
 
     protected function columnPush(columns) -> string
     {
-        if (columns === "*")
+        var_dump(columns);
+        if (columns === "*" && is_string(columns))
         {
             return columns;
         }
 
         var stack = [],key,value,match2;
-
-        if (is_string(columns))
-        {
-            let columns = [columns];
-        }
-        var_dump(columns);
         for key,value in columns
         {
             if (is_array(value))
