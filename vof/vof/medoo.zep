@@ -632,7 +632,7 @@ class Medoo
         }
         else
         {
-        	var_dump(columns);
+
             let column = this->columnPush(columns);
         }
         let this->columns = columns;
@@ -1012,12 +1012,10 @@ class Medoo
 
     protected function columnPush(columns) -> string
     {
-        var_dump(columns);
-        if (columns === "*" && is_string(columns))
+        if (columns === "*" || is_string(columns))
         {
             return columns;
         }
-
         var stack = [],key,value,match2;
         for key,value in columns
         {
