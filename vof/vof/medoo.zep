@@ -331,7 +331,6 @@ class Medoo
 			}
 			statement->execute();
 			let this->statement = statement;
-			// var_dump(statement);
 			return statement;
 		}
 		else
@@ -381,7 +380,7 @@ class Medoo
 
         let query = this->exec(this->selectContext(table, map, join, columns, where), map);
         let columns = columns == null ? "*" : columns;
-        var_dump(query);
+        var_dump(columns);
         if (query == false)
         {
             return false;
@@ -515,7 +514,6 @@ class Medoo
         }
 
         let join_key = is_array(join) ? array_keys(join) : null;
-        var_dump(join);
 
         if (isset(join_key[ 0 ]) && strpos(join_key[ 0 ], "[") === 0)
         {
