@@ -82,12 +82,13 @@ $datas5 = $database->select("member",[
 ],[
     "member.id",
     "bill"=>[
-        "member_bill.*"
+        "member_bill.email"
     ]
 ],[
-    "LIMIT" => [0,2],
+    "LIMIT" => [1,2],
     "ORDER" => ["member.id" => "DESC"],
 ]);
+var_dump(json_encode($datas5));
 var_dump($datas5);
 // log
 var_dump($database->log());

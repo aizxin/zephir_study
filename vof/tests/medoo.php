@@ -42,15 +42,29 @@
 	// $datas = $database->select("member", "*");
 	// var_dump($datas);
 	// log
-	$data2 = $database->select("member",[
-    	"[>]member_bill" => ["id" => "memberId"]
-	],[
-	    "member.id",
-	    "member_bill.email"
-	],[
-	    "LIMIT" => 50
-	]);
-	var_dump($data2);
+	// $data2 = $database->select("member",[
+ //    	"[>]member_bill" => ["id" => "memberId"]
+	// ],[
+	//     "member.id",
+	//     "member_bill.email"
+	// ],[
+	//     "LIMIT" => 50
+	// ]);
+	// var_dump($data2);
+
+$datas5 = $database->select("member",[
+    "[>]member_bill" => ["id" => "memberId"]
+],[
+    "member.id",
+    "bill"=>[
+        "member_bill.email"
+    ]
+],[
+    "LIMIT" => [1,2],
+    "ORDER" => ["member.id" => "DESC"],
+]);
+var_dump(json_encode($datas5));
+var_dump($datas5);
 // log
 	// var_dump($sql);
 	var_dump($database->log());
