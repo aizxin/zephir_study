@@ -26,6 +26,7 @@ class Medoo
     protected columns;
     protected stack;
     protected debug_mode = false;
+    
     public function __construct(options = null)
     {
         var commands, dsn, option, value, port, type, is_port, dbname, tempArray, e;

@@ -373,7 +373,7 @@ class Medoo
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
     public function select(table, join, columns = null, where = null)
     {
-        var column,map=[],stack=[],column_map=[],index=0,is_single_column,query = null,data,current_stack = [];
+        var column,map=[],stack=[],column_map=[],index=0,is_single_column,query = null,data,current_stack;
 
         let column = where === null ? join : columns;
 
@@ -399,23 +399,20 @@ class Medoo
         let fetchMethod = "fetch";
         let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
         let column_map = this->columnMap(columns, column_map);
-        if(data){
-            return data;
-        }else{
-            return false;
-        }
-        // while (data)
-        // {
-       	// 	var_dump(column_map);
-       	// 	var_dump(current_stack);
-
-        //     let current_stack = this->dataMap(data, columns, column_map, current_stack);
-
-        //     let stack[ index ] = current_stack;
-
-        //     let index++;
+        // if(data){
+        //     return data;
+        // }else{
+        //     return false;
         // }
-        // return stack;
+        while (data)
+        {
+        	let current_stack = [];
+            let current_stack = this->dataMap(data, columns, column_map, current_stack);
+            let stack[ index ] = current_stack;
+            let index++;
+            let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
+        }
+        return stack;
     }
     protected function dataMap(data, columns, column_map, stack) -> array
     {
