@@ -1032,8 +1032,8 @@ class Medoo
             else
             {
                 preg_match("/(?<column>[a-zA-Z0-9_\.]+)(?:\s*\((?<alias>[a-zA-Z0-9_]+)\)|\s*\[(?<type>(String|Bool|Int|Number|Object|JSON))\])?/i", value, match2);
-                var_dump(isset(match2[ "alias" ]));
-                if (isset(match2[ "alias" ]))
+                var_dump(!empty(match2[ "alias" ]));
+                if (!empty(match2[ "alias" ]))
                 {
                     let stack[] = this->columnQuote( match2[ "column" ] ) . " AS " . this->columnQuote( match2[ "alias" ] );
 
