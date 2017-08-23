@@ -86,6 +86,8 @@ class Medoo
 
 	protected columns = [];
 
+	protected map = [];
+
 
 	public function __construct(array! options)
 	{
@@ -381,9 +383,8 @@ class Medoo
 
         let is_single_column = is_string(column) && column !== "*";
 
-        let query = this->exec(this->selectContext(table, map, join, columns, where), map);
+        let query = this->exec(this->selectContext(table, map, join, columns, where), this->map);
         let columns =  this->columns;
-        var_dump(columns);
         if (query == false)
         {
             return false;
@@ -641,7 +642,7 @@ class Medoo
     protected function whereClause(where, map) -> string
 	{
 		var group,map_key,columns,where_clause,where_keys,where_OR,where_AND,single_condition,condition,value,match1,mode,mode_array=[];
-
+		let this->map = [];
 		if (is_array(where))
 		{
 			let where_keys = array_keys(where);
@@ -801,7 +802,7 @@ class Medoo
 				let where_clause .= " " . where;
 			}
 		}
-
+		let this->map = map;
 		return where_clause;
 	}
 
