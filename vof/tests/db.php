@@ -56,27 +56,39 @@ $database = new Medoo($data);
 // )->fetchAll();
 // var_dump($data1);
 //  测试 select
-$datas1 = $database->select("member", "*");
-var_dump($datas1);
-$datas3 = $database->select("member", "name,phone");
-var_dump($datas3);
-$datas2 = $database->select("member",[
+// $datas1 = $database->select("member", "*");
+// var_dump($datas1);
+// $datas3 = $database->select("member", "name,phone");
+// var_dump($datas3);
+// $datas2 = $database->select("member",[
+//     "[>]member_bill" => ["id" => "memberId"]
+// ],[
+//     "member.id",
+//     "member_bill.email"
+// ],[
+//     "LIMIT" => 50,
+//     "ORDER" => ["member.id" => "DESC"],
+// ]);
+// var_dump($datas2);
+// $data4 = $database->select("member", array(
+//     "id",
+//     "phone(my_phone)"
+// ), array(
+//     "LIMIT" => 20
+// ));
+// var_dump($data4);
+$datas5 = $database->select("member",[
     "[>]member_bill" => ["id" => "memberId"]
 ],[
     "member.id",
-    "member_bill.email"
+    "bill"=>[
+        "member_bill.*"
+    ]
 ],[
-    "LIMIT" => 50,
+    "LIMIT" => [0,2],
     "ORDER" => ["member.id" => "DESC"],
 ]);
-var_dump($datas2);
-$data4 = $database->select("member", array(
-    "id",
-    "phone(my_phone)"
-), array(
-    "LIMIT" => 20
-));
-var_dump($data4);
+var_dump($datas5);
 // log
 var_dump($database->log());
 // last
