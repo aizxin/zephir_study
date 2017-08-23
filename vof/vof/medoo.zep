@@ -399,6 +399,8 @@ class Medoo
         let fetchMethod = "fetch";
         let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
         let column_map = this->columnMap(columns, column_map);
+        var_dump(columns);
+        var_dump(column_map);
         while (data)
         {
         	let current_stack = [];
@@ -460,7 +462,6 @@ class Medoo
 				let stack[ key ] = current_stack;
 			}
 		}
-		var_dump(stack);
 		return stack;
     }
 
@@ -636,6 +637,7 @@ class Medoo
         {
             let column = this->columnPush(columns);
         }
+        var_dump(columns);
         return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
     }
 
