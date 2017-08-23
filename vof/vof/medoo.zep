@@ -632,7 +632,6 @@ class Medoo
         }
         else
         {
-
             let column = this->columnPush(columns);
         }
         let this->columns = columns;
@@ -1012,13 +1011,17 @@ class Medoo
 
     protected function columnPush(columns) -> string
     {
+        var_dump(columns);
+        if (columns === "*")
+        {
+            return columns;
+        }
 
         var stack = [],key,value,match2;
-        if (columns === "*" || is_string(columns))
+
+        if (is_string(columns))
         {
-        	let stack = [columns];
-        	var_dump(stack);
-            return columns;
+            let columns = [columns];
         }
         for key,value in columns
         {
@@ -1029,7 +1032,7 @@ class Medoo
             else
             {
                 preg_match("/(?<column>[a-zA-Z0-9_\.]+)(?:\s*\((?<alias>[a-zA-Z0-9_]+)\)|\s*\[(?<type>(String|Bool|Int|Number|Object|JSON))\])?/i", value, match2);
-
+                var_dump(match2);
                 if (isset(match2[ "alias" ]))
                 {
                     let stack[] = this->columnQuote( match2[ "column" ] ) . " AS " . this->columnQuote( match2[ "alias" ] );
