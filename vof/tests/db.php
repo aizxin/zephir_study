@@ -58,18 +58,18 @@ $database = new Medoo($data);
 //  测试 select
 // $datas1 = $database->select("member", "*");
 // var_dump($datas1);
-// $datas3 = $database->select("member", "name,phone");
-// var_dump($datas3);
-$datas2 = $database->select("member",[
-    "[>]member_bill" => ["id" => "memberId"]
-],[
-    "member.id",
-    "member_bill.email"
-],[
-    "LIMIT" => 50,
-    "ORDER" => ["member.id" => "DESC"],
-]);
-var_dump($datas2);
+$datas3 = $database->select("member", "name,phone");
+var_dump($datas3);
+// $datas2 = $database->select("member",[
+//     "[>]member_bill" => ["id" => "memberId"]
+// ],[
+//     "member.id",
+//     "member_bill.email"
+// ],[
+//     "LIMIT" => 50,
+//     "ORDER" => ["member.id" => "DESC"],
+// ]);
+// var_dump($datas2);
 // $data4 = $database->select("member", array(
 //     "id",
 //     "phone(my_phone)"
