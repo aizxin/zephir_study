@@ -84,6 +84,9 @@ class Medoo
 
 	protected guid = 0;
 
+	protected columns = [];
+
+
 	public function __construct(array! options)
 	{
 		var commands=[],attr=[],port,is_port,driver,stack=[],key,value,dsn,e;
@@ -379,7 +382,7 @@ class Medoo
         let is_single_column = is_string(column) && column !== "*";
 
         let query = this->exec(this->selectContext(table, map, join, columns, where), map);
-        let columns = columns == null ? "*" : columns;
+        let columns =  this->columns;
         var_dump(columns);
         if (query == false)
         {
@@ -499,7 +502,7 @@ class Medoo
     {
         var column,table_match,table_query,join_key,table_join=[],join_array=[],sub_table,relation,match1,key,value,table_name,joins=[];
         preg_match("/(?<table>[a-zA-Z0-9_]+)\s*\((?<alias>[a-zA-Z0-9_]+)\)/i", table, table_match);
-
+        let this->columns = [];
         if (isset(table_match[ "table" ]) && isset(table_match[ "alias" ]))
         {
             let table = this->tableQuote(table_match[ "table" ]);
@@ -631,7 +634,7 @@ class Medoo
         {
             let column = this->columnPush(columns);
         }
-        var_dump(columns);
+        let this->columns = columns;
         return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
     }
 
