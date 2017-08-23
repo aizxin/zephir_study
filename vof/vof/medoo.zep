@@ -384,7 +384,7 @@ class Medoo
 
         let query = this->exec(this->selectContext(table, map, join, columns, where), this->map);
         let columns =  this->columns;
-        var_dump(query);
+
         if (query == false)
         {
             return false;
@@ -1011,7 +1011,6 @@ class Medoo
 
     protected function columnPush(columns) -> string
     {
-        var_dump(columns);
         if (columns === "*")
         {
             return columns;
