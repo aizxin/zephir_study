@@ -69,6 +69,6 @@ $datas2 = $database->select("member",[
 ]);
 var_dump($datas2);
 // log
-var_dump($database->log());
+var_dump($database->info());
 // last
 // var_dump($database->last());
