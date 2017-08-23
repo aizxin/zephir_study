@@ -518,7 +518,6 @@ class Medoo
         }
 
         let join_key = is_array(join) ? array_keys(join) : null;
-        var_dump(join_key);
         if (isset(join_key[ 0 ]) && strpos(join_key[ 0 ], "[") === 0)
         {
             let join_array = [
@@ -607,7 +606,6 @@ class Medoo
                 let where = columns;
                 let columns = join;
             }
-            var_dump(columns);
         }
 
         if column_fn
@@ -634,6 +632,7 @@ class Medoo
         }
         else
         {
+        	var_dump(columns);
             let column = this->columnPush(columns);
         }
         var_dump(columns);
