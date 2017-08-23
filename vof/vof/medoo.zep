@@ -632,17 +632,17 @@ class Medoo
         }
         else
         {
-        	var_dump(columns);
             let column = this->columnPush(columns);
         }
-        var_dump(columns);
+        var_dump(column);
         let this->columns = columns;
+        var_dump("SELECT " . column . " FROM " . table_query . this->whereClause(where, map));
         return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
     }
 
     protected function whereClause(where, map) -> string
 	{
-		var group,map_key,columns,where_clause,where_keys,where_OR,where_AND,single_condition,condition,value,match1,mode,mode_array=[];
+		var group,map_key,columns,where_clause="",where_keys,where_OR,where_AND,single_condition,condition,value,match1,mode,mode_array=[];
 		let this->map = [];
 		if (is_array(where))
 		{
