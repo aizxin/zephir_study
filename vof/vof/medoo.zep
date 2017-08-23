@@ -1012,8 +1012,11 @@ class Medoo
 
     protected function columnPush(columns) -> string
     {
+
         if (columns === "*" || is_string(columns))
         {
+        	let columns = [columns];
+        	var_dump(columns);
             return columns;
         }
         var stack = [],key,value,match2;

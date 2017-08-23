@@ -58,7 +58,7 @@ $database = new Medoo($data);
 //  测试 select
 // $datas1 = $database->select("member", "*");
 // var_dump($datas1);
-$datas3 = $database->select("member", "name");
+$datas3 = $database->select("member", "name,phone");
 var_dump($datas3);
 // $datas2 = $database->select("member",[
 //     "[>]member_bill" => ["id" => "memberId"]
