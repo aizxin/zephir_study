@@ -1020,7 +1020,7 @@ class Medoo
 
         if (is_string(columns))
         {
-            let columns = [columns];
+            let columns = explode(",",columns);
         }
         var_dump(columns);
         for key,value in columns
