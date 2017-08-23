@@ -384,7 +384,7 @@ class Medoo
 
         let query = this->exec(this->selectContext(table, map, join, columns, where), this->map);
         let columns =  this->columns;
-
+        var_dump(query);
         if (query == false)
         {
             return false;
@@ -396,7 +396,7 @@ class Medoo
 
         if (is_single_column)
         {
-            return query->fetchAll(\PDO::FETCH_COLUMN);
+            return query->fetchAll(\PDO::FETCH_ASSOC);
         }
         var fetchMethod;
         let fetchMethod = "fetch";
@@ -1022,7 +1022,7 @@ class Medoo
         {
             let columns = explode(",",columns);
         }
-        var_dump(columns);
+
         for key,value in columns
         {
             if (is_array(value))
@@ -1032,7 +1032,6 @@ class Medoo
             else
             {
                 preg_match("/(?<column>[a-zA-Z0-9_\.]+)(?:\s*\((?<alias>[a-zA-Z0-9_]+)\)|\s*\[(?<type>(String|Bool|Int|Number|Object|JSON))\])?/i", value, match2);
-                var_dump(match2);
                 if (isset(match2[ "alias" ]))
                 {
                     let stack[] = this->columnQuote( match2[ "column" ] ) . " AS " . this->columnQuote( match2[ "alias" ] );
