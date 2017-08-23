@@ -95,7 +95,7 @@ $datas6 = $database->select("member",[
 ],[
     "member.id",
     "bill"=>[
-        "member_bill.email[Bool]",
+        "member_bill.email [Bool]",
         "meta" => [
             "member_bill.email"
         ]
