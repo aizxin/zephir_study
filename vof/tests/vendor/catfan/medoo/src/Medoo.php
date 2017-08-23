@@ -388,7 +388,7 @@ class Medoo
 			else
 			{
 				preg_match('/(?<column>[a-zA-Z0-9_\.]+)(?:\s*\((?<alias>[a-zA-Z0-9_]+)\)|\s*\[(?<type>(String|Bool|Int|Number|Object|JSON))\])?/i', $value, $match);
-
+				var_dump($match);
 				if (!empty($match[ 'alias' ]))
 				{
 					$stack[] = $this->columnQuote( $match[ 'column' ] ) . ' AS ' . $this->columnQuote( $match[ 'alias' ] );
