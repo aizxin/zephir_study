@@ -404,6 +404,7 @@ class Medoo
         // }else{
         //     return false;
         // }
+        var_dump(data);
         while (data)
         {
         	let current_stack = [];
