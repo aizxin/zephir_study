@@ -632,9 +632,10 @@ class Medoo
         }
         else
         {
+        	var_dump(columns);
             let column = this->columnPush(columns);
+        	var_dump(column);
         }
-        var_dump(column);
         let this->columns = columns;
         var_dump("SELECT " . column . " FROM " . table_query . this->whereClause(where, map));
         return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
@@ -1024,7 +1025,7 @@ class Medoo
         {
             let columns = [columns];
         }
-
+        var_dump(columns);
         for key,value in columns
         {
             if (is_array(value))
