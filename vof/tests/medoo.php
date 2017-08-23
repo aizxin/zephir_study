@@ -80,7 +80,7 @@ $datas6 = $database->select("member",[
     "ORDER" => ["member.id" => "DESC"],
 ]);
 var_dump(json_encode($datas6));
-var_dump($datas6);
+// var_dump($datas6);
 // log
 	// var_dump($sql);
 var_dump($database->log());
