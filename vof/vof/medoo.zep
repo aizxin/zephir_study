@@ -501,7 +501,7 @@ class Medoo
         return query ? 0 + query->fetchColumn() : false;
     }
 
-    public function action(actions)  -> boolean
+    public function action(actions) -> boolean
     {
         var result;
         if (is_callable(actions))
@@ -543,7 +543,7 @@ class Medoo
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
-    public function select(table, join, columns = null, where = null)  -> array
+    public function select(table, join, columns = null, where = null) -> array
     {
         var column,map=[],stack=[],column_map=[],index=0,is_single_column,query = null,data,current_stack;
 
