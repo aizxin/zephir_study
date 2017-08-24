@@ -114,4 +114,4 @@ var_dump($data7);
 // log
 var_dump($database->log());
 // last
-var_dump($database->info());
+// var_dump($database->info());
