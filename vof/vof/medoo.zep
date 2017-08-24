@@ -808,7 +808,6 @@ class Medoo
 
     protected function whereClause(where, map) -> string
 	{
-        var_dump(where);
 		var group,map_key,columns,where_clause="",where_keys,where_OR,where_AND,single_condition,condition,value,match1,mode,mode_array=[];
 		let this->map = [];
 		if (is_array(where))
@@ -820,7 +819,7 @@ class Medoo
 			let single_condition = array_diff_key(where, array_flip(
 				["AND", "OR", "GROUP", "ORDER", "HAVING", "LIMIT", "LIKE", "MATCH"]
 			));
-            var_dump(single_condition);
+            // var_dump(single_condition);
 			if (!empty(single_condition))
 			{
 				let condition = this->dataImplode(single_condition, map, " AND");
@@ -991,7 +990,7 @@ class Medoo
         {
             let map_key = this->mapKey();
             let type = gettype(value);
-
+            var_dump(map_key);
             if (preg_match("/^(AND|OR)(\s+#.*)?$/i", key, relation_match) && type === "array")
             {
                 let wheres[] = 0 !== count(array_diff_key(value, array_keys(array_keys(value)))) ? "(" . this->dataImplode(value, map, " " . relation_match[ 1 ]) . ")" : "(" . this->innerConjunct(value, map,  " " . relation_match[ 1 ], conjunctor) . ")";
@@ -1151,6 +1150,7 @@ class Medoo
                 }
             }
         }
+        let this->map = map;
         return implode(wheres,conjunctor . " ");
     }
 

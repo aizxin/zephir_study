@@ -618,7 +618,7 @@ class Medoo
 				}
 			}
 		}
-
+		var_dump($wheres);
 		return implode($conjunctor . ' ', $wheres);
 	}
 
@@ -792,7 +792,7 @@ class Medoo
 				$where_clause .= ' ' . $where;
 			}
 		}
-		var_dump($where_clause);
+		// var_dump($where_clause);
 		return $where_clause;
 	}
 
@@ -1045,7 +1045,7 @@ class Medoo
 		$query = $this->exec($this->selectContext($table, $map, $join, $columns, $where), $map);
 
 		$this->columnMap($columns, $column_map);
-		var_dump($column_map);
+		// var_dump($column_map);
 		if (!$query)
 		{
 			return false;
