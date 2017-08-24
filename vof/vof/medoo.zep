@@ -376,14 +376,14 @@ class Medoo
     {
         var map = [];
 
-        return this->exec("DELETE FROM " . this->tableQuote(table) . this->whereClause(where, map), $this->map);
+        return this->exec("DELETE FROM " . this->tableQuote(table) . this->whereClause(where, map), this->map);
     }
 
     public function get(table, join = null, columns = null, where = null)
     {
         var map = [],stack = [],column_map = [],column,is_single_column,query,data;
 
-        let column = $where === null ? join : columns;
+        let column = where === null ? join : columns;
 
         let is_single_column = is_string(column) && column !== "*";
 
