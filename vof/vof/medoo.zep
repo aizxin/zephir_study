@@ -801,13 +801,13 @@ class Medoo
         {
             let column = this->columnPush(columns);
         }
-        // var_dump(column);
         let this->columns = columns;
         return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
     }
 
     protected function whereClause(where, map) -> string
 	{
+        var_dump(where);
 		var group,map_key,columns,where_clause="",where_keys,where_OR,where_AND,single_condition,condition,value,match1,mode,mode_array=[];
 		let this->map = [];
 		if (is_array(where))

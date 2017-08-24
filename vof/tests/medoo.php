@@ -51,7 +51,13 @@
 	//     "LIMIT" => 50
 	// ]);
 	// var_dump($data2);
-
+$data4 = $database->select("member", array(
+    "id",
+    "phone(my_phone)"
+), array(
+    "id" => 39
+));
+var_dump($data4);
 // $datas5 = $database->select("member",[
 //     "[>]member_bill" => ["id" => "memberId"]
 // ],[
