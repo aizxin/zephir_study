@@ -444,7 +444,7 @@ class Medoo
 		foreach ($data as $key => $value)
 		{
 			$map_key = $this->mapKey();
-			var_dump($map_key);
+			// var_dump($map_key);
 			$type = gettype($value);
 
 			if (
@@ -618,7 +618,7 @@ class Medoo
 				}
 			}
 		}
-		var_dump($wheres);
+		// var_dump($wheres);
 		return implode($conjunctor . ' ', $wheres);
 	}
 
@@ -635,11 +635,11 @@ class Medoo
 			$single_condition = array_diff_key($where, array_flip(
 				['AND', 'OR', 'GROUP', 'ORDER', 'HAVING', 'LIMIT', 'LIKE', 'MATCH']
 			));
-
+			var_dump($single_condition);
 			if (!empty($single_condition))
 			{
 				$condition = $this->dataImplode($single_condition, $map, ' AND');
-
+				var_dump($condition);
 				if ($condition !== '')
 				{
 					$where_clause = ' WHERE ' . $condition;
@@ -940,7 +940,7 @@ class Medoo
 		{
 			$column = $this->columnPush($columns);
 		}
-
+		var_dump($where);
 		return 'SELECT ' . $column . ' FROM ' . $table_query . $this->whereClause($where, $map);
 	}
 
