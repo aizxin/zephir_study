@@ -378,7 +378,7 @@ class Medoo
 		{
 			$columns = [$columns];
 		}
-
+		var_dump($columns);
 		foreach ($columns as $key => $value)
 		{
 			if (is_array($value))
@@ -1064,12 +1064,12 @@ class Medoo
 			return $query->fetchAll(PDO::FETCH_COLUMN);
 		}
 
+			var_dump($column_map);
 		while ($data = $query->fetch(PDO::FETCH_ASSOC))
 		{
 			$current_stack = [];
 
 			$this->dataMap($data, $columns, $column_map, $current_stack);
-
 			$stack[ $index ] = $current_stack;
 
 			$index++;
