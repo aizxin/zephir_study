@@ -1018,141 +1018,141 @@ class Medoo
                         continue;
                     }
 
-                    if (isset(match1[ "operator" ]))
-                    {
-                        let operator = match1[ "operator" ];
+                    // if (isset(match1[ "operator" ]))
+                    // {
+                    //     let operator = match1[ "operator" ];
 
-                        if (operator === "!")
-                        {
-                            switch (type)
-                            {
-                                case "NULL":
-                                    let wheres[] = column . " IS NOT NULL";
-                                    break;
+                    //     if (operator === "!")
+                    //     {
+                    //         switch (type)
+                    //         {
+                    //             case "NULL":
+                    //                 let wheres[] = column . " IS NOT NULL";
+                    //                 break;
 
-                                case "array":
-                                    let wheres[] = column . " NOT IN (" . this->arrayQuote(value) . ")";
-                                    break;
+                    //             case "array":
+                    //                 let wheres[] = column . " NOT IN (" . this->arrayQuote(value) . ")";
+                    //                 break;
 
-                                case "integer":
-                                case "double":
-                                    let wheres[] = column . " != " . map_key;
-                                    let map[ map_key ] = [value, \PDO::PARAM_INT];
-                                    break;
+                    //             case "integer":
+                    //             case "double":
+                    //                 let wheres[] = column . " != " . map_key;
+                    //                 let map[ map_key ] = [value, \PDO::PARAM_INT];
+                    //                 break;
 
-                                case "boolean":
-                                    let wheres[] = column . " != " . map_key;
-                                    let map[ map_key ] = [(value ? "1" : "0"), \PDO::PARAM_BOOL];
-                                    break;
+                    //             case "boolean":
+                    //                 let wheres[] = column . " != " . map_key;
+                    //                 let map[ map_key ] = [(value ? "1" : "0"), \PDO::PARAM_BOOL];
+                    //                 break;
 
-                                case "string":
-                                    let wheres[] = column . " != " . map_key;
-                                    let map[ map_key ] = [value, \PDO::PARAM_STR];
-                                    break;
-                            }
-                        }
+                    //             case "string":
+                    //                 let wheres[] = column . " != " . map_key;
+                    //                 let map[ map_key ] = [value, \PDO::PARAM_STR];
+                    //                 break;
+                    //         }
+                    //     }
 
-                        if (operator === "<>" || operator === "><")
-                        {
-                            if (type === "array")
-                            {
-                                if (operator === "><")
-                                {
-                                    let column .= " NOT";
-                                }
+                    //     if (operator === "<>" || operator === "><")
+                    //     {
+                    //         if (type === "array")
+                    //         {
+                    //             if (operator === "><")
+                    //             {
+                    //                 let column .= " NOT";
+                    //             }
 
-                                let wheres[] = "(" . column . " BETWEEN " . map_key . "a AND " . map_key . "b)";
+                    //             let wheres[] = "(" . column . " BETWEEN " . map_key . "a AND " . map_key . "b)";
 
-                                let data_type = (is_numeric(value[ 0 ]) && is_numeric(value[ 1 ])) ? \PDO::PARAM_INT : \PDO::PARAM_STR;
+                    //             let data_type = (is_numeric(value[ 0 ]) && is_numeric(value[ 1 ])) ? \PDO::PARAM_INT : \PDO::PARAM_STR;
 
-                                let map[ map_key . "a" ] = [value[ 0 ], data_type];
-                                let map[ map_key . "b" ] = [value[ 1 ], data_type];
-                            }
-                        }
+                    //             let map[ map_key . "a" ] = [value[ 0 ], data_type];
+                    //             let map[ map_key . "b" ] = [value[ 1 ], data_type];
+                    //         }
+                    //     }
 
-                        if (operator === "~" || operator === "!~")
-                        {
-                            if (type !== "array")
-                            {
-                                let value = [ value ];
-                            }
+                    //     if (operator === "~" || operator === "!~")
+                    //     {
+                    //         if (type !== "array")
+                    //         {
+                    //             let value = [ value ];
+                    //         }
 
-                            let connector = ' OR ';
-                            let stack = array_values(value);
+                    //         let connector = ' OR ';
+                    //         let stack = array_values(value);
 
-                            if (is_array(stack[ 0 ]))
-                            {
-                                if (isset(value[ "AND" ]) || isset(value[ "OR" ]))
-                                {
-                                    let connector = " " . array_keys(value)[ 0 ] . " ";
-                                    let value = stack[ 0 ];
-                                }
-                            }
+                    //         if (is_array(stack[ 0 ]))
+                    //         {
+                    //             if (isset(value[ "AND" ]) || isset(value[ "OR" ]))
+                    //             {
+                    //                 let connector = " " . array_keys(value)[ 0 ] . " ";
+                    //                 let value = stack[ 0 ];
+                    //             }
+                    //         }
 
-                            let like_clauses = [];
-                            foreach (value as index => item)
-                            {
-                                let item = strval(item);
+                    //         let like_clauses = [];
+                    //         foreach (value as index => item)
+                    //         {
+                    //             let item = strval(item);
 
-                                if (!preg_match("/(\[.+\]|_|%.+|.+%)/", item))
-                                {
-                                    let item = "%" . item . "%";
-                                }
+                    //             if (!preg_match("/(\[.+\]|_|%.+|.+%)/", item))
+                    //             {
+                    //                 let item = "%" . item . "%";
+                    //             }
 
-                                let like_clauses[] = column . (operator === "!~" ? " NOT" : "") . " LIKE " . map_key . "L" . index;
-                                let map[ map_key . "L" . index ] = [item, \PDO::PARAM_STR];
-                            }
+                    //             let like_clauses[] = column . (operator === "!~" ? " NOT" : "") . " LIKE " . map_key . "L" . index;
+                    //             let map[ map_key . "L" . index ] = [item, \PDO::PARAM_STR];
+                    //         }
 
-                            let wheres[] = "(" . implode(connector, like_clauses) . ")";
-                        }
+                    //         let wheres[] = "(" . implode(like_clauses,connector) . ")";
+                    //     }
 
-                        if (in_array(operator, [">", ">=", "<", "<="]))
-                        {
-                            let condition = column . " " . operator . " ";
+                    //     if (in_array(operator, [">", ">=", "<", "<="]))
+                    //     {
+                    //         let condition = column . " " . operator . " ";
 
-                            if (is_numeric(value))
-                            {
-                                let condition .= map_key;
-                                let map[ map_key ] = [value, \PDO::PARAM_INT];
-                            }
-                            else
-                            {
-                                let condition .= map_key;
-                                let map[ map_key ] = [value, \PDO::PARAM_STR];
-                            }
+                    //         if (is_numeric(value))
+                    //         {
+                    //             let condition .= map_key;
+                    //             let map[ map_key ] = [value, \PDO::PARAM_INT];
+                    //         }
+                    //         else
+                    //         {
+                    //             let condition .= map_key;
+                    //             let map[ map_key ] = [value, \PDO::PARAM_STR];
+                    //         }
 
-                            let wheres[] = condition;
-                        }
-                    }
-                    else
-                    {
-                        switch (type)
-                        {
-                            case "NULL":
-                                let wheres[] = column . " IS NULL";
-                                break;
+                    //         let wheres[] = condition;
+                    //     }
+                    // }
+                    // else
+                    // {
+                    //     switch (type)
+                    //     {
+                    //         case "NULL":
+                    //             let wheres[] = column . " IS NULL";
+                    //             break;
 
-                            case "array":
-                                let wheres[] = column . " IN (" . this->arrayQuote(value) . ")";
-                                break;
+                    //         case "array":
+                    //             let wheres[] = column . " IN (" . this->arrayQuote(value) . ")";
+                    //             break;
 
-                            case "integer":
-                            case "double":
-                                let wheres[] = column . " = " . map_key;
-                                let map[ map_key ] = [value, \PDO::PARAM_INT];
-                                break;
+                    //         case "integer":
+                    //         case "double":
+                    //             let wheres[] = column . " = " . map_key;
+                    //             let map[ map_key ] = [value, \PDO::PARAM_INT];
+                    //             break;
 
-                            case "boolean":
-                                let wheres[] = column . " = " . map_key;
-                                let map[ map_key ] = [(value ? "1" : "0"), \PDO::PARAM_BOOL];
-                                break;
+                    //         case "boolean":
+                    //             let wheres[] = column . " = " . map_key;
+                    //             let map[ map_key ] = [(value ? "1" : "0"), \PDO::PARAM_BOOL];
+                    //             break;
 
-                            case "string":
-                                let wheres[] = column . " = " . map_key;
-                                let map[ map_key ] = [value, \PDO::PARAM_STR];
-                                break;
-                        }
-                    }
+                    //         case "string":
+                    //             let wheres[] = column . " = " . map_key;
+                    //             let map[ map_key ] = [value, \PDO::PARAM_STR];
+                    //             break;
+                    //     }
+                    // }
                 }
             }
         }
