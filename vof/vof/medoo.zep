@@ -1022,6 +1022,7 @@ class Medoo
         {
             let columns = explode(",",columns);
         }
+    	var_dump(columns);
 
         for key,value in columns
         {
