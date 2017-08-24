@@ -74,7 +74,7 @@ $data4 = $database->select("member", array(
     "id",
     "phone(my_phone)"
 ), array(
-    "LIMIT" => 20
+    "id" => 39
 ));
 var_dump($data4);
 // $datas5 = $database->select("member",[
