@@ -979,7 +979,7 @@ class Medoo
 		return ":MeDoO_" . i . "_mEdOo";
 	}
 
-    protected function dataImplode(data, map, conjunctor)
+    protected function dataImplode(data, map, conjunctor)  -> string
     {
         var index,item,condition,like_clauses,stack,connector,data_type,operator,column,match1,relation_match,type,map_key,value,key,wheres = [];
 
@@ -1147,6 +1147,7 @@ class Medoo
             }
         }
         let this->map = map;
+        var_dump(implode(wheres,conjunctor . " "));
         return implode(wheres,conjunctor . " ");
     }
 
