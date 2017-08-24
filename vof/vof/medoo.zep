@@ -402,7 +402,6 @@ class Medoo
         let fetchMethod = "fetch";
         let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
         let column_map = this->columnMap(columns, column_map);
-        var_dump(column_map);
         while (data)
         {
         	let current_stack = [];
@@ -424,7 +423,6 @@ class Medoo
 			{
 				let map = column_map[ value ];
 				let column_key = map[ 0 ];
-
 				if (isset(map[ 1 ]))
 				{
 					switch (map[ 1 ])
@@ -480,7 +478,7 @@ class Medoo
 			{
 				preg_match("/(?<column>[a-zA-Z0-9_\.]*)(?:\s*\((?<alias>[a-zA-Z0-9_]+)\)|\s*\[(?<type>(String|Bool|Int|Number|Object|JSON))\])?/i", value, key_match);
 
-				let column_key = isset(key_match[ "alias" ]) ? key_match[ "alias" ] : preg_replace("/^[\w]*\./i", "", key_match[ "column" ]);
+				let column_key = isset(key_match[ "alias" ]) && !empty(key_match[ "alias" ]) ? key_match[ "alias" ] : preg_replace("/^[\w]*\./i", "", key_match[ "column" ]);
 
 				if (isset(key_match[ "type" ]))
 				{

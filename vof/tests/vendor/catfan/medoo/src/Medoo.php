@@ -378,7 +378,7 @@ class Medoo
 		{
 			$columns = [$columns];
 		}
-		var_dump($columns);
+
 		foreach ($columns as $key => $value)
 		{
 			if (is_array($value))
@@ -388,11 +388,9 @@ class Medoo
 			else
 			{
 				preg_match('/(?<column>[a-zA-Z0-9_\.]+)(?:\s*\((?<alias>[a-zA-Z0-9_]+)\)|\s*\[(?<type>(String|Bool|Int|Number|Object|JSON))\])?/i', $value, $match);
-				// var_dump($match);
 				if (!empty($match[ 'alias' ]))
 				{
 					$stack[] = $this->columnQuote( $match[ 'column' ] ) . ' AS ' . $this->columnQuote( $match[ 'alias' ] );
-					// var_dump($stack);
 
 					$columns[ $key ] = $match[ 'alias' ];
 				}
@@ -402,7 +400,7 @@ class Medoo
 				}
 			}
 		}
-		// var_dump(implode($stack, ','));
+
 		return implode($stack, ',');
 	}
 
@@ -943,7 +941,7 @@ class Medoo
 		{
 			$column = $this->columnPush($columns);
 		}
-		var_dump($column);
+
 		return 'SELECT ' . $column . ' FROM ' . $table_query . $this->whereClause($where, $map);
 	}
 
@@ -1048,7 +1046,7 @@ class Medoo
 		$query = $this->exec($this->selectContext($table, $map, $join, $columns, $where), $map);
 
 		$this->columnMap($columns, $column_map);
-
+		var_dump($column_map);
 		if (!$query)
 		{
 			return false;
@@ -1064,12 +1062,12 @@ class Medoo
 			return $query->fetchAll(PDO::FETCH_COLUMN);
 		}
 
-			var_dump($column_map);
 		while ($data = $query->fetch(PDO::FETCH_ASSOC))
 		{
 			$current_stack = [];
 
 			$this->dataMap($data, $columns, $column_map, $current_stack);
+
 			$stack[ $index ] = $current_stack;
 
 			$index++;
