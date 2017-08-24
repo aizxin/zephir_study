@@ -90,20 +90,20 @@ var_dump($data4);
 // ]);
 // var_dump(json_encode($datas5));
 // var_dump($datas5);
-$datas6 = $database->select("member",[
-    "[>]member_bill" => ["id" => "memberId"]
-],[
-    "member.id",
-    "bill"=>[
-        "member_bill.email [Bool]",
-        "meta" => [
-            "member_bill.email"
-        ]
-    ]
-],[
-    "LIMIT" => [1,2],
-    "ORDER" => ["member.id" => "DESC"],
-]);
+// $datas6 = $database->select("member",[
+//     "[>]member_bill" => ["id" => "memberId"]
+// ],[
+//     "member.id",
+//     "bill"=>[
+//         "member_bill.email [Bool]",
+//         "meta" => [
+//             "member_bill.email"
+//         ]
+//     ]
+// ],[
+//     "LIMIT" => [1,2],
+//     "ORDER" => ["member.id" => "DESC"],
+// ]);
 // var_dump(json_encode($datas6));
 // var_dump($datas6);
 // get 测试

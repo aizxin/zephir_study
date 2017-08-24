@@ -821,7 +821,7 @@ class Medoo
             if single_condition != tmpArray2
 			{
 				let condition = this->dataImplode(single_condition, map, " AND");
-                var_dump(condition);
+                // var_dump(condition);
 				if (condition !== "")
 				{
 					let where_clause = " WHERE " . condition;
