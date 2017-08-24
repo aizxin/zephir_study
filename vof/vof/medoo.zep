@@ -994,9 +994,7 @@ class Medoo
 
             if (preg_match("/^(AND|OR)(\s+#.*)?$/i", key, relation_match) && type === "array")
             {
-                let wheres[] = 0 !== count(array_diff_key(value, array_keys(array_keys(value)))) ?
-                    "(" . this->dataImplode(value, map, " " . relation_match[ 1 ]) . ")" :
-                    "(" . this->innerConjunct(value, map,  " " . relation_match[ 1 ], conjunctor) . ")";
+                let wheres[] = 0 !== count(array_diff_key(value, array_keys(array_keys(value)))) ? "(" . this->dataImplode(value, map, " " . relation_match[ 1 ]) . ")" : "(" . this->innerConjunct(value, map,  " " . relation_match[ 1 ], conjunctor) . ")";
             }
             else
             {
@@ -1011,10 +1009,7 @@ class Medoo
 
                     if (!empty(match1[ 1 ]))
                     {
-                        let wheres[] = column .
-                            (isset(match1[ 'operator' ]) ? " " . match1[ "operator" ] . " " : " = ") .
-                            this->fnQuote(key, value);
-
+                        let wheres[] = column . (isset(match1[ 'operator' ]) ? " " . match1[ "operator" ] . " " : " = ") . this->fnQuote(key, value);
                         continue;
                     }
 
