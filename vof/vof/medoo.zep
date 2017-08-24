@@ -1085,7 +1085,7 @@ class Medoo
                             }
 
                             let like_clauses = [];
-                            foreach index,item in value
+                            for index,item in value
                             {
                                 let item = strval(item);
 
