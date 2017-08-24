@@ -543,7 +543,7 @@ class Medoo
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
-    public function select(table, join, columns = null, where = null) -> array
+    public function select(table, join, columns = null, where = null) -> float | array
     {
         var column,map=[],stack=[],column_map=[],index=0,is_single_column,query = null,data,current_stack;
 
