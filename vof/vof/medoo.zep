@@ -373,7 +373,7 @@ class Medoo
     /////////////////////////////////////////////////////////////////////////////////////////////////  1
 
 
-    public function get(table, join = null, columns = null, where = null)
+    public function get(table, join, columns = null, where = null)
     {
         var map = [],stack = [],column_map = [],column,is_single_column,query,data;
 
