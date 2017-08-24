@@ -11,10 +11,10 @@
 		'database_name'=>'kamun',      //数据库名称
 		'server'=>'127.0.0.1',        //数据库连接地址
 		// 'server'=>'rm-wz9435289632q5m4a.mysql.rds.aliyuncs.com',        //数据库连接地址
-		// 'server'=>'rm-wz9435289632q5m4ao.mysql.rds.aliyuncs.com',        //数据库连接地址
+		'server'=>'rm-wz9435289632q5m4ao.mysql.rds.aliyuncs.com',        //数据库连接地址
 		'username'=>'root',  //用户名
-		'password'=>'root',  //密码
-		// 'password'=>'0FKeMf10gle2ml670Rz8',  //密码
+		// 'password'=>'root',  //密码
+		'password'=>'0FKeMf10gle2ml670Rz8',  //密码
 		'charset'=>'utf8',            //数据库编码
 
 		// [可选的] 数据库连接端口
@@ -65,22 +65,26 @@
 // ]);
 // var_dump(json_encode($datas5));
 // var_dump($datas5);
-$datas6 = $database->select("member",[
-    "[>]member_bill" => ["id" => "memberId"]
-],[
-    "member.id",
-    "bill"=>[
-        "member_bill.email [Bool]",
-        "meta" => [
-            "member_bill.email"
-        ]
-    ]
-],[
-    "LIMIT" => [1,2],
-    "ORDER" => ["member.id" => "DESC"],
-]);
-var_dump(json_encode($datas6));
+// $datas6 = $database->select("member",[
+//     "[>]member_bill" => ["id" => "memberId"]
+// ],[
+//     "member.id",
+//     "bill"=>[
+//         "member_bill.email [Bool]",
+//         "meta" => [
+//             "member_bill.email"
+//         ]
+//     ]
+// ],[
+//     "LIMIT" => [1,2],
+//     "ORDER" => ["member.id" => "DESC"],
+// ]);
+// var_dump(json_encode($datas6));
 // var_dump($datas6);
+$data7 = $database->get("member_bill", "email", [
+    "id" => 111
+]);
+var_dump($data7);
 // log
 	// var_dump($sql);
 var_dump($database->log());

@@ -865,6 +865,7 @@ class Medoo
 
 					let columns = implode(", ",array_map([this, "columnQuote"], match1[ "columns" ]));
 					let map_key = this->mapKey();
+                    var_dump(map_key);
 					let map[ map_key ] = [match1[ "keyword" ], \PDO::PARAM_STR];
 
 					let where_clause .= (where_clause !== "" ? " AND " : " WHERE") . " MATCH (" . columns . ") AGAINST (" . map_key . mode . ")";
@@ -982,40 +983,46 @@ class Medoo
 		return ":MeDoO_" . i . "_mEdOo";
 	}
 
-	protected function dataImplode(data, conjunctor, outer_conjunctor = null)  -> string
+    protected function dataImplode(data, map, conjunctor)
     {
-        var wheres = [],key,value,type,relation_match,match1,operator,connector,stack,condition;
+        var index,item,condition,like_clauses,stack,connector,data_type,operator,column,match1,relation_match,type,map_key,value,key,wheres = [];
 
-        for key,value in data
+        foreach (data as key => value)
         {
+            let map_key = this->mapKey();
             let type = gettype(value);
 
-            if (preg_match("/^(AND|OR)(\s+#.*)?$/i", key, relation_match) && type == "array")
+            if (preg_match("/^(AND|OR)(\s+#.*)?$/i", key, relation_match) && type === "array")
             {
                 let wheres[] = 0 !== count(array_diff_key(value, array_keys(array_keys(value)))) ?
-                    "(" . this->dataImplode(value, " " . relation_match[ 1 ]) . ")" :
-                    "(" . this->innerConjunct(value, " " . relation_match[ 1 ], conjunctor) . ")";
+                    "(" . this->dataImplode(value, map, " " . relation_match[ 1 ]) . ")" :
+                    "(" . this->innerConjunct(value, map,  " " . relation_match[ 1 ], conjunctor) . ")";
             }
             else
             {
-                if (is_int(key) && preg_match("/([\w\.\-]+)\[(\>|\>\=|\<|\<\=|\!|\=)\]([\w\.\-]+)/i", value, match1)
-                )
+                if (is_int(key) && preg_match("/([a-zA-Z0-9_\.]+)\[(?<operator>\>|\>\=|\<|\<\=|\!|\=)\]([a-zA-Z0-9_\.]+)/i", value, match1))
                 {
-                    let operator = match1[ 2 ];
-
-                    let wheres[] = this->columnQuote(match1[ 1 ]) . " " . operator . " " . this->columnQuote(match1[ 3 ]);
+                    let wheres[] = this->columnQuote(match1[ 1 ]) . " " . match1[ "operator" ] . " " . this->columnQuote(match1[ 3 ]);
                 }
                 else
                 {
-                    preg_match("/(#?)([\w\.\-]+)(\[(\>|\>\=|\<|\<\=|\!|\<\>|\>\<|\!?~)\])?/i", key, match1);
-                    var column;
+                    preg_match("/(#?)([a-zA-Z0-9_\.]+)(\[(?<operator>\>|\>\=|\<|\<\=|\!|\<\>|\>\<|\!?~)\])?/i", key, match1);
                     let column = this->columnQuote(match1[ 2 ]);
 
-                    if (isset(match1[ 4 ]))
+                    if (!empty(match1[ 1 ]))
                     {
-                        let operator = match1[ 4 ];
+                        let wheres[] = column .
+                            (isset(match1[ 'operator' ]) ? " " . match1[ "operator" ] . " " : " = ") .
+                            this->fnQuote(key, value);
 
-                        if (operator == "!")
+                        continue;
+                    }
+
+                    if (isset(match1[ "operator" ]))
+                    {
+                        let operator = match1[ "operator" ];
+
+                        if (operator === "!")
                         {
                             switch (type)
                             {
@@ -1029,60 +1036,61 @@ class Medoo
 
                                 case "integer":
                                 case "double":
-                                    let wheres[] = column . " != " . value;
+                                    let wheres[] = column . " != " . map_key;
+                                    let map[ map_key ] = [value, \PDO::PARAM_INT];
                                     break;
 
                                 case "boolean":
-                                    let wheres[] = column . " != " . (value ? "1" : "0");
+                                    let wheres[] = column . " != " . map_key;
+                                    let map[ map_key ] = [(value ? "1" : "0"), \PDO::PARAM_BOOL];
                                     break;
 
                                 case "string":
-                                    let wheres[] = column . " != " . this->fnQuote(key, value);
+                                    let wheres[] = column . " != " . map_key;
+                                    let map[ map_key ] = [value, \PDO::PARAM_STR];
                                     break;
                             }
                         }
 
-                        if (operator == "<>" || operator == "><")
+                        if (operator === "<>" || operator === "><")
                         {
-                            if (type == "array")
+                            if (type === "array")
                             {
-                                if (operator == "><")
+                                if (operator === "><")
                                 {
                                     let column .= " NOT";
                                 }
 
-                                if (is_numeric(value[ 0 ]) && is_numeric(value[ 1 ]))
-                                {
-                                    let wheres[] = "(" . column . " BETWEEN " . value[ 0 ] . " AND " . value[ 1 ] . ")";
-                                }
-                                else
-                                {
-                                    let wheres[] = "(" . column . " BETWEEN " . this->quote(value[ 0 ]) . " AND " . this->quote(value[ 1 ]) . ")";
-                                }
+                                let wheres[] = "(" . column . " BETWEEN " . map_key . "a AND " . map_key . "b)";
+
+                                let data_type = (is_numeric(value[ 0 ]) && is_numeric(value[ 1 ])) ? \PDO::PARAM_INT : \PDO::PARAM_STR;
+
+                                let map[ map_key . "a" ] = [value[ 0 ], data_type];
+                                let map[ map_key . "b" ] = [value[ 1 ], data_type];
                             }
                         }
 
-                        if (operator == "~" || operator == "!~")
+                        if (operator === "~" || operator === "!~")
                         {
-                            if (type != "array")
+                            if (type !== "array")
                             {
-                                let value = [value];
+                                let value = [ value ];
                             }
 
-                            let connector = " OR ";
+                            let connector = ' OR ';
                             let stack = array_values(value);
 
-                            if (is_array(stack[0]))
+                            if (is_array(stack[ 0 ]))
                             {
-                                if (isset(value["AND"]) || isset(value["OR"]))
+                                if (isset(value[ "AND" ]) || isset(value[ "OR" ]))
                                 {
-                                    let connector = " " . array_keys(value)[0] . " ";
-                                    let value = stack[0];
+                                    let connector = " " . array_keys(value)[ 0 ] . " ";
+                                    let value = stack[ 0 ];
                                 }
                             }
 
-                            var like_clauses = [],item;
-                            for item in value
+                            let like_clauses = [];
+                            foreach (value as index => item)
                             {
                                 let item = strval(item);
 
@@ -1091,10 +1099,11 @@ class Medoo
                                     let item = "%" . item . "%";
                                 }
 
-                                let like_clauses[] = column . (operator === "!~" ? " NOT" : "") . " LIKE " . this->fnQuote(key, item);
+                                let like_clauses[] = column . (operator === "!~" ? " NOT" : "") . " LIKE " . map_key . "L" . index;
+                                let map[ map_key . "L" . index ] = [item, \PDO::PARAM_STR];
                             }
 
-                            let wheres[] = "(" . implode(like_clauses,connector) . ")";
+                            let wheres[] = "(" . implode(connector, like_clauses) . ")";
                         }
 
                         if (in_array(operator, [">", ">=", "<", "<="]))
@@ -1103,15 +1112,13 @@ class Medoo
 
                             if (is_numeric(value))
                             {
-                                let condition .= value;
-                            }
-                            elseif (strpos(key, "#") === 0)
-                            {
-                                let condition .= this->fnQuote(key, value);
+                                let condition .= map_key;
+                                let map[ map_key ] = [value, \PDO::PARAM_INT];
                             }
                             else
                             {
-                                let condition .= this->quote(value);
+                                let condition .= map_key;
+                                let map[ map_key ] = [value, \PDO::PARAM_STR];
                             }
 
                             let wheres[] = condition;
@@ -1131,25 +1138,26 @@ class Medoo
 
                             case "integer":
                             case "double":
-                                let wheres[] = column . " = " . value;
+                                let wheres[] = column . " = " . map_key;
+                                let map[ map_key ] = [value, \PDO::PARAM_INT];
                                 break;
 
                             case "boolean":
-                                let wheres[] = column . " = " . (value ? "1" : "0");
+                                let wheres[] = column . " = " . map_key;
+                                let map[ map_key ] = [(value ? "1" : "0"), \PDO::PARAM_BOOL];
                                 break;
 
                             case "string":
-                                let wheres[] = column . " = " . this->fnQuote(key, value);
+                                let wheres[] = column . " = " . map_key;
+                                let map[ map_key ] = [value, \PDO::PARAM_STR];
                                 break;
                         }
                     }
                 }
             }
         }
-
         return implode(wheres,conjunctor . " ");
     }
-
 
     protected function fnQuote(column, str)  -> string
     {
@@ -1167,16 +1175,17 @@ class Medoo
         return implode(",",stack);
     }
 
-    protected function innerConjunct(data, conjunctor, outer_conjunctor)  -> string
+    protected function innerConjunct(data, map, conjunctor, outer_conjunctor)
     {
-        var haystack = [],value;
-        for value in data
-        {
-            let haystack[] = "(" . this->dataImplode(value, conjunctor) . ")";
-        }
+        var value,stack = [];
 
-        return implode(haystack,outer_conjunctor . " ");
+        foreach (data as value)
+        {
+            let stack[] = "(" . this->dataImplode(value, map, conjunctor) . ")";
+        }
+        return implode(stack,outer_conjunctor . " ");
     }
+
 
     protected function columnPush(columns) -> string
     {

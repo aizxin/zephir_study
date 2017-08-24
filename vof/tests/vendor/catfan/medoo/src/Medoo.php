@@ -444,7 +444,7 @@ class Medoo
 		foreach ($data as $key => $value)
 		{
 			$map_key = $this->mapKey();
-
+			var_dump($map_key);
 			$type = gettype($value);
 
 			if (
@@ -792,7 +792,7 @@ class Medoo
 				$where_clause .= ' ' . $where;
 			}
 		}
-
+		var_dump($where_clause);
 		return $where_clause;
 	}
 
@@ -914,7 +914,6 @@ class Medoo
 				$columns = $join;
 			}
 		}
-
 		if (isset($column_fn))
 		{
 			if ($column_fn === 1)
@@ -1106,7 +1105,7 @@ class Medoo
 			{
 				if (strpos($key, '#') === 0)
 				{
-					$values[] = $this->fnQuote($key, $data[ $key ]);	
+					$values[] = $this->fnQuote($key, $data[ $key ]);
 					continue;
 				}
 
