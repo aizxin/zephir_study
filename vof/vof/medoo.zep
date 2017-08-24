@@ -816,7 +816,7 @@ class Medoo
 			let where_OR = preg_grep("/^OR\s*#?$/i", where_keys);
 			let single_condition = array_diff_key(where, array_flip(["AND", "OR", "GROUP", "ORDER", "HAVING", "LIMIT", "LIKE", "MATCH"]));
             // var_dump(single_condition);
-			if (single_condition != [])
+			if (single_condition != mode_array)
 			{
 				let condition = this->dataImplode(single_condition, map, " AND");
 
