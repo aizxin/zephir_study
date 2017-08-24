@@ -501,7 +501,7 @@ class Medoo
         return query ? 0 + query->fetchColumn() : false;
     }
 
-    public function action(actions) -> boolean
+    public function action(actions)
     {
         var result;
         if (is_callable(actions))
