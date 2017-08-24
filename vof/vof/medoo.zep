@@ -1085,7 +1085,7 @@ class Medoo
                             }
 
                             let like_clauses = [];
-                            foreach (value as index => item)
+                            foreach index,item in value
                             {
                                 let item = strval(item);
 
@@ -1101,23 +1101,23 @@ class Medoo
                             let wheres[] = "(" . implode(like_clauses,connector) . ")";
                         }
 
-                        if (in_array(operator, [">", ">=", "<", "<="]))
-                        {
-                            let condition = column . " " . operator . " ";
+                        // if (in_array(operator, [">", ">=", "<", "<="]))
+                        // {
+                        //     let condition = column . " " . operator . " ";
 
-                            if (is_numeric(value))
-                            {
-                                let condition .= map_key;
-                                let map[ map_key ] = [value, \PDO::PARAM_INT];
-                            }
-                            else
-                            {
-                                let condition .= map_key;
-                                let map[ map_key ] = [value, \PDO::PARAM_STR];
-                            }
+                        //     if (is_numeric(value))
+                        //     {
+                        //         let condition .= map_key;
+                        //         let map[ map_key ] = [value, \PDO::PARAM_INT];
+                        //     }
+                        //     else
+                        //     {
+                        //         let condition .= map_key;
+                        //         let map[ map_key ] = [value, \PDO::PARAM_STR];
+                        //     }
 
-                            let wheres[] = condition;
-                        }
+                        //     let wheres[] = condition;
+                        // }
                     }
                     // else
                     // {
