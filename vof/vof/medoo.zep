@@ -819,7 +819,7 @@ class Medoo
 			if (single_condition != mode_array)
 			{
 				let condition = this->dataImplode(single_condition, map, " AND");
-
+                var_dump(condition);
 				if (condition !== "")
 				{
 					let where_clause = " WHERE " . condition;
