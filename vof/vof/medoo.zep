@@ -812,14 +812,13 @@ class Medoo
 		let this->map = [];
 		if (is_array(where))
 		{
+            var_dump("12453");
 			let where_keys = array_keys(where);
 			let where_AND = preg_grep("/^AND\s*#?$/i", where_keys);
 			let where_OR = preg_grep("/^OR\s*#?$/i", where_keys);
 
-			let single_condition = array_diff_key(where, array_flip(
-				["AND", "OR", "GROUP", "ORDER", "HAVING", "LIMIT", "LIKE", "MATCH"]
-			));
-            var_dump(single_condition);
+			let single_condition = array_diff_key(where, array_flip(["AND", "OR", "GROUP", "ORDER", "HAVING", "LIMIT", "LIKE", "MATCH"]));
+            // var_dump(single_condition);
 			if (!empty(single_condition))
 			{
 				let condition = this->dataImplode(single_condition, map, " AND");
