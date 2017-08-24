@@ -501,47 +501,6 @@ class Medoo
         return query ? 0 + query->fetchColumn() : false;
     }
 
-    public function action(actions)
-    {
-        var result;
-        if (is_callable(actions))
-        {
-            this->pdo->beginTransaction();
-            let result = actions(this);
-            if (result === false)
-            {
-                this->pdo->rollBack();
-            }
-            else
-            {
-                this->pdo->commit();
-            }
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public function id()
-    {
-        var type;
-        let type = this->database_type;
-        if (type === "oracle")
-        {
-            return 0;
-        }
-        elseif (type === "mssql")
-        {
-            return this->pdo->query("SELECT SCOPE_IDENTITY()")->fetchColumn();
-        }
-        elseif (type === "pgsql")
-        {
-            return this->pdo->query("SELECT LASTVAL()")->fetchColumn();
-        }
-        return this->pdo->lastInsertId();
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
     public function select(table, join, columns = null, where = null)
     {
