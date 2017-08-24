@@ -864,7 +864,6 @@ class Medoo
 
 					let columns = implode(", ",array_map([this, "columnQuote"], match1[ "columns" ]));
 					let map_key = this->mapKey();
-                    var_dump(map_key);
 					let map[ map_key ] = [match1[ "keyword" ], \PDO::PARAM_STR];
 
 					let where_clause .= (where_clause !== "" ? " AND " : " WHERE") . " MATCH (" . columns . ") AGAINST (" . map_key . mode . ")";
@@ -1151,6 +1150,7 @@ class Medoo
             }
         }
         let this->map = map;
+        var_dump(wheres);
         return implode(wheres,conjunctor . " ");
     }
 
