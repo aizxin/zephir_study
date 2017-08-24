@@ -987,7 +987,7 @@ class Medoo
     {
         var index,item,condition,like_clauses,stack,connector,data_type,operator,column,match1,relation_match,type,map_key,value,key,wheres = [];
 
-        foreach (data as key => value)
+        for key,value in data
         {
             let map_key = this->mapKey();
             let type = gettype(value);
@@ -1179,7 +1179,7 @@ class Medoo
     {
         var value,stack = [];
 
-        foreach (data as value)
+        for value in data
         {
             let stack[] = "(" . this->dataImplode(value, map, conjunctor) . ")";
         }
