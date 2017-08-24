@@ -70,13 +70,13 @@ $database = new Medoo($data);
 //     "ORDER" => ["member.id" => "DESC"],
 // ]);
 // var_dump($datas2);
-// $data4 = $database->select("member", array(
-//     "id",
-//     "phone(my_phone)"
-// ), array(
-//     "LIMIT" => 20
-// ));
-// var_dump($data4);
+$data4 = $database->select("member", array(
+    "id",
+    "phone(my_phone)"
+), array(
+    "LIMIT" => 20
+));
+var_dump($data4);
 // $datas5 = $database->select("member",[
 //     "[>]member_bill" => ["id" => "memberId"]
 // ],[
