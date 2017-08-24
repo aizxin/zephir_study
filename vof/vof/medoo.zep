@@ -820,7 +820,7 @@ class Medoo
 			let single_condition = array_diff_key(where, array_flip(
 				["AND", "OR", "GROUP", "ORDER", "HAVING", "LIMIT", "LIKE", "MATCH"]
 			));
-
+            var_dump(single_condition);
 			if (!empty(single_condition))
 			{
 				let condition = this->dataImplode(single_condition, map, " AND");
