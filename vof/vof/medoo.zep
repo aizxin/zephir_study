@@ -418,6 +418,29 @@ class Medoo
         }
     }
 
+    public function delete(table, where)
+    {
+        var map = [];
+
+        return this->exec("DELETE FROM " . this->tableQuote(table) . this->whereClause(where, map), this->map);
+    }
+
+    public function has(table, join, where = null)
+    {
+        var map = [],column = null,query;
+
+        let query = this->exec("SELECT EXISTS(" . this->selectContext(table, map, join, column, where, 1) . ")", this->map);
+
+        if (query)
+        {
+            return query->fetchColumn() === "1";
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
     public function select(table, join, columns = null, where = null)
     {
