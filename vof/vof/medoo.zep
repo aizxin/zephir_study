@@ -492,6 +492,15 @@ class Medoo
         return query ? 0 + query->fetchColumn() : false;
     }
 
+    public function sum(table, join, column = null, where = null)
+    {
+        var query,map = [];
+
+        lat query = this->exec(this->selectContext(table, map, join, column, where, "SUM"), this->map);
+
+        return query ? 0 + query->fetchColumn() : false;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
     public function select(table, join, columns = null, where = null)
     {
