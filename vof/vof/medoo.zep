@@ -441,7 +441,7 @@ class Medoo
         }
     }
 
-    public function count(table, join = null, column = null, where = null)
+    public function count(table, join = null, column = null, where = null) -> int
     {
         var query,map = [];
 
@@ -450,7 +450,7 @@ class Medoo
         return query ? 0 + query->fetchColumn() : false;
     }
 
-    public function max(table, join, column = null, where = null)
+    public function max(table, join, column = null, where = null) -> float | boolean
     {
         var max,query,map = [];
         let query = this->exec(this->selectContext(table, map, join, column, where, "MAX"), this->map);
@@ -465,7 +465,7 @@ class Medoo
         }
     }
 
-    public function min(table, join, column = null, where = null)
+    public function min(table, join, column = null, where = null) -> float | boolean
     {
         var min,query,map = [];
 
@@ -483,7 +483,7 @@ class Medoo
         }
     }
 
-    public function avg(table, join, column = null, where = null)
+    public function avg(table, join, column = null, where = null) -> float | boolean
     {
         var query,map = [];
 
@@ -492,7 +492,7 @@ class Medoo
         return query ? 0 + query->fetchColumn() : false;
     }
 
-    public function sum(table, join, column = null, where = null)
+    public function sum(table, join, column = null, where = null) -> float | boolean
     {
         var query,map = [];
 
@@ -501,7 +501,7 @@ class Medoo
         return query ? 0 + query->fetchColumn() : false;
     }
 
-    public function action(actions)
+    public function action(actions)  -> boolean
     {
         var result;
         if (is_callable(actions))
@@ -523,7 +523,7 @@ class Medoo
         }
     }
 
-    public function id()
+    public function id() -> int
     {
         var type;
         let type = this->database_type;
@@ -543,7 +543,7 @@ class Medoo
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
-    public function select(table, join, columns = null, where = null)
+    public function select(table, join, columns = null, where = null)  -> array
     {
         var column,map=[],stack=[],column_map=[],index=0,is_single_column,query = null,data,current_stack;
 
@@ -972,7 +972,7 @@ class Medoo
 		return where_clause;
 	}
 
-	protected function mapKey()
+	protected function mapKey()  -> string
 	{
 		var i;
 		let i = this->guid;
@@ -1149,12 +1149,12 @@ class Medoo
     }
 
 
-    protected function fnQuote(column, str)
+    protected function fnQuote(column, str)  -> string
     {
         return (strpos(column, "#") === 0 && preg_match("/^[A-Z0-9\_]*\([^)]*\)$/", str)) ? str : this->quote(str);
     }
 
-    protected function arrayQuote(array1)
+    protected function arrayQuote(array1)  -> string
     {
         var stack = [],value;
         for value in array1
@@ -1165,7 +1165,7 @@ class Medoo
         return implode(",",stack);
     }
 
-    protected function innerConjunct(data, conjunctor, outer_conjunctor)
+    protected function innerConjunct(data, conjunctor, outer_conjunctor)  -> string
     {
         var haystack = [],value;
         for value in data
@@ -1214,7 +1214,7 @@ class Medoo
         return implode(",",stack);
     }
 
-    protected function columnQuote(str)
+    protected function columnQuote(str)  -> string
     {
         var column_match;
         preg_match("/(^#)?([a-zA-Z0-9_]*)\.([a-zA-Z0-9_]*)(\s*\[JSON\]$)?/", str, column_match);
@@ -1227,12 +1227,12 @@ class Medoo
         return "`" . str . "`";
     }
 
-	protected function tableQuote(table)
+	protected function tableQuote(table)  -> string
 	{
 		return "`" . this->prefix . table . "`";
 	}
 
-	public function debug()
+	public function debug()  -> <Medoo>
 	{
 		let this->debug_mode = true;
 		return this;
@@ -1243,14 +1243,14 @@ class Medoo
 		return this->statement ? this->statement->errorInfo() : null;
 	}
 
-	public function last()
+	public function last()  -> array | boolean
 	{
 		var log;
 		let log = end(this->logs);
 		return this->generate(log[0], log[1]);
 	}
 
-	public function log()
+	public function log()  -> array
 	{
 		var log,logs = [];
 		for log in this->logs
@@ -1266,7 +1266,7 @@ class Medoo
 		// );
 	}
 
-	public function info()
+	public function info()  -> array
 	{
 		var output,key,value;
 		let output = [
