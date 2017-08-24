@@ -1009,7 +1009,9 @@ class Medoo
 
                     if (!empty(match1[ 1 ]))
                     {
-                        let wheres[] = column . (isset(match1[ 'operator' ]) ? " " . match1[ "operator" ] . " " : " = ") . this->fnQuote(key, value);
+                        var operator12;
+                        let operator12 = isset(match1[ 'operator' ]) ? " " . match1[ "operator" ] . " " : " = ";
+                        let wheres[] = column . operator12 . this->fnQuote(key, value);
                         continue;
                     }
 
