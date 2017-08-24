@@ -507,7 +507,7 @@ class Medoo
         if (is_callable(actions))
         {
             this->pdo->beginTransaction();
-            let result = actions(this);
+            let result = {actions}(this);
             if (result === false)
             {
                 this->pdo->rollBack();
