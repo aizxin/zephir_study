@@ -66,28 +66,28 @@ namespace Vof;
 class Medoo
 {
 
-	protected pdo;
 
-	protected database_type;
+    protected database_type;
 
-	protected prefix;
+    protected prefix;
 
-	protected statement;
+    protected statement;
 
-	protected option = [];
+    protected option = [];
 
-	protected logs = [];
+    protected logs = [];
 
-	protected logging = false;
+    protected logging = false;
 
-	protected debug_mode = false;
+    protected debug_mode = false;
 
-	protected guid = 0;
+    protected guid = 0;
 
-	protected columns = [];
+    protected columns = [];
 
-	protected map = [];
+    protected map = [];
 
+	public pdo;
 
 	public function __construct(array! options)
 	{
@@ -372,7 +372,174 @@ class Medoo
 
     /////////////////////////////////////////////////////////////////////////////////////////////////  1
 
+    public function delete(table, where)
+    {
+        var map = [];
 
+        return this->exec("DELETE FROM " . this->tableQuote(table) . this->whereClause(where, map), $this->map);
+    }
+
+    public function get(table, join = null, columns = null, where = null)
+    {
+        var map = [],stack = [],column_map = [],column,is_single_column,query,data;
+
+        let column = $where === null ? join : columns;
+
+        let is_single_column = is_string(column) && column !== "*";
+
+        let query = this->exec(this->selectContext(table, map, join, columns, where) . " LIMIT 1", this->map);
+
+        let columns = this->columns;
+
+        if (query)
+        {
+            let data = query->fetchAll(\PDO::FETCH_ASSOC);
+
+            if (isset(data[ 0 ]))
+            {
+                if (column === "*")
+                {
+                    return data[ 0 ];
+                }
+
+                let column_map = this->columnMap(columns, column_map);
+
+                let stack = this->dataMap(data[ 0 ], columns, column_map, stack);
+
+                if (is_single_column)
+                {
+                    return stack[ column_map[ column ][ 0 ] ];
+                }
+
+                return stack;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function has(table, join, where = null)
+    {
+        var map = [],column = null,query;
+
+        let query = this->exec("SELECT EXISTS(" . this->selectContext(table, map, join, column, where, 1) . ")", this->map);
+
+        if (query)
+        {
+            return query->fetchColumn() === "1";
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function count(table, join = null, column = null, where = null)
+    {
+        var query,map = [];
+
+        let query = this->exec(this->selectContext(table, map, join, column, where, "COUNT"), this->map);
+
+        return query ? 0 + query->fetchColumn() : false;
+    }
+
+    public function max(table, join, column = null, where = null)
+    {
+        var max,query,map = [];
+        let query = this->exec(this->selectContext(table, map, join, column, where, "MAX"), this->map);
+        if (query)
+        {
+            let max = query->fetchColumn();
+            return is_numeric(max) ? max + 0 : max;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function min(table, join, column = null, where = null)
+    {
+        var min,query,map = [];
+
+        let query = $this->exec($this->selectContext(table, map, join, column, where, "MIN"), this->map);
+
+        if (query)
+        {
+            let min = query->fetchColumn();
+
+            return is_numeric(min) ? min + 0 : min;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function avg(table, join, column = null, where = null)
+    {
+        var query,map = [];
+
+        let query = this->exec(this->selectContext(table, map, join, column, where, "AVG"), this->map);
+
+        return query ? 0 + query->fetchColumn() : false;
+    }
+
+    public function sum(table, join, column = null, where = null)
+    {
+        var query,map = [];
+
+        lat query = this->exec(this->selectContext(table, map, join, column, where, "SUM"), this->map);
+
+        return query ? 0 + query->fetchColumn() : false;
+    }
+
+    public function action(actions)
+    {
+        var result;
+        if (is_callable(actions))
+        {
+            this->pdo->beginTransaction();
+            let result = actions(this);
+            if (result === false)
+            {
+                this->pdo->rollBack();
+            }
+            else
+            {
+                this->pdo->commit();
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function id()
+    {
+        var type;
+        let type = this->database_type;
+        if (type === "oracle")
+        {
+            return 0;
+        }
+        elseif (type === "mssql")
+        {
+            return this->pdo->query("SELECT SCOPE_IDENTITY()")->fetchColumn();
+        }
+        elseif (type === "pgsql")
+        {
+            return this->pdo->query("SELECT LASTVAL()")->fetchColumn();
+        }
+        return this->pdo->lastInsertId();
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
     public function select(table, join, columns = null, where = null)
