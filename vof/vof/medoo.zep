@@ -1119,35 +1119,35 @@ class Medoo
                             let wheres[] = condition;
                         }
                     }
-                    else
-                    {
-                        switch (type)
-                        {
-                            case "NULL":
-                                let wheres[] = column . " IS NULL";
-                                break;
+                    // else
+                    // {
+                    //     switch (type)
+                    //     {
+                    //         case "NULL":
+                    //             let wheres[] = column . " IS NULL";
+                    //             break;
 
-                            case "array":
-                                let wheres[] = column . " IN (" . this->arrayQuote(value) . ")";
-                                break;
+                    //         case "array":
+                    //             let wheres[] = column . " IN (" . this->arrayQuote(value) . ")";
+                    //             break;
 
-                            case "integer":
-                            case "double":
-                                let wheres[] = column . " = " . map_key;
-                                let map[ map_key ] = [value, \PDO::PARAM_INT];
-                                break;
+                    //         case "integer":
+                    //         case "double":
+                    //             let wheres[] = column . " = " . map_key;
+                    //             let map[ map_key ] = [value, \PDO::PARAM_INT];
+                    //             break;
 
-                            case "boolean":
-                                let wheres[] = column . " = " . map_key;
-                                let map[ map_key ] = [(value ? "1" : "0"), \PDO::PARAM_BOOL];
-                                break;
+                    //         case "boolean":
+                    //             let wheres[] = column . " = " . map_key;
+                    //             let map[ map_key ] = [(value ? "1" : "0"), \PDO::PARAM_BOOL];
+                    //             break;
 
-                            case "string":
-                                let wheres[] = column . " = " . map_key;
-                                let map[ map_key ] = [value, \PDO::PARAM_STR];
-                                break;
-                        }
-                    }
+                    //         case "string":
+                    //             let wheres[] = column . " = " . map_key;
+                    //             let map[ map_key ] = [value, \PDO::PARAM_STR];
+                    //             break;
+                    //     }
+                    // }
                 }
             }
         }
