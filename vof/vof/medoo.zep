@@ -1044,7 +1044,7 @@ class Medoo
                 }
             }
         }
-
+        var_dump(implode(",",stack));
         return implode(",",stack);
     }
 

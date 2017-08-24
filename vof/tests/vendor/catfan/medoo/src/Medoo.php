@@ -388,10 +388,11 @@ class Medoo
 			else
 			{
 				preg_match('/(?<column>[a-zA-Z0-9_\.]+)(?:\s*\((?<alias>[a-zA-Z0-9_]+)\)|\s*\[(?<type>(String|Bool|Int|Number|Object|JSON))\])?/i', $value, $match);
-				var_dump($match);
+				// var_dump($match);
 				if (!empty($match[ 'alias' ]))
 				{
 					$stack[] = $this->columnQuote( $match[ 'column' ] ) . ' AS ' . $this->columnQuote( $match[ 'alias' ] );
+					// var_dump($stack);
 
 					$columns[ $key ] = $match[ 'alias' ];
 				}
@@ -401,7 +402,7 @@ class Medoo
 				}
 			}
 		}
-
+		// var_dump(implode($stack, ','));
 		return implode($stack, ',');
 	}
 
@@ -942,7 +943,7 @@ class Medoo
 		{
 			$column = $this->columnPush($columns);
 		}
-
+		var_dump($column);
 		return 'SELECT ' . $column . ' FROM ' . $table_query . $this->whereClause($where, $map);
 	}
 
