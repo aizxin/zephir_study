@@ -483,6 +483,15 @@ class Medoo
         }
     }
 
+    public function avg(table, join, column = null, where = null)
+    {
+        var query,map = [];
+
+        let query = this->exec(this->selectContext(table, map, join, column, where, "AVG"), this->map);
+
+        return query ? 0 + query->fetchColumn() : false;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
     public function select(table, join, columns = null, where = null)
     {
