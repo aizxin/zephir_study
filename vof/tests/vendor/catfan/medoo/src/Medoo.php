@@ -639,7 +639,7 @@ class Medoo
 			if (!empty($single_condition))
 			{
 				$condition = $this->dataImplode($single_condition, $map, ' AND');
-				var_dump($condition);
+				// var_dump($condition);
 				if ($condition !== '')
 				{
 					$where_clause = ' WHERE ' . $condition;

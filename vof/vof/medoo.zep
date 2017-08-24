@@ -807,16 +807,18 @@ class Medoo
 
     protected function whereClause(where, map) -> string
 	{
-		var group,map_key,columns,where_clause="",where_keys,where_OR,where_AND,single_condition,condition,value,match1,mode,mode_array=[];
+		var tmpArray,tmpArray2,group,map_key,columns,where_clause="",where_keys,where_OR,where_AND,single_condition,condition,value,match1,mode,mode_array=[];
 		let this->map = [];
 		if (is_array(where))
 		{
 			let where_keys = array_keys(where);
 			let where_AND = preg_grep("/^AND\s*#?$/i", where_keys);
 			let where_OR = preg_grep("/^OR\s*#?$/i", where_keys);
-			let single_condition = array_diff_key(where, array_flip(["AND", "OR", "GROUP", "ORDER", "HAVING", "LIMIT", "LIKE", "MATCH"]));
-            var_dump(single_condition != mode_array);
-			if (single_condition != mode_array)
+			let tmpArray = ["AND", "OR", "GROUP", "ORDER", "HAVING", "LIMIT", "LIKE", "MATCH"];
+            let single_condition =  array_diff_key(where, array_flip(tmpArray));
+            let tmpArray2 = [];
+            var_dump(single_condition);
+            if single_condition != tmpArray2
 			{
 				let condition = this->dataImplode(single_condition, map, " AND");
                 var_dump(condition);
