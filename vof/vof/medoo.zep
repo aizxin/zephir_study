@@ -465,6 +465,24 @@ class Medoo
         }
     }
 
+    public function min(table, join, column = null, where = null)
+    {
+        var min,query,map = [];
+
+        let query = this->exec(this->selectContext(table, map, join, column, where, "MIN"), this->map);
+
+        if (query)
+        {
+            let min = query->fetchColumn();
+
+            return is_numeric(min) ? min + 0 : min;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
     public function select(table, join, columns = null, where = null)
     {
