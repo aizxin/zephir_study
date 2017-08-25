@@ -1146,6 +1146,7 @@ class Medoo
         }
         let this->map = map;
         var_dump(wheres);
+        var_dump(conjunctor . " ");
         return implode(wheres,conjunctor . " ");
     }
 

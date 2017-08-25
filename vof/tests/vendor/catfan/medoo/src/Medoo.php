@@ -618,7 +618,8 @@ class Medoo
 				}
 			}
 		}
-		// var_dump($wheres);
+		var_dump($wheres);
+		var_dump($conjunctor . ' ');
 		return implode($conjunctor . ' ', $wheres);
 	}
 
