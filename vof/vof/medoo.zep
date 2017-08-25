@@ -659,7 +659,7 @@ class Medoo
 			}
 			else
 			{
-				let stack[] = this->columnMap(value, stack);
+				let stack = this->columnMap(value, stack);
 			}
 		}
 
@@ -802,7 +802,6 @@ class Medoo
             let column = this->columnPush(columns);
         }
         let this->columns = columns;
-        var_dump(columns);
         return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
     }
 
