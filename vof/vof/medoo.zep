@@ -570,8 +570,6 @@ class Medoo
         let fetchMethod = "fetch";
         let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
         let column_map = this->columnMap(columns, column_map);
-        var_dump(columns);
-        var_dump(column_map);
         while (data)
         {
         	let current_stack = [];
@@ -819,11 +817,9 @@ class Medoo
 			let tmpArray = ["AND", "OR", "GROUP", "ORDER", "HAVING", "LIMIT", "LIKE", "MATCH"];
             let single_condition =  array_diff_key(where, array_flip(tmpArray));
             let tmpArray2 = [];
-            var_dump(single_condition);
             if single_condition != tmpArray2
 			{
 				let condition = this->dataImplode(single_condition, map, " AND");
-                // var_dump(condition);
 				if (condition !== "")
 				{
 					let where_clause = " WHERE " . condition;
@@ -1149,7 +1145,6 @@ class Medoo
             }
         }
         let this->map = map;
-        // var_dump(implode(wheres,conjunctor . " "));
         return implode(wheres,conjunctor . " ");
     }
 
