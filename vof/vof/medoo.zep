@@ -817,7 +817,6 @@ class Medoo
 			let tmpArray = ["AND", "OR", "GROUP", "ORDER", "HAVING", "LIMIT", "LIKE", "MATCH"];
             let single_condition =  array_diff_key(where, array_flip(tmpArray));
             let tmpArray2 = [];
-            var_dump(single_condition);
             if single_condition != tmpArray2
 			{
 				let condition = this->dataImplode(single_condition, map, " AND");
@@ -1146,6 +1145,7 @@ class Medoo
             }
         }
         let this->map = map;
+        var_dump(wheres);
         return implode(wheres,conjunctor . " ");
     }
 

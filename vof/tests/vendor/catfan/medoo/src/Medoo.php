@@ -635,11 +635,11 @@ class Medoo
 			$single_condition = array_diff_key($where, array_flip(
 				['AND', 'OR', 'GROUP', 'ORDER', 'HAVING', 'LIMIT', 'LIKE', 'MATCH']
 			));
-			var_dump($single_condition);
+			var_dump($map);
 			if (!empty($single_condition))
 			{
 				$condition = $this->dataImplode($single_condition, $map, ' AND');
-				// var_dump($condition);
+				var_dump($condition);
 				if ($condition !== '')
 				{
 					$where_clause = ' WHERE ' . $condition;
@@ -940,7 +940,7 @@ class Medoo
 		{
 			$column = $this->columnPush($columns);
 		}
-		var_dump($where);
+		// var_dump($where);
 		return 'SELECT ' . $column . ' FROM ' . $table_query . $this->whereClause($where, $map);
 	}
 
@@ -1060,8 +1060,8 @@ class Medoo
 		{
 			return $query->fetchAll(PDO::FETCH_COLUMN);
 		}
-		var_dump($columns);
-        var_dump($column_map);
+		// var_dump($columns);
+        // var_dump($column_map);
 		while ($data = $query->fetch(PDO::FETCH_ASSOC))
 		{
 			$current_stack = [];
