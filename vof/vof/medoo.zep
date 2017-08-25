@@ -826,7 +826,6 @@ class Medoo
 				}
 			}
 
-            var_dump(where_clause);
 			if (!empty(where_AND))
 			{
 				let value = array_values(where_AND);
@@ -1146,7 +1145,7 @@ class Medoo
             }
         }
         let this->map = map;
-        var_dump(implode(wheres,conjunctor . " "));
+        var_dump(wheres);
         return implode(wheres,conjunctor . " ");
     }
 
