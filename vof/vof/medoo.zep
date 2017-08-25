@@ -1145,9 +1145,7 @@ class Medoo
             }
         }
         let this->map = map;
-        var_dump(wheres);
-        var_dump(conjunctor . " ");
-        return implode(wheres,conjunctor . " ");
+        return implode(conjunctor . " ",wheres);
     }
 
     protected function fnQuote(column, str)  -> string
@@ -1174,7 +1172,7 @@ class Medoo
         {
             let stack[] = "(" . this->dataImplode(value, map, conjunctor) . ")";
         }
-        return implode(stack,outer_conjunctor . " ");
+        return implode(outer_conjunctor . " ",stack);
     }
 
 
