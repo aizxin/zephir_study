@@ -659,7 +659,7 @@ class Medoo
 			}
 			else
 			{
-				let stack = this->columnMap(value, stack);
+				let stack[] = this->columnMap(value, stack);
 			}
 		}
 
