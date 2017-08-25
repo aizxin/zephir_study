@@ -570,6 +570,8 @@ class Medoo
         let fetchMethod = "fetch";
         let data = query->{fetchMethod}(\PDO::FETCH_ASSOC);
         let column_map = this->columnMap(columns, column_map);
+        var_dump(columns);
+        var_dump(column_map);
         while (data)
         {
         	let current_stack = [];
