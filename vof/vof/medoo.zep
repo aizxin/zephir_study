@@ -966,6 +966,7 @@ class Medoo
 			}
 		}
 		let this->map = map;
+		var_dump(map);
 		return where_clause;
 	}
 

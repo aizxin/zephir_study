@@ -618,8 +618,6 @@ class Medoo
 				}
 			}
 		}
-		var_dump($wheres);
-		var_dump($conjunctor . ' ');
 		return implode($conjunctor . ' ', $wheres);
 	}
 
@@ -636,11 +634,10 @@ class Medoo
 			$single_condition = array_diff_key($where, array_flip(
 				['AND', 'OR', 'GROUP', 'ORDER', 'HAVING', 'LIMIT', 'LIKE', 'MATCH']
 			));
-			var_dump($map);
 			if (!empty($single_condition))
 			{
 				$condition = $this->dataImplode($single_condition, $map, ' AND');
-				var_dump($condition);
+				// var_dump($condition);
 				if ($condition !== '')
 				{
 					$where_clause = ' WHERE ' . $condition;
@@ -793,7 +790,8 @@ class Medoo
 				$where_clause .= ' ' . $where;
 			}
 		}
-		// var_dump($where_clause);
+		var_dump($where_clause);
+		var_dump($map);
 		return $where_clause;
 	}
 
