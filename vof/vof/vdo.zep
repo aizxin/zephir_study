@@ -22,7 +22,7 @@
 namespace Vof;
 
 /**
- * Vof\Medoo
+ * Vof\Vdo
  *
  * <code>
  *
@@ -62,7 +62,7 @@ namespace Vof;
  *</code>
  */
 
-class Medoo
+class Vdo
 {
 
 
