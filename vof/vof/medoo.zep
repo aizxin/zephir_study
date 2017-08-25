@@ -863,6 +863,7 @@ class Medoo
 					let map[ map_key ] = [match1[ "keyword" ], \PDO::PARAM_STR];
 
 					let where_clause .= (where_clause !== "" ? " AND " : " WHERE") . " MATCH (" . columns . ") AGAINST (" . map_key . mode . ")";
+					let this->map = map;
 				}
 			}
 
@@ -965,8 +966,7 @@ class Medoo
 				let where_clause .= " " . where;
 			}
 		}
-		let this->map = map;
-		var_dump(map);
+		var_dump(this->map);
 		return where_clause;
 	}
 

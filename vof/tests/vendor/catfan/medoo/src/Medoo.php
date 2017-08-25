@@ -623,6 +623,7 @@ class Medoo
 
 	protected function whereClause($where, &$map)
 	{
+		var_dump($map);
 		$where_clause = '';
 
 		if (is_array($where))
