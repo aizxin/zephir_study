@@ -456,7 +456,7 @@ class Medoo
         {
             let fields[] = this->columnQuote(preg_replace("/(^#|\s*\[JSON\]$)/i", "", key));
         }
-        var_dump(fields);
+        var_dump(columns);
         var_dump(stack);
         return this->exec("INSERT INTO " . this->tableQuote(table) . " (" . implode(", ", fields) . ") VALUES " . implode(", ", stack), map);
     }
