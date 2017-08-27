@@ -381,14 +381,15 @@ class Medoo
             let datas = [datas];
         }
 
+        var_dump(datas);
         for data in datas
         {
             for key,value in data
             {
+                var_dump(key);
                 let columns[] = key;
             }
         }
-        var_dump(datas);
         var_dump(columns);
         let columns = array_unique(columns);
 
