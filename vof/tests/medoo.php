@@ -97,11 +97,19 @@ $data8 = $database->get("member_idcard", [
     "member_bill.email",
     "member_idcard.name",
 ], [
-    "LIMIT" => [1,2],
     "ORDER" => ["member_idcard.id" => "DESC"],
 ]);
 var_dump($data8);
-// log
+$data9 = $database->get("member_idcard", [
+    "[>]member_bill" => "memberId"
+], [
+    "member_bill.email",
+    "member_idcard.name",
+], [
+    "member_idcard.id[>]" => 30,
+]);
+var_dump($data9);
+// log"user_id[>]" => 1
 	// var_dump($sql);
 var_dump($database->log());
 ?>
