@@ -388,7 +388,7 @@ class Medoo
                 let columns[] = key;
             }
         }
-
+        var_dump(columns);
         let columns = array_unique(columns);
 
         for data in datas
@@ -456,8 +456,7 @@ class Medoo
         {
             let fields[] = this->columnQuote(preg_replace("/(^#|\s*\[JSON\]$)/i", "", key));
         }
-        var_dump(columns);
-        var_dump(stack);
+
         return this->exec("INSERT INTO " . this->tableQuote(table) . " (" . implode(", ", fields) . ") VALUES " . implode(", ", stack), map);
     }
 
