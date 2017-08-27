@@ -530,34 +530,34 @@ class Medoo
     {
         var map=[],replace_query=[],column,replacements,replacement,map_key,replacequery="";
 
-        if (is_array(columns))
+        if (is_array(columns)){
 
-            // for column,replacements in columns
-            // {
-                // if (is_array(replacements[ 0 ]))
-                // {
-                //     for replacement in replacements
-                //     {
-                //         let map_key = this->mapKey();
+            for column,replacements in columns
+            {
+                if (is_array(replacements[ 0 ]))
+                {
+                    for replacement in replacements
+                    {
+                        let map_key = this->mapKey();
 
-                //         let replace_query[] = this->columnQuote(column) . " = REPLACE(" . this->columnQuote(column) . ", " . map_key . "a, " . map_key . "b)";
+                        let replace_query[] = this->columnQuote(column) . " = REPLACE(" . this->columnQuote(column) . ", " . map_key . "a, " . map_key . "b)";
 
-                //         let map[ map_key . "a" ] = [replacement[ 0 ], \PDO::PARAM_STR];
-                //         let map[ map_key . "b" ] = [replacement[ 1 ], \PDO::PARAM_STR];
-                //     }
-                // }
-                // else
-                // {
-                //     let map_key = this->mapKey();
+                        let map[ map_key . "a" ] = [replacement[ 0 ], \PDO::PARAM_STR];
+                        let map[ map_key . "b" ] = [replacement[ 1 ], \PDO::PARAM_STR];
+                    }
+                }
+                else
+                {
+                    let map_key = this->mapKey();
 
-                //     let replace_query[] = this->columnQuote(column) . " = REPLACE(" . this->columnQuote(column) . ", " . map_key . "a, " . map_key . "b)";
+                    let replace_query[] = this->columnQuote(column) . " = REPLACE(" . this->columnQuote(column) . ", " . map_key . "a, " . map_key . "b)";
 
-                //     let map[ map_key . "a" ] = [replacements[ 0 ], \PDO::PARAM_STR];
-                //     let map[ map_key . "b" ] = [replacements[ 1 ],\ PDO::PARAM_STR];
-                // }
-            // }
+                    let map[ map_key . "a" ] = [replacements[ 0 ], \PDO::PARAM_STR];
+                    let map[ map_key . "b" ] = [replacements[ 1 ],\ PDO::PARAM_STR];
+                }
+            }
 
-            // let replacequery = implode(replace_query,", ");
+            let replacequery = implode(", ", replace_query);
         }
 
         return this->exec("UPDATE " . this->tableQuote(table) . " SET " . replacequery . this->whereClause(where, map), this->map);
