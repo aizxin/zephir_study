@@ -460,7 +460,71 @@ class Medoo
         return this->exec("INSERT INTO " . this->tableQuote(table) . " (" . implode(", ", fields) . ") VALUES " . implode(", ", stack), map);
     }
 
+    public function update(table, data, where = null)
+    {
+        var fields = [],map = [],key,value,column,map_key,match1;
 
+        for key,value in data
+        {
+            let column = this->columnQuote(preg_replace("/(^#|\s*\[(JSON|\+|\-|\*|\/)\]$)/i", "", key));
+
+            if (strpos(key, "#") === 0)
+            {
+                let fields[] = column . " = " . value;
+                continue;
+            }
+
+            let map_key = this->mapKey();
+
+            preg_match("/(?<column>[a-zA-Z0-9_]+)(\[(?<operator>\+|\-|\*|\/)\])?/i", key, match1);
+
+            if (isset(match1[ "operator" ]))
+            {
+                if (is_numeric(value))
+                {
+                    let fields[] = column . " = " . column . " " . match1[ "operator" ] . " " . value;
+                }
+            }
+            else
+            {
+                let fields[] = column . " = " . map_key;
+
+                switch (gettype(value))
+                {
+                    case "NULL":
+                        let map[ map_key ] = [null, \PDO::PARAM_NULL];
+                        break;
+
+                    case "array":
+                        let map[ map_key ] = [strpos($key, "[JSON]") === strlen(key) - 6 ? json_encode(value) : serialize($value),\PDO::PARAM_STR];
+                        break;
+
+                    case "object":
+                        let map[ map_key ] = [serialize(value), \PDO::PARAM_STR];
+                        break;
+
+                    case "resource":
+                        let map[ map_key ] = [value, \PDO::PARAM_LOB];
+                        break;
+
+                    case "boolean":
+                        let map[ map_key ] = [(value ? "1" : "0"), \PDO::PARAM_BOOL];
+                        break;
+
+                    case "integer":
+                    case "double":
+                        let map[ map_key ] = [value, \PDO::PARAM_INT];
+                        break;
+
+                    case "string":
+                        let map[ map_key ] = [value, \PDO::PARAM_STR];
+                        break;
+                }
+            }
+        }
+
+        return this->exec("UPDATE " . this->tableQuote(table) . " SET " . implode(", ", fields) . this->whereClause(where, map), this->map);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
     public function select(table, join, columns = null, where = null)
