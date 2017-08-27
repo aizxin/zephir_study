@@ -376,6 +376,7 @@ class Medoo
     {
         var stack = [],columns = [],fields = [],map = [],data,key,value,values,map_key;
 
+        var_dump(datas);
         if (!isset(datas[ 0 ]))
         {
             let datas = [datas];
