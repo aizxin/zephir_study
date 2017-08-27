@@ -379,6 +379,7 @@ class Medoo
         var_dump(datas);
         if (!isset(datas[ 0 ]))
         {
+            var_dump("111");
             let datas = [datas];
         }
 
