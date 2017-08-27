@@ -388,7 +388,7 @@ class Medoo
                 let columns[] = key;
             }
         }
-        var_dump(columns);
+        var_dump(datas);
         let columns = array_unique(columns);
 
         for data in datas
