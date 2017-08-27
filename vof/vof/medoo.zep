@@ -560,7 +560,7 @@ class Medoo
             let replace_query = implode(", ", replace_query);
         }
 
-        return $this->exec("UPDATE " . this->tableQuote(table) . " SET " . replace_query . this->whereClause(where, map), this->map);
+        return this->exec("UPDATE " . this->tableQuote(table) . " SET " . replace_query . this->whereClause(where, map), this->map);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
