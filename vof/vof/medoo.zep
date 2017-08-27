@@ -418,7 +418,7 @@ class Medoo
                     switch (gettype(value))
                     {
                         case "NULL":
-                            map[ map_key ] = [null, \PDO::PARAM_NULL];
+                            let map[ map_key ] = [null, \PDO::PARAM_NULL];
                             break;
 
                         case "array":
@@ -443,13 +443,13 @@ class Medoo
                             break;
 
                         case "string":
-                            map[ map_key ] = [value, \PDO::PARAM_STR];
+                            let map[ map_key ] = [value, \PDO::PARAM_STR];
                             break;
                     }
                 }
             }
 
-            $stack[] = "(" . implode(", ",values) . ")";
+            let stack[] = "(" . implode(", ",values) . ")";
         }
 
         for key in columns
