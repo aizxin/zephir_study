@@ -133,7 +133,7 @@ $database = new Medoo($data);
 // 测试 insert
 $database->insert("member", [
     "phone" => "foo",
-    "name" => "foo@bar.com",
+    "name" => "foo",
     "age" => 25
 ]);
 // log
