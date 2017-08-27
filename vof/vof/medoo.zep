@@ -557,7 +557,7 @@ class Medoo
                 // }
             // }
 
-            let replacequery = implode(", ", replace_query);
+            let replacequery = implode(replace_query,", ");
         }
 
         return this->exec("UPDATE " . this->tableQuote(table) . " SET " . replacequery . this->whereClause(where, map), this->map);
