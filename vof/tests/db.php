@@ -131,7 +131,7 @@ $database = new Medoo($data);
 // ]);
 // var_dump($data9);
 // 测试 insert
-$database->insert("account", [
+$database->insert("member", [
     "phone" => "foo",
     "name" => "foo@bar.com",
     "age" => 25
