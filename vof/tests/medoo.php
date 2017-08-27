@@ -87,10 +87,20 @@
 // ]);
 // var_dump(json_encode($datas6));
 // var_dump($datas6);
-$data7 = $database->get("member_bill", "email", [
-    "id" => 111
+// $data7 = $database->get("member_bill", "email", [
+//     "id" => 111
+// ]);
+// var_dump($data7);
+$data8 = $database->get("member_idcard", [
+    "[>]member_bill" => "memberId"
+], [
+    "member_bill.email",
+    "member_idcard.name",
+], [
+    "LIMIT" => [1,2],
+    "ORDER" => ["member_idcard.id" => "DESC"],
 ]);
-var_dump($data7);
+var_dump($data8);
 // log
 	// var_dump($sql);
 var_dump($database->log());
