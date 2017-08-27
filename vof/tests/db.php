@@ -113,7 +113,7 @@ $database = new Medoo($data);
 // var_dump($data7);
 
 $data8 = $database->get("member_bill", [
-    "[>]member_bill" => "memberId"
+    "[>]member_bill" => ["id" => "memberId"]
 ], [
     "member_bill.email",
     "member.name",
