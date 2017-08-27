@@ -383,13 +383,14 @@ class Medoo
             let datas = [datas];
         }
 
-        var_dump(isset(datas[ 0 ]));
+        var_dump(datas);
         for data in datas
         {
-            for key,value in data
+            var key1;
+            for key1,value in data
             {
-                var_dump(key);
-                let columns[] = key;
+                var_dump(key1);
+                let columns[] = key1;
             }
         }
         var_dump(columns);
