@@ -4,7 +4,7 @@ use Vof\Medoo;
 // use Medoo\Medoo;
 $data = [
     'database_type' => 'mysql',
-    'database_name' => 'kamun',
+    'database_name' => 'medoo',
     'server' => 'rm-wz9435289632q5m4a.mysql.rds.aliyuncs.com',
     'username' => 'root',
     'password' => '0FKeMf10gle2ml670Rz8',
@@ -130,6 +130,12 @@ $database = new Medoo($data);
 //     "member_idcard.id[>]" => 30,
 // ]);
 // var_dump($data9);
+// 测试 insert
+$database->insert("account", [
+    "phone" => "foo",
+    "name" => "foo@bar.com",
+    "age" => 25
+]);
 // log
 var_dump($database->log());
 // last
