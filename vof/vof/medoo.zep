@@ -374,16 +374,15 @@ class Medoo
 
     public function insert(table, datas)
     {
-        var stack = [],columns = [],fields = [],map = [],data,key,value,values,map_key;
+        var stack = [],columns = [],fields = [],map = [],data,key,value,values,map_key,data_all=[];
 
         var_dump(datas);
         if !(isset datas[0])
         {
-            var_dump("111");
-            let datas = [datas];
+            let data_all[] = datas;
+            let datas = data_all;
         }
-
-        var_dump(datas);
+        var_dump(data_all);
         for data in datas
         {
             var key1;
