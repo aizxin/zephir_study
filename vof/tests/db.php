@@ -112,14 +112,14 @@ $database = new Medoo($data);
 // ]);
 // var_dump($data7);
 
-$data8 = $database->get("member", [
+$data8 = $database->get("member_idcard", [
     "[>]member_bill" => "memberId"
 ], [
     "member_bill.email",
-    "member.name",
+    "member_idcard.name",
 ], [
     "LIMIT" => [1,2],
-    "ORDER" => ["member.id" => "DESC"],
+    "ORDER" => ["member_idcard.id" => "DESC"],
 ]);
 var_dump($data8);
 // log
