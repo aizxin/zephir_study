@@ -526,6 +526,43 @@ class Medoo
         return this->exec("UPDATE " . this->tableQuote(table) . " SET " . implode(", ", fields) . this->whereClause(where, map), this->map);
     }
 
+    public function replace(table, columns, where = null)
+    {
+        var map = [],replace_query = [],column,replacements,replacement,map_key;
+
+        if (is_array(columns))
+
+            for column,replacements in columns
+            {
+                if (is_array(replacements[ 0 ]))
+                {
+                    for replacement in replacements
+                    {
+                        let map_key = this->mapKey();
+
+                        let replace_query[] = this->columnQuote(column) . " = REPLACE(" . this->columnQuote(column) . ", " . map_key . "a, " . map_key . "b)";
+
+                        let map[ map_key . "a" ] = [replacement[ 0 ], \PDO::PARAM_STR];
+                        let map[ map_key . "b" ] = [replacement[ 1 ], \PDO::PARAM_STR];
+                    }
+                }
+                else
+                {
+                    let map_key = this->mapKey();
+
+                    let replace_query[] = this->columnQuote(column) . " = REPLACE(" . this->columnQuote(column) . ", " . map_key . "a, " . map_key . "b)";
+
+                    let map[ map_key . "a" ] = [replacements[ 0 ], \PDO::PARAM_STR];
+                    let map[ map_key . "b" ] = [replacements[ 1 ],\ PDO::PARAM_STR];
+                }
+            }
+
+            let replace_query = implode(", ", replace_query);
+        }
+
+        return $this->exec("UPDATE " . this->tableQuote(table) . " SET " . replace_query . this->whereClause(where, map), this->map);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
     public function select(table, join, columns = null, where = null)
     {
