@@ -528,9 +528,9 @@ class Medoo
 
     public function replace(table, columns, where = null)
     {
-        var map = [],replace_query=[],column,replacements,replacement,map_key,replacequery;
+        var map=[],replace_query=[],column,replacements,replacement,map_key,replacequery="";
 
-        if (is_array(columns))
+        // if (is_array(columns))
 
             // for column,replacements in columns
             // {
@@ -557,8 +557,8 @@ class Medoo
                 // }
             // }
 
-            let replacequery = implode(", ", replace_query);
-        }
+        //     let replacequery = implode(", ", replace_query);
+        // }
 
         return this->exec("UPDATE " . this->tableQuote(table) . " SET " . replacequery . this->whereClause(where, map), this->map);
     }
