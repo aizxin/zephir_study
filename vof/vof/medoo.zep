@@ -376,23 +376,19 @@ class Medoo
     {
         var stack = [],columns = [],fields = [],map = [],data,key,value,values,map_key,data_all=[];
 
-        var_dump(datas);
         if !(isset datas[0])
         {
             let data_all[] = datas;
             let datas = data_all;
         }
-        var_dump(data_all);
         for data in datas
         {
             var key1;
             for key1,value in data
             {
-                var_dump(key1);
                 let columns[] = key1;
             }
         }
-        var_dump(columns);
         let columns = array_unique(columns);
 
         for data in datas

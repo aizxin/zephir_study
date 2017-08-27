@@ -131,10 +131,14 @@ $database = new Medoo($data);
 // ]);
 // var_dump($data9);
 // 测试 insert
-$database->insert("member", [
-    "phone" => "foo",
-    "name" => "foo",
-    "age" => 25
+// $database->insert("member", [
+//     "phone" => "foo",
+//     "name" => "foo",
+//     "age" => 25
+// ]);
+// 测试 update
+$database->update("member",["age" => 68],[
+    "id" => 36
 ]);
 // log
 var_dump($database->log());
