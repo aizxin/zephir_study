@@ -131,15 +131,22 @@ $database = new Medoo($data);
 // ]);
 // var_dump($data9);
 // 测试 insert
-// $database->insert("member", [
-//     "phone" => "foo",
-//     "name" => "foo",
-//     "age" => 25
-// ]);
+$database->insert("member", [
+    [
+        "phone" => "hhh",
+        "name" => "hhh",
+        "age" => 25
+    ],[
+        "phone" => "ggg",
+        "name" => "ggg",
+        "age" => 25
+    ]
+]);
 // 测试 update
-$database->update("member",["age" => 68],[
+$data10 = $database->update("member",["age" => 58],[
     "id" => 36
 ]);
+var_dump($data10->rowCount());
 // log
 var_dump($database->log());
 // last
