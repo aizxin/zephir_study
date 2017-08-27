@@ -49,34 +49,34 @@ $database = new Medoo($data);
 // $data = $database->query($sql)->fetchAll();
 // var_dump($data);
 
-$data1 = $database->query(
-    "SELECT * FROM member WHERE id = :id", [
-        ":id" => 19
-    ]
-)->fetchAll();
-var_dump($data1);
+// $data1 = $database->query(
+//     "SELECT * FROM member WHERE id = :id", [
+//         ":id" => 19
+//     ]
+// )->fetchAll();
+// var_dump($data1);
 //  测试 select
 // $datas1 = $database->select("member", "*");
 // var_dump($datas1);
-$datas3 = $database->select("member", "name,phone");
-var_dump($datas3);
-$datas2 = $database->select("member",[
-    "[>]member_bill" => ["id" => "memberId"]
-],[
-    "member.id",
-    "member_bill.email"
-],[
-    "LIMIT" => 50,
-    "ORDER" => ["member.id" => "DESC"],
-]);
-var_dump($datas2);
-$data4 = $database->select("member", array(
-    "id",
-    "phone(my_phone)"
-), array(
-    "id" => 39
-));
-var_dump($data4);
+// $datas3 = $database->select("member", "name,phone");
+// var_dump($datas3);
+// $datas2 = $database->select("member",[
+//     "[>]member_bill" => ["id" => "memberId"]
+// ],[
+//     "member.id",
+//     "member_bill.email"
+// ],[
+//     "LIMIT" => 50,
+//     "ORDER" => ["member.id" => "DESC"],
+// ]);
+// var_dump($datas2);
+// $data4 = $database->select("member", array(
+//     "id",
+//     "phone(my_phone)"
+// ), array(
+//     "id" => 39
+// ));
+// var_dump($data4);
 // $datas5 = $database->select("member",[
 //     "[>]member_bill" => ["id" => "memberId"]
 // ],[
@@ -90,27 +90,38 @@ var_dump($data4);
 // ]);
 // var_dump(json_encode($datas5));
 // var_dump($datas5);
-$datas6 = $database->select("member",[
-    "[>]member_bill" => ["id" => "memberId"]
-],[
-    "member.id",
-    "bill"=>[
-        "member_bill.email [Bool]",
-        "meta" => [
-            "member_bill.email"
-        ]
-    ]
-],[
+// $datas6 = $database->select("member",[
+//     "[>]member_bill" => ["id" => "memberId"]
+// ],[
+//     "member.id",
+//     "bill"=>[
+//         "member_bill.email [Bool]",
+//         "meta" => [
+//             "member_bill.email"
+//         ]
+//     ]
+// ],[
+//     "LIMIT" => [1,2],
+//     "ORDER" => ["member.id" => "DESC"],
+// ]);
+// var_dump(json_encode($datas6));
+// var_dump($datas6);
+// get 测试
+// $data7 = $database->get("member_bill", "email", [
+//     "id" => 111
+// ]);
+// var_dump($data7);
+
+$data8 = $database->get("member_bill", [
+    "[>]member_bill" => "memberId"
+], [
+    "member_bill.email",
+    "member.name",
+], [
     "LIMIT" => [1,2],
     "ORDER" => ["member.id" => "DESC"],
 ]);
-var_dump(json_encode($datas6));
-// var_dump($datas6);
-// get 测试
-$data7 = $database->get("member_bill", "email", [
-    "id" => 111
-]);
-var_dump($data7);
+var_dump($data8);
 // log
 var_dump($database->log());
 // last
