@@ -382,7 +382,7 @@ class Medoo
             let datas = [datas];
         }
 
-        var_dump(datas);
+        var_dump(!isset(datas[ 0 ]));
         for data in datas
         {
             for key,value in data
