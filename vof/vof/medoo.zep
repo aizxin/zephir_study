@@ -552,7 +552,7 @@ class Medoo
 
         let query = this->exec(this->selectContext(table, map, join, columns, where), this->map);
         let columns =  this->columns;
-
+        var_dump(this->columns);
         if (query == false)
         {
             return false;
