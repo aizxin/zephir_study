@@ -532,8 +532,8 @@ class Medoo
 
         if (is_array(columns))
 
-            for column,replacements in columns
-            {
+            // for column,replacements in columns
+            // {
                 // if (is_array(replacements[ 0 ]))
                 // {
                 //     for replacement in replacements
@@ -555,7 +555,7 @@ class Medoo
                 //     let map[ map_key . "a" ] = [replacements[ 0 ], \PDO::PARAM_STR];
                 //     let map[ map_key . "b" ] = [replacements[ 1 ],\ PDO::PARAM_STR];
                 // }
-            }
+            // }
 
             let replacequery = implode(", ", replace_query);
         }
