@@ -671,6 +671,7 @@ class Medoo
         var column,table_match,table_query,join_key,table_join=[],join_array=[],sub_table,relation,match1,key,value,table_name,joins=[];
         preg_match("/(?<table>[a-zA-Z0-9_]+)\s*\((?<alias>[a-zA-Z0-9_]+)\)/i", table, table_match);
         let this->columns = [];
+        let this->map = [];
         if (isset(table_match[ "table" ]) && isset(table_match[ "alias" ]))
         {
             let table = this->tableQuote(table_match[ "table" ]);
@@ -801,7 +802,6 @@ class Medoo
         {
             let column = this->columnPush(columns);
         }
-        let this->columns = columns;
         return "SELECT " . column . " FROM " . table_query . this->whereClause(where, map);
     }
 
@@ -863,7 +863,8 @@ class Medoo
 					let map[ map_key ] = [match1[ "keyword" ], \PDO::PARAM_STR];
 
 					let where_clause .= (where_clause !== "" ? " AND " : " WHERE") . " MATCH (" . columns . ") AGAINST (" . map_key . mode . ")";
-					let this->map = map;
+                    let this->map = map;
+					let this->columns = columns;
 				}
 			}
 
@@ -1212,6 +1213,7 @@ class Medoo
                 }
             }
         }
+        let this->columns = columns;
         return implode(",",stack);
     }
 
