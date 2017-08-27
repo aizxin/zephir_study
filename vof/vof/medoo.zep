@@ -374,7 +374,6 @@ class Medoo
 
     public function insert(table, datas)
     {
-        var_dump(datas);
         var stack = [],columns = [],fields = [],map = [],data,key,value,values,map_key;
 
         if (!isset(datas[ 0 ]))
@@ -389,6 +388,8 @@ class Medoo
                 let columns[] = key;
             }
         }
+        var_dump(datas);
+        var_dump(columns);
         let columns = array_unique(columns);
 
         for data in datas
