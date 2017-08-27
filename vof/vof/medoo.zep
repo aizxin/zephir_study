@@ -372,174 +372,195 @@ class Medoo
 
     /////////////////////////////////////////////////////////////////////////////////////////////////  1
 
-
-    public function get(table, join, columns = null, where = null)
+    public function insert(table, datas)
     {
-        var map = [],stack = [],column_map = [],column,is_single_column,query,data;
+        var stack = [],columns = [],fields = [],map = [],data,key,value,values,map_key;
 
-        let column = where === null ? join : columns;
-
-        let is_single_column = is_string(column) && column !== "*";
-
-        let query = this->exec(this->selectContext(table, map, join, columns, where) . " LIMIT 1", this->map);
-
-        let columns = this->columns;
-
-        if (query)
+        if (!isset(datas[ 0 ]))
         {
-            let data = query->fetchAll(\PDO::FETCH_ASSOC);
+            let datas = [datas];
+        }
 
-            if (isset(data[ 0 ]))
+        for data in datas
+        {
+            for key,value in data
             {
-                if (column === "*")
+                let columns[] = key;
+            }
+        }
+
+        let columns = array_unique(columns);
+
+        for data in datas
+        {
+            let values = [];
+
+            for key in columns
+            {
+                if (strpos(key, "#") === 0)
                 {
-                    return data[ 0 ];
+                    let values[] = this->fnQuote(key, data[ key ]);
+                    continue;
                 }
 
-                let column_map = this->columnMap(columns, column_map);
+                let map_key =this->mapKey();
 
-                let stack = this->dataMap(data[ 0 ], columns, column_map, stack);
+                let values[] = map_key;
 
-                if (is_single_column)
+                if (!isset(data[ key ]))
                 {
-                    return stack[ column_map[ column ][ 0 ] ];
+                    let map[ map_key ] = [null, \PDO::PARAM_NULL];
                 }
+                else
+                {
+                    let value = data[ key ];
 
-                return stack;
+                    switch (gettype(value))
+                    {
+                        case "NULL":
+                            map[ map_key ] = [null, \PDO::PARAM_NULL];
+                            break;
+
+                        case "array":
+                            let map[ map_key ] = [strpos(key, "[JSON]") === strlen(key) - 6 ? json_encode(value) : serialize(value),\PDO::PARAM_STR];
+                            break;
+
+                        case "object":
+                            let map[ map_key ] = [serialize(value), \PDO::PARAM_STR];
+                            break;
+
+                        case "resource":
+                            let map[ map_key ] = [value, \PDO::PARAM_LOB];
+                            break;
+
+                        case "boolean":
+                            let map[ map_key ] = [(value ? "1" : "0"), \PDO::PARAM_BOOL];
+                            break;
+
+                        case "integer":
+                        case "double":
+                            let map[ map_key ] = [value, \PDO::PARAM_INT];
+                            break;
+
+                        case "string":
+                            map[ map_key ] = [value, \PDO::PARAM_STR];
+                            break;
+                    }
+                }
+            }
+
+            $stack[] = "(" . implode(", ",values) . ")";
+        }
+
+        for key in columns
+        {
+            let fields[] = this->columnQuote(preg_replace("/(^#|\s*\[JSON\]$)/i", "", key));
+        }
+
+        return this->exec("INSERT INTO " . this->tableQuote(table) . " (" . implode(", ", fields) . ") VALUES " . implode(", ", stack), map);
+    }
+
+    public function update(table, data, where = null)
+    {
+        var fields = [],map = [],key,value,column,map_key,match1;
+
+        for key,value in data
+        {
+            let column = this->columnQuote(preg_replace("/(^#|\s*\[(JSON|\+|\-|\*|\/)\]$)/i", "", key));
+
+            if (strpos(key, "#") === 0)
+            {
+                let fields[] = column . " = " . value;
+                continue;
+            }
+
+            let map_key = this->mapKey();
+
+            preg_match("/(?<column>[a-zA-Z0-9_]+)(\[(?<operator>\+|\-|\*|\/)\])?/i", key, match1);
+
+            if (isset(match1[ "operator" ]))
+            {
+                if (is_numeric(value))
+                {
+                    let fields[] = column . " = " . column . " " . match1[ "operator" ] . " " . value;
+                }
             }
             else
             {
-                return false;
+                let fields[] = column . " = " . map_key;
+
+                switch (gettype(value))
+                {
+                    case "NULL":
+                        let map[ map_key ] = [null, \PDO::PARAM_NULL];
+                        break;
+
+                    case "array":
+                        let map[ map_key ] = [strpos($key, "[JSON]") === strlen(key) - 6 ? json_encode(value) : serialize($value),\PDO::PARAM_STR];
+                        break;
+
+                    case "object":
+                        let map[ map_key ] = [serialize(value), \PDO::PARAM_STR];
+                        break;
+
+                    case "resource":
+                        let map[ map_key ] = [value, \PDO::PARAM_LOB];
+                        break;
+
+                    case "boolean":
+                        let map[ map_key ] = [(value ? "1" : "0"), \PDO::PARAM_BOOL];
+                        break;
+
+                    case "integer":
+                    case "double":
+                        let map[ map_key ] = [value, \PDO::PARAM_INT];
+                        break;
+
+                    case "string":
+                        let map[ map_key ] = [value, \PDO::PARAM_STR];
+                        break;
+                }
             }
         }
-        else
-        {
-            return false;
-        }
+
+        return this->exec("UPDATE " . this->tableQuote(table) . " SET " . implode(", ", fields) . this->whereClause(where, map), this->map);
     }
 
-    public function delete(table, where)
+    public function replace(table, columns, where = null)
     {
-        var map = [];
+        var map = [],replace_query = [],column,replacements,replacement,map_key;
 
-        return this->exec("DELETE FROM " . this->tableQuote(table) . this->whereClause(where, map), this->map);
-    }
+        if (is_array(columns))
 
-    public function has(table, join, where = null)
-    {
-        var map = [],column = null,query;
-
-        let query = this->exec("SELECT EXISTS(" . this->selectContext(table, map, join, column, where, 1) . ")", this->map);
-
-        if (query)
-        {
-            return query->fetchColumn() === "1";
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public function count(table, join = null, column = null, where = null) -> int
-    {
-        var query,map = [];
-
-        let query = this->exec(this->selectContext(table, map, join, column, where, "COUNT"), this->map);
-
-        return query ? 0 + query->fetchColumn() : false;
-    }
-
-    public function max(table, join, column = null, where = null) -> float | boolean
-    {
-        var max,query,map = [];
-        let query = this->exec(this->selectContext(table, map, join, column, where, "MAX"), this->map);
-        if (query)
-        {
-            let max = query->fetchColumn();
-            return is_numeric(max) ? max + 0 : max;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public function min(table, join, column = null, where = null) -> float | boolean
-    {
-        var min,query,map = [];
-
-        let query = this->exec(this->selectContext(table, map, join, column, where, "MIN"), this->map);
-
-        if (query)
-        {
-            let min = query->fetchColumn();
-
-            return is_numeric(min) ? min + 0 : min;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public function avg(table, join, column = null, where = null) -> float | boolean
-    {
-        var query,map = [];
-
-        let query = this->exec(this->selectContext(table, map, join, column, where, "AVG"), this->map);
-
-        return query ? 0 + query->fetchColumn() : false;
-    }
-
-    public function sum(table, join, column = null, where = null) -> float | boolean
-    {
-        var query,map = [];
-
-        let query = this->exec(this->selectContext(table, map, join, column, where, "SUM"), this->map);
-
-        return query ? 0 + query->fetchColumn() : false;
-    }
-
-    public function action(actions)
-    {
-        var result;
-        if (is_callable(actions))
-        {
-            this->pdo->beginTransaction();
-            let result = {actions}(this);
-            if (result === false)
+            for column,replacements in columns
             {
-                this->pdo->rollBack();
-            }
-            else
-            {
-                this->pdo->commit();
-            }
-        }
-        else
-        {
-            return false;
-        }
-    }
+                if (is_array(replacements[ 0 ]))
+                {
+                    for replacement in replacements
+                    {
+                        let map_key = this->mapKey();
 
-    public function id() -> int
-    {
-        var type;
-        let type = this->database_type;
-        if (type === "oracle")
-        {
-            return 0;
+                        let replace_query[] = this->columnQuote(column) . " = REPLACE(" . this->columnQuote(column) . ", " . map_key . "a, " . map_key . "b)";
+
+                        let map[ map_key . "a" ] = [replacement[ 0 ], \PDO::PARAM_STR];
+                        let map[ map_key . "b" ] = [replacement[ 1 ], \PDO::PARAM_STR];
+                    }
+                }
+                else
+                {
+                    let map_key = this->mapKey();
+
+                    let replace_query[] = this->columnQuote(column) . " = REPLACE(" . this->columnQuote(column) . ", " . map_key . "a, " . map_key . "b)";
+
+                    let map[ map_key . "a" ] = [replacements[ 0 ], \PDO::PARAM_STR];
+                    let map[ map_key . "b" ] = [replacements[ 1 ],\ PDO::PARAM_STR];
+                }
+            }
+
+            let replace_query = implode(", ", replace_query);
         }
-        elseif (type === "mssql")
-        {
-            return this->pdo->query("SELECT SCOPE_IDENTITY()")->fetchColumn();
-        }
-        elseif (type === "pgsql")
-        {
-            return this->pdo->query("SELECT LASTVAL()")->fetchColumn();
-        }
-        return this->pdo->lastInsertId();
+
+        return $this->exec("UPDATE " . this->tableQuote(table) . " SET " . replace_query . this->whereClause(where, map), this->map);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////// 1
@@ -1232,6 +1253,175 @@ class Medoo
 	{
 		return "`" . this->prefix . table . "`";
 	}
+
+     public function get(table, join, columns = null, where = null)
+    {
+        var map = [],stack = [],column_map = [],column,is_single_column,query,data;
+
+        let column = where === null ? join : columns;
+
+        let is_single_column = is_string(column) && column !== "*";
+
+        let query = this->exec(this->selectContext(table, map, join, columns, where) . " LIMIT 1", this->map);
+
+        let columns = this->columns;
+
+        if (query)
+        {
+            let data = query->fetchAll(\PDO::FETCH_ASSOC);
+
+            if (isset(data[ 0 ]))
+            {
+                if (column === "*")
+                {
+                    return data[ 0 ];
+                }
+
+                let column_map = this->columnMap(columns, column_map);
+
+                let stack = this->dataMap(data[ 0 ], columns, column_map, stack);
+
+                if (is_single_column)
+                {
+                    return stack[ column_map[ column ][ 0 ] ];
+                }
+
+                return stack;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function delete(table, where)
+    {
+        var map = [];
+
+        return this->exec("DELETE FROM " . this->tableQuote(table) . this->whereClause(where, map), this->map);
+    }
+
+    public function has(table, join, where = null)
+    {
+        var map = [],column = null,query;
+
+        let query = this->exec("SELECT EXISTS(" . this->selectContext(table, map, join, column, where, 1) . ")", this->map);
+
+        if (query)
+        {
+            return query->fetchColumn() === "1";
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function count(table, join = null, column = null, where = null) -> int
+    {
+        var query,map = [];
+
+        let query = this->exec(this->selectContext(table, map, join, column, where, "COUNT"), this->map);
+
+        return query ? 0 + query->fetchColumn() : false;
+    }
+
+    public function max(table, join, column = null, where = null) -> float | boolean
+    {
+        var max,query,map = [];
+        let query = this->exec(this->selectContext(table, map, join, column, where, "MAX"), this->map);
+        if (query)
+        {
+            let max = query->fetchColumn();
+            return is_numeric(max) ? max + 0 : max;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function min(table, join, column = null, where = null) -> float | boolean
+    {
+        var min,query,map = [];
+
+        let query = this->exec(this->selectContext(table, map, join, column, where, "MIN"), this->map);
+
+        if (query)
+        {
+            let min = query->fetchColumn();
+
+            return is_numeric(min) ? min + 0 : min;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function avg(table, join, column = null, where = null) -> float | boolean
+    {
+        var query,map = [];
+
+        let query = this->exec(this->selectContext(table, map, join, column, where, "AVG"), this->map);
+
+        return query ? 0 + query->fetchColumn() : false;
+    }
+
+    public function sum(table, join, column = null, where = null) -> float | boolean
+    {
+        var query,map = [];
+
+        let query = this->exec(this->selectContext(table, map, join, column, where, "SUM"), this->map);
+
+        return query ? 0 + query->fetchColumn() : false;
+    }
+
+    public function action(actions)
+    {
+        var result;
+        if (is_callable(actions))
+        {
+            this->pdo->beginTransaction();
+            let result = {actions}(this);
+            if (result === false)
+            {
+                this->pdo->rollBack();
+            }
+            else
+            {
+                this->pdo->commit();
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function id() -> int
+    {
+        var type;
+        let type = this->database_type;
+        if (type === "oracle")
+        {
+            return 0;
+        }
+        elseif (type === "mssql")
+        {
+            return this->pdo->query("SELECT SCOPE_IDENTITY()")->fetchColumn();
+        }
+        elseif (type === "pgsql")
+        {
+            return this->pdo->query("SELECT LASTVAL()")->fetchColumn();
+        }
+        return this->pdo->lastInsertId();
+    }
 
 	public function debug()  -> <Medoo>
 	{

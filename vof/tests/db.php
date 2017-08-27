@@ -112,24 +112,24 @@ $database = new Medoo($data);
 // ]);
 // var_dump($data7);
 
-$data8 = $database->get("member_idcard", [
-    "[>]member_bill" => "memberId"
-], [
-    "member_bill.email",
-    "member_idcard.name",
-], [
-    "ORDER" => ["member_idcard.id" => "DESC"],
-]);
-var_dump($data8);
-$data9 = $database->get("member_idcard", [
-    "[>]member_bill" => "memberId"
-], [
-    "member_bill.email",
-    "member_idcard.name",
-], [
-    "member_idcard.id[>]" => 30,
-]);
-var_dump($data9);
+// $data8 = $database->get("member_idcard", [
+//     "[>]member_bill" => "memberId"
+// ], [
+//     "member_bill.email",
+//     "member_idcard.name",
+// ], [
+//     "ORDER" => ["member_idcard.id" => "DESC"],
+// ]);
+// var_dump($data8);
+// $data9 = $database->get("member_idcard", [
+//     "[>]member_bill" => "memberId"
+// ], [
+//     "member_bill.email",
+//     "member_idcard.name",
+// ], [
+//     "member_idcard.id[>]" => 30,
+// ]);
+// var_dump($data9);
 // log
 var_dump($database->log());
 // last
