@@ -24,7 +24,8 @@ $data = [
 
     // // [optional] driver_option for connection, read more from http://www.php.net/manual/en/pdo.setattribute.php
     'option' => [
-        PDO::ATTR_CASE => PDO::CASE_NATURAL
+        PDO::ATTR_CASE => PDO::CASE_NATURAL,
+        PDO::ATTR_PERSISTENT => true
     ],
 
     // // [optional] Medoo will execute those commands after connected to the database for initialization
